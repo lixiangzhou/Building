@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CJMenuSelectThreeConView">
+            <rect key="frame" x="0.0" y="0.0" width="321" height="314"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CVt-o1-gqz" userLabel="leftTableView">
+                    <rect key="frame" x="0.0" y="0.0" width="107" height="157"/>
+                    <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
+                </tableView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yGG-Ie-akD" userLabel="centerTableView">
+                    <rect key="frame" x="107" y="0.0" width="107" height="157"/>
+                    <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                </tableView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MoY-Td-bCA" userLabel="rightTableView">
+                    <rect key="frame" x="214" y="0.0" width="107" height="157"/>
+                    <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nBm-7O-C9f" userLabel="blackView">
+                    <rect key="frame" x="0.0" y="157" width="321" height="157"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.45000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="0.45000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="yGG-Ie-akD" firstAttribute="height" secondItem="CVt-o1-gqz" secondAttribute="height" id="1hT-h6-LFt"/>
+                <constraint firstItem="MoY-Td-bCA" firstAttribute="height" secondItem="CVt-o1-gqz" secondAttribute="height" id="4BN-WO-46K"/>
+                <constraint firstItem="CVt-o1-gqz" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="1:2" id="5E2-5d-R5q"/>
+                <constraint firstItem="CVt-o1-gqz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AbJ-sp-CBy"/>
+                <constraint firstItem="nBm-7O-C9f" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BNM-Tz-I4p"/>
+                <constraint firstItem="nBm-7O-C9f" firstAttribute="top" secondItem="CVt-o1-gqz" secondAttribute="bottom" id="CQI-JR-UvW"/>
+                <constraint firstItem="CVt-o1-gqz" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GMa-1d-d59"/>
+                <constraint firstAttribute="trailing" secondItem="nBm-7O-C9f" secondAttribute="trailing" id="GnL-kg-L3G"/>
+                <constraint firstItem="MoY-Td-bCA" firstAttribute="leading" secondItem="yGG-Ie-akD" secondAttribute="trailing" id="OPO-Rb-s3l"/>
+                <constraint firstItem="yGG-Ie-akD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ura-A6-N9T"/>
+                <constraint firstAttribute="trailing" secondItem="MoY-Td-bCA" secondAttribute="trailing" id="bib-nG-v2k"/>
+                <constraint firstItem="yGG-Ie-akD" firstAttribute="width" secondItem="CVt-o1-gqz" secondAttribute="width" id="csC-yA-Phs"/>
+                <constraint firstItem="yGG-Ie-akD" firstAttribute="leading" secondItem="CVt-o1-gqz" secondAttribute="trailing" id="fWl-aO-ZL2"/>
+                <constraint firstAttribute="bottom" secondItem="nBm-7O-C9f" secondAttribute="bottom" id="wEh-iJ-XFy"/>
+                <constraint firstItem="MoY-Td-bCA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="wpQ-vh-27W"/>
+                <constraint firstItem="MoY-Td-bCA" firstAttribute="width" secondItem="CVt-o1-gqz" secondAttribute="width" id="zMV-Sg-RGy"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="blackView" destination="nBm-7O-C9f" id="7Ag-hI-nxA"/>
+                <outlet property="centerTableView" destination="yGG-Ie-akD" id="Epb-Vs-NTa"/>
+                <outlet property="leftTableView" destination="CVt-o1-gqz" id="hD3-CY-2O7"/>
+                <outlet property="rightTableView" destination="MoY-Td-bCA" id="sUp-8s-zTA"/>
+            </connections>
+            <point key="canvasLocation" x="-226.40000000000001" y="-264.46776611694156"/>
+        </view>
+    </objects>
+</document>

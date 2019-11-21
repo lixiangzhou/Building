@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="FYServiceSecondLevelCollectionCell">
+            <rect key="frame" x="0.0" y="0.0" width="236" height="277"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="236" height="277"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="url_no_access_image" translatesAutoresizingMaskIntoConstraints="NO" id="5C0-lQ-hCv" userLabel="myImageView">
+                        <rect key="frame" x="10" y="10" width="216" height="162"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="5C0-lQ-hCv" secondAttribute="height" multiplier="4:3" id="k0I-3v-wcS"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="Skm-Nk-kSa" userLabel="titleLabel">
+                        <rect key="frame" x="10" y="180" width="216" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.43137254899999999" green="0.43137254899999999" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="5C0-lQ-hCv" secondAttribute="trailing" constant="10" id="2pw-g4-Xpr"/>
+                <constraint firstItem="Skm-Nk-kSa" firstAttribute="trailing" secondItem="5C0-lQ-hCv" secondAttribute="trailing" id="9bq-DP-cda"/>
+                <constraint firstItem="Skm-Nk-kSa" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="AAy-EF-dm9"/>
+                <constraint firstItem="Skm-Nk-kSa" firstAttribute="leading" secondItem="5C0-lQ-hCv" secondAttribute="leading" id="AKY-Y9-xST"/>
+                <constraint firstItem="5C0-lQ-hCv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="ICa-HY-PuP"/>
+                <constraint firstItem="5C0-lQ-hCv" firstAttribute="width" secondItem="5C0-lQ-hCv" secondAttribute="height" multiplier="4:3" id="JPY-La-F5u"/>
+                <constraint firstItem="5C0-lQ-hCv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="QVU-IY-DJw"/>
+                <constraint firstItem="Skm-Nk-kSa" firstAttribute="top" secondItem="5C0-lQ-hCv" secondAttribute="bottom" constant="8" id="p5t-xo-7oV"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <size key="customSize" width="236" height="277"/>
+            <connections>
+                <outlet property="myImageView" destination="5C0-lQ-hCv" id="TPJ-zE-1oL"/>
+                <outlet property="titleLabel" destination="Skm-Nk-kSa" id="eD1-2e-P7O"/>
+            </connections>
+            <point key="canvasLocation" x="171" y="79"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="url_no_access_image" width="12" height="12"/>
+    </resources>
+</document>
