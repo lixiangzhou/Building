@@ -18,11 +18,6 @@
 @property (nonatomic, assign) BOOL LoginStatus;
 @property (nonatomic, copy)  NSString  * serviceType;//楼宇服务：buildService;企业服务：corpService
 
-
-
-
-
-
 @property (nonatomic, assign) NSInteger uid;
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *realName;//真实姓名

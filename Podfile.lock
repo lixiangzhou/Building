@@ -33,6 +33,7 @@ PODS:
   - SDWebImage/Core (5.0.6)
   - SVProgressHUD (2.2.5)
   - TUSafariActivity (1.0.4)
+  - TZImagePickerController (3.2.7)
   - "UITableView+FDTemplateLayoutCell (1.6)"
   - YYModel (1.0.4)
 
@@ -50,6 +51,7 @@ DEPENDENCIES:
   - SDCycleScrollView (~> 1.64)
   - SDWebImage
   - SVProgressHUD
+  - TZImagePickerController
   - "UITableView+FDTemplateLayoutCell (~> 1.6.beta)"
   - YYModel
 
@@ -70,6 +72,7 @@ SPEC REPOS:
     - SDWebImage
     - SVProgressHUD
     - TUSafariActivity
+    - TZImagePickerController
     - "UITableView+FDTemplateLayoutCell"
     - YYModel
 
@@ -89,9 +92,10 @@ SPEC CHECKSUMS:
   SDWebImage: 920f1a2ff1ca8296ad34f6e0510a1ef1d70ac965
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
+  TZImagePickerController: 821b81f83594a736e831a018f2a2ce31822ddf0b
   "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: cf6c17a36fdaf8c73815ce821b40fe065523351c
+PODFILE CHECKSUM: 66cc7524c479b10e555fb8a7ca19e79ff21c08a0
 
 COCOAPODS: 1.8.4

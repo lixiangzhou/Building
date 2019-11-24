@@ -433,6 +433,9 @@ static int wrPushDisplayCount = 0;
 
 - (void)updateNavigationBarWithFromVC:(UIViewController *)fromVC toVC:(UIViewController *)toVC progress:(CGFloat)progress {
     // change navBarBarTintColor
+    if (![WRNavigationBar needUpdateNavigationBar:toVC]) {
+        return;
+    }
     UIColor *fromBarTintColor = [fromVC wr_navBarBarTintColor];
     UIColor *toBarTintColor = [toVC wr_navBarBarTintColor];
     UIColor *newBarTintColor = [WRNavigationBar middleColor:fromBarTintColor toColor:toBarTintColor percent:progress];

@@ -107,4 +107,6 @@ typedef void (^CYLPushOrPopCallback)(NSArray<__kindof UIViewController *> *viewC
 
 - (UIViewController *)cyl_getViewControllerInsteadIOfNavigationController;
 
+- (void)popToClazz:(NSString *)clazzName;
+
 @end

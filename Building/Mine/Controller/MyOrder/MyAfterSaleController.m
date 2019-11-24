@@ -8,6 +8,7 @@
 
 #import "MyAfterSaleController.h"
 #import "OrderProductBaseInfoView.h"
+#import "ApplyRefundController.h"
 
 @interface MyAfterSaleController ()
 @property (nonatomic, strong) OrderProductBaseInfoView *productView;
@@ -31,8 +32,10 @@
     [self.view addSubview:self.productView];
     
     UIView *itemView1 = [self addItemViewIcon:@"ic_tuikuan_1" title:@"我要退款（无需退货）" subtitle:@"没收到货，或与卖家协商同意不同退货只退款"];
+    itemView1.tag = 1;
     
     UIView *itemView2 = [self addItemViewIcon:@"ic_tuikuan_2" title:@"我要退货退款" subtitle:@"我要退货退款"];
+    itemView2.tag = 2;
     
     [self.productView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset(NAV_HEIGHT);
@@ -90,14 +93,21 @@
     
     [arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(view);
-        make.right.equalTo(@12);
+        make.right.equalTo(@-12);
     }];
+    
+    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)]];
     
     [self.view addSubview:view];
      
     return view;
 }
 
-
+- (void)tapAction:(UITapGestureRecognizer *)tap {
+    ApplyRefundController *vc = [ApplyRefundController new];
+    vc.type = tap.view.tag;
+    vc.model = self.model;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 @end

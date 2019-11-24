@@ -88,6 +88,19 @@
 {
     return self.frame.size;
 }
+
+- (UIView *)addBottomLine {
+    UIView *line = [UIView new];
+    line.backgroundColor = BackGroundColor;
+    [self addSubview:line];
+    
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.right.left.equalTo(self);
+        make.height.equalTo(@1);
+    }];
+    return line;
+}
+
 @end
 
 @implementation UIView (Circle)

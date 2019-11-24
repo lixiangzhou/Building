@@ -273,4 +273,16 @@
     return atIndex;
 }
 
+- (void)popToClazz:(NSString *)clazzName {
+    UIViewController *vc;
+    [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([NSStringFromClass(obj.class) isEqualToString:clazzName]) {
+            *stop = YES;
+        }
+    }];
+    
+    if (vc) {
+        [self.navigationController popToViewController:vc animated:YES];
+    }
+}
 @end

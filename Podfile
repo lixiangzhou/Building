@@ -25,5 +25,6 @@ target 'Building' do
     pod 'UITableView+FDTemplateLayoutCell', '~> 1.6.beta'
     pod 'BMKLocationKit'
     pod 'BaiduMapKit' #百度地图SDK
+    pod 'TZImagePickerController'
 
 end

@@ -328,8 +328,14 @@ static inline NSString *cachePath() {
 //    refreshCache = YES;
 //  AFHTTPSessionManager *manager = [self manager];
 //    AFHTTPSessionManager *manager = [self manager:[self requestHeader:params]];
+    if ([GlobalConfigClass shareMySingle].userAndTokenModel.token) {
+        NSMutableDictionary *header = (NSMutableDictionary *)[headerParams mutableCopy];
+        header[@"token"] = [GlobalConfigClass shareMySingle].userAndTokenModel.token;
+        headerParams = header;
+    }
+    
     AFHTTPSessionManager *manager = [self manager:headerParams];
-  NSString *absolute = [self absoluteUrlWithPath:url];
+    NSString *absolute = [self absoluteUrlWithPath:url];
   
   if ([self baseUrl] == nil) {
     if ([NSURL URLWithString:url] == nil) {
@@ -623,6 +629,12 @@ static inline NSString *cachePath() {
   
 //  AFHTTPSessionManager *manager = [self manager];
 //    AFHTTPSessionManager *manager = [self manager:[self requestHeader:parameters]];
+    if ([GlobalConfigClass shareMySingle].userAndTokenModel.token) {
+        NSMutableDictionary *header = (NSMutableDictionary *)[headerParams mutableCopy];
+        header = header ?: [NSMutableDictionary new];
+        header[@"token"] = [GlobalConfigClass shareMySingle].userAndTokenModel.token;
+        headerParams = header;
+    }
     AFHTTPSessionManager *manager = [self manager:headerParams];
 
   QSURLSessionTask *session = [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -696,6 +708,11 @@ static inline NSString *cachePath() {
     
 //    AFHTTPSessionManager *manager = [self manager];
 //    AFHTTPSessionManager *manager = [self manager:[self requestHeader:parameters]];
+    if ([GlobalConfigClass shareMySingle].userAndTokenModel.token) {
+        NSMutableDictionary *header = (NSMutableDictionary *)[headerParams mutableCopy];
+        header[@"token"] = [GlobalConfigClass shareMySingle].userAndTokenModel.token;
+        headerParams = header;
+    }
     AFHTTPSessionManager *manager = [self manager:headerParams];
     
     QSURLSessionTask *session = [manager POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {

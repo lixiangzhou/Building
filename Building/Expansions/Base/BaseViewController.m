@@ -89,6 +89,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
+}
+
 /**
  设置我的未读标记
  */

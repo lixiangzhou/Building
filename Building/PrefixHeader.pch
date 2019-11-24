@@ -71,6 +71,7 @@
 #import "NSString+CalcWidthAndHeight.h"
 #import "UIView+Extension.h"
 #import "UILabel+Extensions.h"
+#import "UIButton+Extensions.h"
 #import "UIViewController+HUD.h"
 //#import "MBProgressHUD+Add.h"
 //#import "NSString+DateFormatter.h"

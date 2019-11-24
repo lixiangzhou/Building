@@ -8,6 +8,12 @@
 
 #import "GlobalConfigClass.h"
 
+@interface GlobalConfigClass ()
+{
+    UserAndTokenModel *_userAndTokenModel;
+}
+@end
+
 @implementation GlobalConfigClass
 
 static GlobalConfigClass* mysingleClass = nil;
@@ -34,5 +40,20 @@ static GlobalConfigClass* mysingleClass = nil;
     return _cityModel;
 }
 
+- (void)setUserAndTokenModel:(UserAndTokenModel *)userAndTokenModel {
+    _userAndTokenModel = userAndTokenModel;
+    NSString *json = [userAndTokenModel yy_modelToJSONString];
+    if (json.length) {
+        [[NSUserDefaults standardUserDefaults] setObject:json forKey:@"userAndTokenModel"];
+    }
+}
+
+- (UserAndTokenModel *)userAndTokenModel {
+    if (_userAndTokenModel == nil) {
+        NSString *json = [[NSUserDefaults standardUserDefaults] objectForKey:@"userAndTokenModel"];
+        _userAndTokenModel = [UserAndTokenModel yy_modelWithJSON:json];
+    }
+    return _userAndTokenModel;
+}
 
 @end

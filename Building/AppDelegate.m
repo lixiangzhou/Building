@@ -12,6 +12,7 @@
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
 #import "WxApi.h"
 #import "PayManager.h"
+#import "WRNavigationBar.h"
 
 @interface AppDelegate ()
 
@@ -32,7 +33,15 @@
 //    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_icon_back"]];
 //    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
 //    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:18], NSFontAttributeName, nil]];
-    
+    [WRNavigationBar wr_widely];
+    // WRNavigationBar 不会对 blackList 中的控制器有影响
+    [WRNavigationBar wr_setBlacklist:@[@"SpecialController",
+                                                                @"TZPhotoPickerController",
+                                                                @"TZGifPhotoPreviewController",
+                                                                @"TZAlbumPickerController",
+                                                                @"TZPhotoPreviewController",
+                                                                @"TZVideoPlayerController"]];
+    [SVProgressHUD setMaximumDismissTimeInterval:2];
     //百度定位
     [[BMKLocationAuth sharedInstance] checkPermisionWithKey:BMK_AK authDelegate:nil];
     //要使用百度地图，请先启动BaiduMapManager
