@@ -39,7 +39,6 @@
     } else {
        self.navBarHeight = 44 + 20;
     }
-        
 
     [self loadingSubViews];
     

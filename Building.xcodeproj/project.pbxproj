@@ -267,6 +267,9 @@
 		10E4F4A5221AEBF60079A245 /* CJMenuSelectThreeConView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10E4F4A3221AEBF60079A245 /* CJMenuSelectThreeConView.xib */; };
 		10E4F4B3221EF6960079A245 /* RRTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E4F4B2221EF6960079A245 /* RRTextView.m */; };
 		46EA1DEBFD63671F69C3414F /* libPods-Building.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B5A1389907CB1BFF0E9A581 /* libPods-Building.a */; };
+		97361FD9238A171C00517B29 /* MyAfterSaleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97361FD8238A171C00517B29 /* MyAfterSaleController.m */; };
+		97361FDF238A247400517B29 /* OrderProductBaseInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97361FDE238A247400517B29 /* OrderProductBaseInfoView.m */; };
+		97361FE2238A263A00517B29 /* UILabel+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 97361FE1238A263A00517B29 /* UILabel+Extensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -692,6 +695,12 @@
 		10E4F4B1221EF6960079A245 /* RRTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRTextView.h; sourceTree = "<group>"; };
 		10E4F4B2221EF6960079A245 /* RRTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRTextView.m; sourceTree = "<group>"; };
 		5E7BE14C271078E2555635A1 /* Pods-Building.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Building.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Building/Pods-Building.debug.xcconfig"; sourceTree = "<group>"; };
+		97361FD7238A171C00517B29 /* MyAfterSaleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyAfterSaleController.h; sourceTree = "<group>"; };
+		97361FD8238A171C00517B29 /* MyAfterSaleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyAfterSaleController.m; sourceTree = "<group>"; };
+		97361FDD238A247400517B29 /* OrderProductBaseInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderProductBaseInfoView.h; sourceTree = "<group>"; };
+		97361FDE238A247400517B29 /* OrderProductBaseInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderProductBaseInfoView.m; sourceTree = "<group>"; };
+		97361FE0238A263A00517B29 /* UILabel+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UILabel+Extensions.h"; sourceTree = "<group>"; };
+		97361FE1238A263A00517B29 /* UILabel+Extensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Extensions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1181,6 +1190,10 @@
 				04CD1A812243819F00C45BF2 /* MyAlreadyReceiveDetailVC.h */,
 				04CD1A86224381A100C45BF2 /* MyAlreadyReceiveDetailVC.m */,
 				04CD1A95224381A700C45BF2 /* MyAlreadyReceiveDetailVC.xib */,
+				97361FD7238A171C00517B29 /* MyAfterSaleController.h */,
+				97361FD8238A171C00517B29 /* MyAfterSaleController.m */,
+				97361FDD238A247400517B29 /* OrderProductBaseInfoView.h */,
+				97361FDE238A247400517B29 /* OrderProductBaseInfoView.m */,
 				04CD1A802243819E00C45BF2 /* MyOrderCell.h */,
 				04CD1A8D224381A400C45BF2 /* MyOrderCell.m */,
 				04CD1A7E2243819D00C45BF2 /* MyOrderCell.xib */,
@@ -1276,6 +1289,8 @@
 			children = (
 				10E4F45F221317620079A245 /* UIView+Extension.h */,
 				10E4F460221317620079A245 /* UIView+Extension.m */,
+				97361FE0238A263A00517B29 /* UILabel+Extensions.h */,
+				97361FE1238A263A00517B29 /* UILabel+Extensions.m */,
 				1029E84E2205961F00E987A7 /* NSDateFormatter+Category.h */,
 				1029E84F2205962000E987A7 /* NSDateFormatter+Category.m */,
 				1029E84B220595B000E987A7 /* NSString+CalcWidthAndHeight.h */,
@@ -1943,6 +1958,7 @@
 				1029E90622106DE600E987A7 /* CJMenuSelectCell.m in Sources */,
 				10E4F49A22180CF40079A245 /* WRNavigationBar.m in Sources */,
 				1029E839220592EE00E987A7 /* MBProgressHUD+Add.m in Sources */,
+				97361FE2238A263A00517B29 /* UILabel+Extensions.m in Sources */,
 				1002D443223C99EB003DBB62 /* MyAlreadyPayListVC.m in Sources */,
 				108BA42622D49F7E000ABAD2 /* UITabBarItem+CYLTabBarControllerExtention.m in Sources */,
 				102601D222258DAE00864F14 /* PersonVCLoginOutCell.m in Sources */,
@@ -1984,6 +2000,7 @@
 				1029E8532205A8F600E987A7 /* HomeNetworkService.m in Sources */,
 				102601DC22282DDB00864F14 /* YuYueBuildOrderVC.m in Sources */,
 				1002D47D223C9F23003DBB62 /* AddressPickerView.m in Sources */,
+				97361FD9238A171C00517B29 /* MyAfterSaleController.m in Sources */,
 				1001C25A223517CA00BB06E4 /* SelectAreaView.m in Sources */,
 				04EAE7A0224B76B20041559A /* MyYuYueServiceCell.m in Sources */,
 				1029E83C2205938900E987A7 /* IosDeviceType.m in Sources */,
@@ -1997,6 +2014,7 @@
 				101015FD220086870005CD9F /* PersonViewController.m in Sources */,
 				1002D488223DEDC1003DBB62 /* WMDragView.m in Sources */,
 				10E4F46A2214526F0079A245 /* CJMenuSelectOneConCell.m in Sources */,
+				97361FDF238A247400517B29 /* OrderProductBaseInfoView.m in Sources */,
 				1001C255223509BE00BB06E4 /* AddAddressVC.m in Sources */,
 				108BA42922D49F7E000ABAD2 /* CYLPlusButton.m in Sources */,
 				10E4F472221467330079A245 /* PersonVCCell.m in Sources */,

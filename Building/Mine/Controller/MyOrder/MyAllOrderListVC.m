@@ -19,6 +19,7 @@
 #import "MyAlreadyCancelDetailVC.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "paySelectControl.h"
+#import "MyAfterSaleController.h"
 
 #define MyOrderCellHeight       200
 
@@ -176,6 +177,12 @@
     if ([model.orderStatus integerValue]==3 || [model.orderStatus integerValue]==4) {
          MyOrderCell *cell = (MyOrderCell *)[self getCellFromXibName:MyOrderCellXibName dequeueTableView:tableView];
         cell.model=model;
+        cell.afterSaleBlock = ^ {
+            MJWeakSelf
+            MyAfterSaleController *vc = [MyAfterSaleController new];
+            vc.model = model;
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        };
         return cell;
     }else if ([model.orderStatus integerValue]==0){
         MyToBePayCell *cell=(MyToBePayCell *)[self getCellFromXibName:MyToBePayCellXibName dequeueTableView:tableView];
@@ -199,19 +206,6 @@
                     [wself.tableView.mj_header beginRefreshing];
                 }
             }];
-//            [wself gainOrderListWithRefresh:YES];
-
-//            //向后台获取支付宝拉起的字符串
-//            [MineNetworkService gainMyOrderPayWithParams:payParams headerParams:paramsHeader Success:^(id  _Nonnull response) {
-//                //调用支付宝支付接口
-//                [[AlipaySDK defaultService] payOrder:response fromScheme:AliPayScheme callback:^(NSDictionary *resultDic) {
-//                    //            NSLog(@"payreslut : %@",resultDic);
-//                    [HomeNetworkService analysisAlipayWithCallBackResult:resultDic success:^{}];
-//                }];
-//            } failure:^(id  _Nonnull response) {
-//                [wself showHint:response];
-//            }];
-            
         };
         return cell;
     }else if ([model.orderStatus integerValue]==1){

@@ -26,7 +26,10 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    
+    self.afterSaleBtn.layer.borderWidth=1;
+    self.afterSaleBtn.layer.cornerRadius=3;
+    self.afterSaleBtn.layer.borderColor=([UIColor colorWithRed:154/255.0 green:204/255.0 blue:255/255.0 alpha:1].CGColor);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -63,6 +66,9 @@
 }
 
 - (IBAction)afterSaleAction:(id)sender {
+    if (self.afterSaleBlock) {
+        self.afterSaleBlock();
+    }
 }
 
 @end

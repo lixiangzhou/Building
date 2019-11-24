@@ -63,12 +63,14 @@
 #import "SVProgressHUD.h"
 //#import "AppEffectManager.h"
 #import "UITableView+FDTemplateLayoutCell.h"
+#import <SDWebImage/SDWebImage.h>
 
 //#import <ReactiveCocoa/ReactiveCocoa.h>
 
 //#import "UIImageView+WebCache.h"
 #import "NSString+CalcWidthAndHeight.h"
 #import "UIView+Extension.h"
+#import "UILabel+Extensions.h"
 #import "UIViewController+HUD.h"
 //#import "MBProgressHUD+Add.h"
 //#import "NSString+DateFormatter.h"
@@ -118,6 +120,7 @@
 #define IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 #define kDevice_Is_iPhoneX (([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO) || ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(828, 1792), [[UIScreen mainScreen] currentMode].size) : NO) || ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : NO))
 
+#define NAV_HEIGHT (kDevice_Is_iPhoneX ? 88 : 64)
 
 //------------------------设置系统颜色-----------------------------//
 // 导航栏的颜色
