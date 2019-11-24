@@ -28,8 +28,8 @@
     //导航栏全局配置===现在颜色是蓝色，因为引入的自定义nav 的问题，还没找到怎么设置
 //    [[UINavigationBar appearance] setBarTintColor:UIColor.redColor];//设置nav bar背景色
 //    [[UINavigationBar appearance] setTintColor:UIColor.redColor];//设置文字、返回按钮颜色
-    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_icon_back"]];
-    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_icon_back"]];
+//    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"nav_icon_back"]];
+//    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"nav_icon_back"]];
 //    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
 //    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:18], NSFontAttributeName, nil]];
     

@@ -15,6 +15,7 @@
 #import "paySelectControl.h"
 
 @interface BuildAndCropServiceOrderVC ()<UITextViewDelegate>
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *telLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -24,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *twoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
-@property (weak, nonatomic) IBOutlet RRTextView *myTextView;
+@property (strong, nonatomic) IBOutlet RRTextView *myTextView;
 @property (weak, nonatomic) IBOutlet UILabel *totalMoneyLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buyButton;
 @property (weak, nonatomic) IBOutlet UILabel *countLiuYanLabel;
@@ -57,7 +58,8 @@
     }
     self.currentAddressModel = nil;
     [self.view endEditing:YES];
-
+    
+    _myTextView = [RRTextView new];
     [_myTextView setFont:UIFontWithSize(13)];
     [_myTextView setPlaceholderOriginY:6 andOriginX:2.5];
     _myTextView.placeholder = @"留言信息（最多300字）";
@@ -66,6 +68,15 @@
     _myTextView.contentInset = UIEdgeInsetsMake(15, 18, 15, 18);
     
     _myTextView.delegate = self;
+    [self.contentView addSubview:self.myTextView];
+    
+    [self.myTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.countLiuYanLabel.mas_bottom).offset(12);
+        make.left.equalTo(@13);
+        make.right.equalTo(@13);
+        make.height.equalTo(@190);
+    }];
+
 
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]
                                              initWithTarget:self action:@selector(handleBackgroundTap:)];

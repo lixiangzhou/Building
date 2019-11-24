@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *companyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UIButton *afterSaleBtn;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 
 @end
@@ -39,7 +40,9 @@
     self.orderSnLabel.text=[NSString stringWithFormat:@"订单编号：%@",model.orderSn];
     if ([model.orderStatus integerValue]==3) {
         self.orderStatuLabel.text=@"已收货";
+        self.afterSaleBtn.hidden = NO;
     }else{
+        self.afterSaleBtn.hidden = YES;
         self.orderStatuLabel.text=@"已取消";
     }
     NSURL *url = [NSURL URLWithString:model.productDetailImg];
@@ -57,6 +60,9 @@
     self.countLabel.text=model.quantity;
     self.amountLabel.text=[NSString stringWithFormat:@"总价: ¥%@",model.amount ];
     
+}
+
+- (IBAction)afterSaleAction:(id)sender {
 }
 
 @end

@@ -30,7 +30,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [self setNavBarTitle:@"我的预约"];
-    if (@available(iOS 11.0, *)) {
+    if (kDevice_Is_iPhoneX) {
         self.navBarHeight = 44 + 44;
     } else {
        self.navBarHeight = 44 + 20;

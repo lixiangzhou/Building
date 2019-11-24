@@ -68,7 +68,7 @@
     [self.tableView.mj_header beginRefreshing];
 
     //数据初始化
-    self.tableViewArr = @[@"实名认证", @"我的预约", @"我的订单", @"我的退款", @"收货地址", @"关于我们"].mutableCopy;
+    self.tableViewArr = @[@"实名认证", @"我的预约", @"我的订单", @"退款/售后", @"收货地址", @"关于我们"].mutableCopy;
     self.isLogin = NO;
     
 }
@@ -156,7 +156,7 @@
             cell.myImageView.image = [UIImage imageNamed:@"my_list_ic_02"];
         } else if ([rowTitle  isEqual: @"我的订单"]){//我的订单
             cell.myImageView.image = [UIImage imageNamed:@"my_list_ic_03"];
-        } else if ([rowTitle  isEqual: @"我的退款"]){//我的退款
+        } else if ([rowTitle  isEqual: @"退款/售后"]){//退款/售后
             cell.myImageView.image = [UIImage imageNamed:@"my_list_ic_04"];
         } else if ([rowTitle  isEqual: @"委托出租单"]){//委托出租单
             cell.myImageView.image = [UIImage imageNamed:@"my_list_ic_07"];
@@ -205,7 +205,7 @@
         } else {
             [self goToLogin];
         }
-    } else if ([rowTitle  isEqual: @"我的退款"]){//我的退款
+    } else if ([rowTitle  isEqual: @"退款/售后"]){//退款/售后
         if (self.isLogin == YES) {//已登录
             MyRefundVC *ac=[[MyRefundVC alloc]init];
             [ac setHidesBottomBarWhenPushed:YES];
@@ -277,8 +277,8 @@
 }
 
 - (void)reloadSelfVc{
-    void (^getDataArr)() = ^ {
-        self.tableViewArr = @[@"实名认证", @"我的预约", @"我的订单", @"我的退款", @"收货地址", @"关于我们"].mutableCopy;
+    void (^getDataArr)(void) = ^ {
+        self.tableViewArr = @[@"实名认证", @"我的预约", @"我的订单", @"退款/售后", @"收货地址", @"关于我们"].mutableCopy;
         if (self.isLogin == YES) {//已登录
             self.personHeaderView.statusLabel.text = @"（普通游客）";
             self.personHeaderView.phoneLabel.text = [GlobalConfigClass shareMySingle].userAndTokenModel.mobile;

@@ -36,13 +36,15 @@
     [self.navigationItem setTitle:@"登录注册"];
 
     //ygz test
-//    self.usernameField.text =   @"18000000005";
-//    self.passwordField.text = @"111111";
-//    [self login:self.loginBtn];
+    self.usernameField.text =   @"18270747102";
+    self.passwordField.text = @"465237";
+    [self login:self.loginBtn];
     //self.usernameField.text = @"15951708537";
 
-    [self.usernameField setValue:UIColorFromHEX(0x888888) forKeyPath:@"_placeholderLabel.textColor"];
-    [self.passwordField setValue:UIColorFromHEX(0x888888) forKeyPath:@"_placeholderLabel.textColor"];
+    self.usernameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入手机号码" attributes:@{NSForegroundColorAttributeName: UIColorFromHEX(0x888888)}];
+    self.passwordField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入密码" attributes:@{NSForegroundColorAttributeName: UIColorFromHEX(0x888888)}];
+//    [self.usernameField setValue:UIColorFromHEX(0x888888) forKeyPath:@"_placeholderLabel.textColor"];
+//    [self.passwordField setValue:UIColorFromHEX(0x888888) forKeyPath:@"_placeholderLabel.textColor"];
 }
 
 -(void)viewWillAppear:(BOOL)animated

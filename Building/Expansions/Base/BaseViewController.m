@@ -22,9 +22,17 @@
 //    [self.view setBackgroundColor:UIColorFromHEX(0xf2f2f2)];
 //    self.automaticallyAdjustsScrollViewInsets = NO;
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
+}
 
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = item;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.navigationController.viewControllers.count > 1) {
+        UIButton *backBtn = [[UIButton alloc] init];
+        [backBtn setImage:[UIImage imageNamed:@"nav_icon_back"] forState:UIControlStateNormal];
+        [backBtn addTarget:self action:@selector(popViewControllerDelay) forControlEvents:UIControlEventTouchUpInside];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    }
 }
     
 - (void)viewDidAppear:(BOOL)animated {

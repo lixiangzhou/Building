@@ -225,7 +225,7 @@
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
     [params setObject:self.idStr forKey:@"addressId" ];
-    [params setObject:self.message forKey:@"message" ];
+    [params setObject:self.message ?: @"" forKey:@"message"];
     [params setObject:self.number forKey:@"number" ];
     //    [params setObject:@"" forKey:@"orderSn" ];
     [params setObject:self.productId forKey:@"productId" ];

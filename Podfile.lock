@@ -54,7 +54,7 @@ DEPENDENCIES:
   - YYModel
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - ARChromeActivity
     - BaiduMapKit
@@ -92,6 +92,6 @@ SPEC CHECKSUMS:
   "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 44ea2c05036543b8a3662972c34b41df2fe1586d
+PODFILE CHECKSUM: cf6c17a36fdaf8c73815ce821b40fe065523351c
 
-COCOAPODS: 1.7.0.beta.3
+COCOAPODS: 1.8.4

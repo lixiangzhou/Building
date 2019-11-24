@@ -24,7 +24,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     //[self.view setBackgroundColor:[UIColor redColor]];
     [self setNavBarTitle:@"委托出租单"];
-    if (@available(iOS 11.0, *)) {
+    if (kDevice_Is_iPhoneX) {
         self.navBarHeight = 44 + 44;
     } else {
         self.navBarHeight = 44 + 20;
