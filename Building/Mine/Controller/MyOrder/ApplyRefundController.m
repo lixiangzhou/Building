@@ -359,18 +359,11 @@
 }
 
 - (void)submit {
-//    goodsStatus    String    1
-//    orderId    String    952
-//    refundAmount    Number    1
-//    refundProof    String    ["/document/member/18270747102/20191124/20191124190420974.jpeg"]
-//    refundReason    String    all空
-//
-//    refundRemark    String    啊啊啊吧d
-//    token    String    45bee05d9464832afd263538fc64f06a
-    
-    if (self.stateView.state == 0) {
-        [SVProgressHUD showErrorWithStatus:@"请选择货物状态"];
-        return;
+    if (self.type == 1) {
+        if (self.stateView.state == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请选择货物状态"];
+            return;
+        }
     }
     
     if (self.reasonView.text.length <= 0) {
@@ -392,17 +385,21 @@
         imgs = @"[]";
     }
     
-    NSDictionary *dict = @{
-        @"goodsStatus": @(self.stateView.state),
+    NSMutableDictionary *dict = dict = [@{
         @"orderId": self.model.idStr,
         @"refundAmount": @(value ?: 0),
         @"refundProof": imgs,
         @"refundReason": self.reasonView.text ?: @"",
         @"refundRemark": self.instructionView.text ?: @"",
         @"token": [GlobalConfigClass shareMySingle].userAndTokenModel.token ?: @""
-    };
+    } mutableCopy];
     
-    NSString *url = [NSString stringWithFormat:@"%@/order/refundOnlyMoney", BasicUrl];
+    NSString *url = [NSString stringWithFormat:@"%@/order/refundGoodsAndMone", BasicUrl];
+    
+    if (self.type == 1) {
+        dict[@"goodsStatus"] = @(self.stateView.state);
+        url = [NSString stringWithFormat:@"%@/order/refundOnlyMoney", BasicUrl];
+    }
     
     [QSNetworking postWithUrl:url params:dict success:^(id response) {
         if ([response[@"code"] integerValue] == 200) {
