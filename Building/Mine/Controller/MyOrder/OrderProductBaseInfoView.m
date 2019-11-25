@@ -92,4 +92,18 @@
     self.numLabel.text = [NSString stringWithFormat:@"x %@", model.quantity];
 }
 
+- (void)setRefundModel:(RefundItemModel *)refundModel {
+    _refundModel = refundModel;
+    
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:refundModel.productDetailImg] placeholderImage:[UIImage imageNamed:@"url_no_access_image"]];
+    
+    self.nameLabel.text = refundModel.productName;
+    self.skuLabel.text = refundModel.productSku;
+    
+    self.supplierLabel.text = refundModel.supplierName;
+    self.priceLabel.text = [NSString stringWithFormat:@"%@%@", refundModel.price, refundModel.priceUnit];
+    
+    self.numLabel.text = [NSString stringWithFormat:@"x %@", refundModel.quantity];
+}
+
 @end

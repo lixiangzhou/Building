@@ -1,67 +1,58 @@
 //
-//  ApplyRefundController.m
+//  RefundController.m
 //  Building
 //
-//  Created by 李向洲 on 2019/11/24.
+//  Created by 李向洲 on 2019/11/25.
 //  Copyright © 2019 Macbook Pro. All rights reserved.
 //
 
-#import "ApplyRefundController.h"
+#import "RefundController.h"
 #import "OrderProductBaseInfoView.h"
-#import "FSTextView.h"
-#import "ApplyRefundStateView.h"
 #import "TZImagePickerController.h"
 
-@interface ApplyRefundController ()
+@interface RefundController ()
 @property (nonatomic, strong) OrderProductBaseInfoView *productView;
-@property (nonatomic, strong) UITextField *stateField;
-@property (nonatomic, strong) FSTextView *reasonView;
-@property (nonatomic, strong) FSTextView *instructionView;
-@property (nonatomic, strong) FSTextView *priceView;
+
+@property (nonatomic, strong) UITextField *componyField;
+@property (nonatomic, strong) UITextField *noField;
+
 @property (nonatomic, strong) UIView *uploadView;
-@property (nonatomic, strong) ApplyRefundStateView *stateView;
+
 @property (nonatomic, strong) NSMutableArray<NSString *> *selectedImgResults;
 @property (nonatomic, strong) NSMutableArray<UIImage *> *selectedImgs;
 @property (nonatomic, strong) NSMutableArray *selectedAssets;
 @end
 
-@implementation ApplyRefundController
+@implementation RefundController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"申请退款";
+    self.title = @"退货";
     
     [self setUI];
-    [self setData];
 }
 
 #pragma mark - UI
 - (void)setUI {
     self.view.backgroundColor = BackGroundColor;
-    self.stateView = [ApplyRefundStateView new];
+    
     self.selectedAssets = [NSMutableArray new];
     self.selectedImgs = [NSMutableArray new];
     self.selectedImgResults = [NSMutableArray new];
     
     self.productView = [OrderProductBaseInfoView new];
+    self.productView.refundModel = self.model;
     [self.view addSubview:self.productView];
     
-    UIView *stateView = [self addStateView];
+    NSArray *temp = [self addInputViewWithTitle:@"物流公司：" placeholder:@"必填"];
+    UIView *companyView = temp[0];
+    self.componyField = temp[1];
+    [companyView addBottomLine];
     
-    NSArray *temp = [self addInputViewWithTitle:@"退款原因" placeholder:@"必选"];
-    UIView *reasonView = temp[0];
-    self.reasonView = temp[1];
-    
-    temp = [self addPriceView];
-    UIView *priceView = temp[0];
-    self.priceView = temp[1];
-    self.priceView.keyboardType = UIKeyboardTypeNumberPad;
-    [priceView addBottomLine];
-    
-    temp = [self addInputViewWithTitle:@"退款说明" placeholder:@"选填"];
-    UIView *instructionView = temp[0];
-    self.instructionView = temp[1];
+    temp = [self addInputViewWithTitle:@"运单号：" placeholder:@"必填"];
+    UIView *noView = temp[0];
+    self.noField = temp[1];
     
     UIView *uploadView = [self addUploadView];
     
@@ -69,55 +60,26 @@
     btn.backgroundColor = UIColorFromHEX(0x9ACCFF);
     [self.view addSubview:btn];
     
-    MJWeakSelf
-    self.stateView.stateBlock = ^(NSInteger state) {
-        if (state == 1) {
-            weakSelf.stateField.text = @"未收到货";
-            weakSelf.priceView.userInteractionEnabled = NO;
-            if (weakSelf.model) {
-                weakSelf.priceView.text = weakSelf.model.price;
-            } else if (weakSelf.refundModel) {
-                weakSelf.priceView.text = weakSelf.refundModel.price;
-            }
-        } else if (state == 2) {
-            weakSelf.priceView.userInteractionEnabled = YES;
-            weakSelf.stateField.text = @"已收到货";
-        }
-    };
-    
     [self.productView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset(NAV_HEIGHT);
         make.left.right.equalTo(self.view);
         make.height.equalTo(@124);
     }];
     
-    [stateView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [companyView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.productView.mas_bottom).offset(10);
         make.left.right.equalTo(self.view);
-        CGFloat h = self.type == 1 ? 50 : 0;
-        make.height.equalTo(@(h));
+        make.height.equalTo(@(50));
     }];
     
-    [reasonView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(stateView.mas_bottom);
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@70);
-    }];
-    
-    [priceView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(reasonView.mas_bottom).offset(10);
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@50);
-    }];
-    
-    [instructionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(priceView.mas_bottom);
+    [noView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(companyView.mas_bottom);
         make.left.right.equalTo(self.view);
         make.height.equalTo(@50);
     }];
     
     [uploadView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(instructionView.mas_bottom).offset(10);
+        make.top.equalTo(noView.mas_bottom).offset(10);
         make.left.right.equalTo(self.view);
         make.height.equalTo(@120);
     }];
@@ -129,48 +91,6 @@
     }];
 }
 
-- (UIView *)addStateView {
-    UIView *stateView = [UIView new];
-    stateView.backgroundColor = [UIColor whiteColor];
-    [stateView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(stateAction:)]];
-    [self.view addSubview:stateView];
-    
-    [stateView addBottomLine];
-    
-    UILabel *label1 = [UILabel title:@"货物状态" txtColor:UIColorFromHEX(0x333333) font:UIFontWithSize(12)];
-    label1.userInteractionEnabled = NO;
-    [stateView addSubview:label1];
-    
-    self.stateField = [UITextField new];
-    self.stateField.userInteractionEnabled = NO;
-    self.stateField.textColor = UIColorFromHEX(0x333333);
-    self.stateField.placeholder = @"请选择";
-    self.stateField.textAlignment = NSTextAlignmentRight;
-    self.stateField.font = UIFontWithSize(12);
-    [stateView addSubview:self.stateField];
-    
-    UIImageView *arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"list_icon_more"]];
-    [stateView addSubview:arrowView];
-    
-    [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@12);
-        make.top.equalTo(@17);
-    }];
-    
-    [self.stateField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.equalTo(stateView);
-        make.right.equalTo(arrowView.mas_left).offset(-12);
-        make.width.equalTo(@200);
-    }];
-    
-    [arrowView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(stateView);
-        make.right.equalTo(@-12);
-    }];
-    
-    return stateView;
-}
-
 - (NSArray *)addInputViewWithTitle:(NSString *)title placeholder:(NSString *)placeholder {
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor whiteColor];
@@ -179,66 +99,21 @@
     UILabel *label1 = [UILabel title:title txtColor:UIColorFromHEX(0x333333) font:UIFontWithSize(12)];
     [view addSubview:label1];
     
-    FSTextView *txtView = [FSTextView new];
+    UITextField *txtView = [UITextField new];
     txtView.textColor = UIColorFromHEX(0x333333);
     txtView.placeholder = placeholder;
     txtView.font = UIFontWithSize(12);
-//    txtView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     [view addSubview:txtView];
     
     [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@12);
-        make.top.equalTo(@17);
+        make.centerY.equalTo(view);
     }];
     
     [txtView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@10);
+        make.top.bottom.equalTo(view);
         make.right.equalTo(@-12);
         make.left.equalTo(label1.mas_right).offset(15);
-        make.bottom.equalTo(@-10);
-    }];
-    
-    return @[view, txtView];
-}
-
-- (NSArray *)addPriceView {
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:view];
-    
-    UILabel *label1 = [UILabel title:@"退款金额" txtColor:UIColorFromHEX(0x333333) font:UIFontWithSize(12)];
-    [view addSubview:label1];
-    
-    UITextField *txtView = [UITextField new];
-    txtView.textColor = UIColorFromHEX(0xFF9300);
-    UILabel *prefix = [UILabel title:@"￥" txtColor:UIColorFromHEX(0xFF9300) font:UIFontWithSize(16)];
-    [prefix sizeToFit];
-    txtView.leftView = prefix;
-    txtView.leftViewMode = UITextFieldViewModeAlways;
-    txtView.font = UIFontWithSize(16);
-    
-    if (self.model) {
-        txtView.text = self.model.price;
-    } else if (self.refundModel) {
-        txtView.text = self.refundModel.price;
-    }
-    
-    if (self.type == 1) {
-        txtView.userInteractionEnabled = NO;
-    }
-    
-    [view addSubview:txtView];
-    
-    [label1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@12);
-        make.top.equalTo(@17);
-    }];
-    
-    [txtView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@10);
-        make.right.equalTo(@-12);
-        make.left.equalTo(label1.mas_right).offset(15);
-        make.bottom.equalTo(@-10);
     }];
     
     return @[view, txtView];
@@ -268,8 +143,6 @@
     for (NSInteger i = 0; i < 3; i++) {
         UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(x, 0, wh, wh)];
         iconView.image = [UIImage imageNamed:@"pic_upload"];
-        iconView.layer.masksToBounds = YES;
-        iconView.layer.borderColor = UIColorFromHEX(0xececec).CGColor;
         iconView.hidden = i != 0;
         iconView.tag = i;
         iconView.userInteractionEnabled = YES;
@@ -278,7 +151,6 @@
         UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(40, 0, 20, 14)];
         btn.hidden = YES;
         [btn setBackgroundImage:[UIImage imageNamed:@"guanbi"] forState:UIControlStateNormal];
-        btn.backgroundColor = UIColorFromHEX(0xececec);
         btn.tag = i;
         [btn addTarget:self action:@selector(deleteAction:) forControlEvents:UIControlEventTouchUpInside];
         [iconView addSubview:btn];
@@ -299,14 +171,6 @@
     return view;
 }
 
-- (void)setData {
-    if (self.model) {
-        self.productView.model = self.model;
-    } else if (self.refundModel) {
-        self.productView.refundModel = self.refundModel;
-    }
-}
-
 #pragma mark - Action
 - (void)imgAction:(UITapGestureRecognizer *)tap {
         
@@ -324,10 +188,6 @@
     [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
-- (void)stateAction:(UITapGestureRecognizer *)tap {
-    [self.stateView show];
-}
-
 - (void)setPhotos:(NSArray *)photos {
     for (NSInteger i = 0; i < self.uploadView.subviews.count; i++) {
         UIImageView *view = self.uploadView.subviews[i];
@@ -337,9 +197,7 @@
             obj.hidden = i >= photos.count;
         }];
         
-        view.layer.borderWidth = 0;
         if (i < photos.count) {
-            view.layer.borderWidth = 0.5;
             view.image = photos[i];
         } else if (i == photos.count) {
             view.image = [UIImage imageNamed:@"pic_upload"];
@@ -381,27 +239,15 @@
 }
 
 - (void)submit {
-    if (self.type == 1) {
-        if (self.stateView.state == 0) {
-            [SVProgressHUD showErrorWithStatus:@"请选择货物状态"];
-            return;
-        }
-    }
-    
-    if (self.reasonView.text.length <= 0) {
-        [SVProgressHUD showErrorWithStatus:@"请填写退款原因"];
+    NSString *company = self.componyField.text ?: @"";
+    NSString *no = self.noField.text ?: @"";
+    if (company.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请填写物流公司"];
         return;
     }
     
-    NSInteger value = [self.priceView.text integerValue];
-    
-    NSInteger price = self.model.price.integerValue;
-    if (self.refundModel) {
-        price = self.refundModel.price.integerValue;
-    }
-    
-    if (value > price) {
-        [SVProgressHUD showErrorWithStatus:@"不可超过订单金额"];
+    if (no.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"请填写运单号"];
         return;
     }
     
@@ -413,34 +259,27 @@
         imgs = @"[]";
     }
     
-    NSString *orderId = self.model.idStr;
-    if (self.refundModel) {
-        orderId = self.refundModel.orderId;
-    }
+//    {
+//        "logisticsCompany": "来咯摸摸",
+//        "logisticsDocument": "226988545",
+//        "logisticsProof": "[]",
+//        "refundId": "211",
+//        "token": "3f69a2ecbbada2fca77a6caa8b15fe2d"
+//    }
     
     NSMutableDictionary *dict = dict = [@{
-        @"orderId": orderId,
-        @"refundAmount": @(value ?: 0),
-        @"refundProof": imgs,
-        @"refundReason": self.reasonView.text ?: @"",
-        @"refundRemark": self.instructionView.text ?: @"",
+        @"logisticsCompany": company,
+        @"logisticsDocument": no,
+        @"logisticsProof": imgs,
+        @"refundId": self.model.idStr,
         @"token": [GlobalConfigClass shareMySingle].userAndTokenModel.token ?: @""
     } mutableCopy];
     
-    NSString *url = [NSString stringWithFormat:@"%@/order/refundGoodsAndMone", BasicUrl];
-    
-    if (self.type == 1) {
-        dict[@"goodsStatus"] = @(self.stateView.state);
-        url = [NSString stringWithFormat:@"%@/order/refundOnlyMoney", BasicUrl];
-    }
+    NSString *url = [NSString stringWithFormat:@"%@/order/returnGoods", BasicUrl];
     
     [QSNetworking postWithUrl:url params:dict success:^(id response) {
         if ([response[@"code"] integerValue] == 200) {
-            if (self.model) {
-                [self popToClazz:@"MyOrderVC"];
-            } else if (self.refundModel) {
-                [self popToClazz:@"MyRefundVC"];
-            }
+            [self popToClazz:@"MyRefundVC"];
         } else {
             if ([response[@"msg"] length]) {
                 [SVProgressHUD showErrorWithStatus:response[@"msg"]];

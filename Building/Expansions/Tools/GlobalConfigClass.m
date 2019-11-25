@@ -42,9 +42,13 @@ static GlobalConfigClass* mysingleClass = nil;
 
 - (void)setUserAndTokenModel:(UserAndTokenModel *)userAndTokenModel {
     _userAndTokenModel = userAndTokenModel;
-    NSString *json = [userAndTokenModel yy_modelToJSONString];
-    if (json.length) {
-        [[NSUserDefaults standardUserDefaults] setObject:json forKey:@"userAndTokenModel"];
+    if (userAndTokenModel) {
+        NSString *json = [userAndTokenModel yy_modelToJSONString];
+        if (json.length) {
+            [[NSUserDefaults standardUserDefaults] setObject:json forKey:@"userAndTokenModel"];
+        }
+    } else {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userAndTokenModel"];
     }
 }
 

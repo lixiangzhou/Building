@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ApplyRefundController : BaseViewController
 @property(nonatomic,strong)MyOrderItemModel *model;
+@property(nonatomic,strong)RefundItemModel *refundModel;
 /// 1 退款 ； 2 退货退款
 @property(nonatomic,assign) NSInteger type;
 @end

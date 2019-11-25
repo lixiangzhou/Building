@@ -13,8 +13,13 @@ typedef void(^MyRefundCellBlock)(UIButton *btn);
 
 @interface MyRefundCell : UITableViewCell
 @property(nonatomic,strong)RefundItemModel *model;
-@property(nonatomic,copy)MyRefundCellBlock cannelBlock;
-@property(nonatomic,copy)MyRefundCellBlock confirmBlock;
+//@property(nonatomic,copy)MyRefundCellBlock cannelBlock;
+//@property(nonatomic,copy)MyRefundCellBlock confirmBlock;
+
+@property(nonatomic, copy) void (^cancelBlock)(void);
+@property(nonatomic, copy) void (^changeBlock)(void);
+@property(nonatomic, copy) void (^serviceBlock)(void);
+@property(nonatomic, copy) void (^returnBlock)(void);
 
 @end
 

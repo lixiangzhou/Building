@@ -30,7 +30,7 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    [self setNavBarTitle:@"我的退款"];
+    [self setNavBarTitle:@"退款/售后"];
     if (kDevice_Is_iPhoneX) {
         self.navBarHeight = 44 + 44;
     } else {

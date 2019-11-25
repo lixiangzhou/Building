@@ -59,11 +59,10 @@
     self.tableView.tableHeaderView = [self myTableHeaderView];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.tableView.mj_footer.hidden = YES;
-                
         [self reloadSelfVc];
+        
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
-
     }];
     [self.tableView.mj_header beginRefreshing];
 

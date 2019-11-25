@@ -57,7 +57,11 @@
 }
 
 - (void)setData {
-    self.productView.model = self.model;
+    if (self.model) {
+        self.productView.model = self.model;
+    } else if (self.refundModel) {
+        self.productView.refundModel = self.refundModel;
+    }
 }
 
 - (UIView *)addItemViewIcon:(NSString *)icon title:(NSString *)title subtitle:(NSString *)subtitle {
@@ -107,6 +111,7 @@
     ApplyRefundController *vc = [ApplyRefundController new];
     vc.type = tap.view.tag;
     vc.model = self.model;
+    vc.refundModel = self.refundModel;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

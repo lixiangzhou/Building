@@ -274,9 +274,10 @@
 }
 
 - (void)popToClazz:(NSString *)clazzName {
-    UIViewController *vc;
+    __block UIViewController *vc;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([NSStringFromClass(obj.class) isEqualToString:clazzName]) {
+            vc = obj;
             *stop = YES;
         }
     }];

@@ -9,6 +9,9 @@
 #import "MyAllRefundListVC.h"
 #import "MyRefundCell.h"
 #import "MyRefundDetailVC.h"
+#import "MyRefundDetailVC.h"
+#import "MyAfterSaleController.h"
+#import "RefundController.h"
 
 #define MyRefundCellHeight       200
 #define MyRefundCellXibName       @"MyRefundCell"
@@ -146,8 +149,7 @@
     }
     
     if ([model.refundStatus integerValue] ==0 || [model.refundStatus integerValue] ==3) {
-        cell.cannelBlock=^(UIButton *btn){
-
+        cell.cancelBlock = ^(void) {
             //NSLog(@"params:%@",params);
             //NSLog(@"headerParams:%@",paramsHeader);
              __weak __typeof__ (self) wself = self;
@@ -167,29 +169,32 @@
     NSMutableDictionary* refundParams = [[NSMutableDictionary alloc] init];
     [refundParams setObject:@"REFUND" forKey:@"operate"];
     [refundParams setObject:model.orderId forKey:@"orderId"];
-    if ([model.refundStatus integerValue]==4) {
-        cell.confirmBlock=^(UIButton *btn){
-            __weak __typeof__ (self) wself = self;
-            [MineNetworkService confirmProductWithParams:confirmParams headerParams:paramsHeader Success:^(id  _Nonnull response) {
-                [wself showHint:@"点击了确认收货"];
-                [self gainRefundListWithRefresh:YES];
-            } failure:^(id  _Nonnull response) {
-                [wself showHint:response];
-            }];
-            
-            
-        };
-        cell.cannelBlock=^(UIButton *btn){
-            __weak __typeof__ (self) wself = self;
-            [MineNetworkService confirmProductWithParams:confirmParams headerParams:paramsHeader Success:^(id  _Nonnull response) {
-                [wself showHint:@"点击了申请退款"];
-                [self gainRefundListWithRefresh:YES];
-            } failure:^(id  _Nonnull response) {
-                [wself showHint:@"申请退款失败"];
-            }];
-            
-        };
-    }
+    
+    MJWeakSelf
+    cell.cancelBlock = ^{
+        [MineNetworkService discharageMyRefundItemWithParams:params headerParams:paramsHeader Success:^(id  _Nonnull response) {
+            [weakSelf showHint:response];
+             [self gainRefundListWithRefresh:YES];
+        } failure:^(id  _Nonnull response) {
+            [weakSelf showHint:@"撤销申请失败"];
+        }];
+    };
+    
+    cell.changeBlock = ^{
+        MyAfterSaleController *vc = [MyAfterSaleController new];
+        vc.refundModel = model;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+    };
+    
+    cell.serviceBlock = ^{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://15900594090"] options:@{} completionHandler:nil];
+    };
+    
+    cell.returnBlock = ^{
+        RefundController *vc = [RefundController new];
+        vc.model = model;
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+    };
    
     return cell;
 }
