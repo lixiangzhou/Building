@@ -38,11 +38,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMY-wR-CHa" userLabel="orderStatuLabel">
-                                <rect key="frame" x="323" y="5" width="40" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMY-wR-CHa" userLabel="orderStatuLabel">
+                                <rect key="frame" x="213" y="5" width="150" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="cJh-ag-MlH"/>
-                                    <constraint firstAttribute="width" constant="40" id="unN-HX-LkY"/>
+                                    <constraint firstAttribute="width" constant="150" id="unN-HX-LkY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>

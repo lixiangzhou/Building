@@ -110,7 +110,6 @@
 		1002D442223C99EB003DBB62 /* MyToBePayListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1002D42E223C99EB003DBB62 /* MyToBePayListVC.xib */; };
 		1002D443223C99EB003DBB62 /* MyAlreadyPayListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1002D42F223C99EB003DBB62 /* MyAlreadyPayListVC.m */; };
 		1002D444223C99EB003DBB62 /* MyRefundVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1002D430223C99EB003DBB62 /* MyRefundVC.xib */; };
-		1002D445223C99EB003DBB62 /* MyRefundDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1002D432223C99EB003DBB62 /* MyRefundDetailVC.xib */; };
 		1002D446223C99EB003DBB62 /* MyRefundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1002D433223C99EB003DBB62 /* MyRefundCell.m */; };
 		1002D447223C99EB003DBB62 /* MyRefundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1002D435223C99EB003DBB62 /* MyRefundCell.xib */; };
 		1002D448223C99EB003DBB62 /* MyAllRefundListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1002D436223C99EB003DBB62 /* MyAllRefundListVC.m */; };
@@ -442,7 +441,6 @@
 		1002D42F223C99EB003DBB62 /* MyAlreadyPayListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlreadyPayListVC.m; sourceTree = "<group>"; };
 		1002D430223C99EB003DBB62 /* MyRefundVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRefundVC.xib; sourceTree = "<group>"; };
 		1002D431223C99EB003DBB62 /* MyAllAuditListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAllAuditListVC.h; sourceTree = "<group>"; };
-		1002D432223C99EB003DBB62 /* MyRefundDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRefundDetailVC.xib; sourceTree = "<group>"; };
 		1002D433223C99EB003DBB62 /* MyRefundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRefundCell.m; sourceTree = "<group>"; };
 		1002D434223C99EB003DBB62 /* MyRefundDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRefundDetailVC.h; sourceTree = "<group>"; };
 		1002D435223C99EB003DBB62 /* MyRefundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRefundCell.xib; sourceTree = "<group>"; };
@@ -832,7 +830,6 @@
 				1002D42E223C99EB003DBB62 /* MyToBePayListVC.xib */,
 				1002D42B223C99EB003DBB62 /* MyToBePayListVC.m */,
 				1002D437223C99EB003DBB62 /* MyToBePayListVC.h */,
-				1002D432223C99EB003DBB62 /* MyRefundDetailVC.xib */,
 				1002D43D223C99EB003DBB62 /* MyRefundDetailVC.m */,
 				1002D434223C99EB003DBB62 /* MyRefundDetailVC.h */,
 				1002D439223C99EB003DBB62 /* MyAlreadyPayListVC.xib */,
@@ -1767,7 +1764,6 @@
 				1002D44B223C99EB003DBB62 /* MyAllRefundListVC.xib in Resources */,
 				0441E02C2251B0B30066C7CE /* list_icon_more@3x.png in Resources */,
 				1029E81F22056D4700E987A7 /* LoginViewController.xib in Resources */,
-				1002D445223C99EB003DBB62 /* MyRefundDetailVC.xib in Resources */,
 				1029E868220D75B200E987A7 /* HomeChoiceCell.xib in Resources */,
 				1026021A222C2C4800864F14 /* YuYueServiceOrderDetailVC.xib in Resources */,
 				04C4E2D922490C5800C95182 /* rentalOrderList.xib in Resources */,

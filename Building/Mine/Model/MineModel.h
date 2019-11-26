@@ -134,6 +134,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,copy)NSString *refundPayTime;//退款时间
 @property(nonatomic,copy)NSString *refundStatus;//退款状态
 @property(nonatomic,copy)NSString *supplierName;//供应商
+@property(nonatomic,copy)NSString *refundAmount;//退款金额
+@property(nonatomic,assign) NSInteger refundType;//退款类型，1：售中退款；2：售后退款；3：售后退货退款
+@property(nonatomic,copy)NSString *goodsStatus;//售后退款 货物状态，1：未收到货；2：已收到货
+@property(nonatomic,copy)NSString *refundReason;//退款原因
+@property(nonatomic,copy)NSString *refundRemark;//退款说明
+@property(nonatomic,strong)NSArray *refundProof;//退款凭证
+@property(nonatomic,copy)NSString *auditSellerInfo;//退货退款 退货信息,卖家收货地址
+@property(nonatomic,copy)NSString *auditSellerMsg;//卖家留言退货退款 卖家留言
+
+@property(nonatomic,copy)NSString *returnLogisticsCompany;//退货物流
+@property(nonatomic,copy)NSString *returnLogisticsDocument;//退货物流
+@property(nonatomic,strong)NSArray *returnLogisticsProof;//退款凭证
+
+
 @end
 
 //退款行记录

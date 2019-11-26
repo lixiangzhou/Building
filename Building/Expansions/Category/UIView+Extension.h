@@ -34,4 +34,5 @@
 @property (nonatomic, assign) CGSize size;
 
 - (UIView *)addBottomLine;
+- (UIView *)addBottomLineLeft:(CGFloat)left right:(CGFloat)right;
 @end

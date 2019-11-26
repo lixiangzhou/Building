@@ -28,8 +28,9 @@
     [super viewWillAppear:animated];
     
     if (self.navigationController.viewControllers.count > 1) {
-        UIButton *backBtn = [[UIButton alloc] init];
+        UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
         [backBtn setImage:[UIImage imageNamed:@"nav_icon_back"] forState:UIControlStateNormal];
+        backBtn.contentEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 15);
         [backBtn addTarget:self action:@selector(popViewControllerDelay) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     }

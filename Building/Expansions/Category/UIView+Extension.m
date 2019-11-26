@@ -101,6 +101,21 @@
     return line;
 }
 
+- (UIView *)addBottomLineLeft:(CGFloat)left right:(CGFloat)right {
+    UIView *line = [UIView new];
+    line.backgroundColor = BackGroundColor;
+    [self addSubview:line];
+    
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(left));
+        make.right.equalTo(@(-right));
+        make.bottom.equalTo(self);
+        make.height.equalTo(@1);
+    }];
+    return line;
+}
+
+
 @end
 
 @implementation UIView (Circle)
