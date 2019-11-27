@@ -127,21 +127,6 @@
     self.amountLabel.text=[NSString stringWithFormat:@"总价: ¥%@",model.amount ];
 }
 
-//- (IBAction)cannelBtn:(id)sender {
-//    if (self.cannelBlock) {
-//        self.cannelBlock(sender);
-//        //NSLog(@"cancelBlock");
-//    }
-//
-//}
-//
-//
-//- (IBAction)confirmBtn:(id)sender {
-//    if (self.confirmBlock) {
-//        self.confirmBlock(sender);
-//    }
-//}
-
 - (void)addActions:(NSArray *)btns {
     CGFloat maxX = ScreenWidth - 16;
     for (NSInteger i = btns.count - 1; i >= 0; i--) {

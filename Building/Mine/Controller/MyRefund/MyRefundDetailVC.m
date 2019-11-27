@@ -9,8 +9,11 @@
 #import "MyRefundDetailVC.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "OrderProductBaseInfoView.h"
+#import "MyAfterSaleController.h"
+#import "RefundController.h"
 
 @interface MyRefundDetailVC ()
+@property(nonatomic,strong)RefundDetailModel *model;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIView *contentView;
@@ -24,6 +27,15 @@
 @property (nonatomic, strong) UIView *actionsView;
 @property (nonatomic, strong) UILabel *priceLabel;
 
+/// 联系客服
+@property (strong, nonatomic) UIButton *serviceBtn;
+/// 取消申请
+@property (strong, nonatomic) UIButton *cancelApplyBtn;
+/// 修改申请
+@property (strong, nonatomic) UIButton *changeApplyBtn;
+/// 退货
+@property (strong, nonatomic) UIButton *returnBtn;
+@property (strong, nonatomic) NSArray *btns;
 @end
 
 @implementation MyRefundDetailVC
@@ -32,23 +44,6 @@
     [super viewDidLoad];
     
     [self setNavBarTitle:@"订单详情"];
-//    if ([GlobalConfigClass shareMySingle].userAndTokenModel == nil) {//未登录
-//        self.token = nil;
-//    } else {
-//        self.token = [GlobalConfigClass shareMySingle].userAndTokenModel.token;
-//    }
-//
-//    [self.addressLabel setNumberOfLines:0];
-//    self.addressLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//
-//
-//
-//    [self gainRefundDetail];
-//
-//    [self.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//        [obj removeFromSuperview];
-//    }];
-
     [self setUI];
     [self getData];
 }
@@ -57,199 +52,169 @@
     [self setMainView];
     [self addAddressView];
     [self addProductView];
-}
-
-- (void)setMainView {
-    self.view.backgroundColor = BackGroundColor;
-    
-    self.scrollView = [UIScrollView new];
-    if (@available(iOS 11.0, *)) {
-        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    } else {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
-    [self.view addSubview:self.scrollView];
-    
-    self.contentView = [UIView new];
-    self.contentView.backgroundColor = BackGroundColor;
-    [self.scrollView addSubview:self.contentView];
-    
-    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(NAV_HEIGHT);
-        make.left.right.bottom.equalTo(self.view);
-    }];
-    
-    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.equalTo(self.scrollView);
-        make.width.equalTo(@(ScreenWidth));
-        make.height.equalTo(@(ScreenHeight));
-    }];
-}
-
-- (void)addProductView {
-    self.productView = [OrderProductBaseInfoView new];
-    [self.contentView addSubview:self.productView];
-    
-    self.actionsView = [UIView new];
-    self.priceLabel = [UILabel title:@"总价：￥0" txtColor:UIColorFromHEX(0x515C6F) font:UIFontWithSize(12)];
-    [self.actionsView addSubview:self.priceLabel];
-    self.actionsView.backgroundColor = [UIColor whiteColor];
-    [self.contentView addSubview:self.actionsView];
-    
-    [self.productView addBottomLineLeft:12 right:12];
-    
-    [self.productView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.addressView.mas_bottom).offset(10);
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@124);
-    }];
-    
-    [self.actionsView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.productView.mas_bottom);
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@30);
-    }];
-    
-    [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@17);
-        make.centerY.equalTo(self.actionsView);
-    }];
-}
-
-- (void)addAddressView {
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor whiteColor];
-    [self.contentView addSubview:view];
-    self.addressView = view;
-    
-    self.contactLabel = [UILabel title:@"联系人：" txtColor:UIColorFromHEX(0x6e6e6e) font:UIFontWithSize(13)];
-    [view addSubview:self.contactLabel];
-    
-    self.mobileLabel = [UILabel title:@"电话：" txtColor:UIColorFromHEX(0x6e6e6e) font:UIFontWithSize(13)];
-    [view addSubview:self.mobileLabel];
-    
-    self.addressLabel = [UILabel title:@"收货地址：" txtColor:UIColorFromHEX(0x6e6e6e) font:UIFontWithSize(13)];
-    self.addressLabel.numberOfLines = 0;
-    [view addSubview:self.addressLabel];
-    
-    [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(NAV_HEIGHT);
-        make.left.right.equalTo(self.view);
-    }];
-    
-    [self.contactLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@14);
-        make.left.equalTo(@19);
-        make.right.equalTo(view.mas_centerX).offset(-5);
-    }];
-    
-    [self.mobileLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.contactLabel);
-        make.left.equalTo(view.mas_centerX).offset(5);
-        make.right.equalTo(@-19);
-    }];
-    
-    [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@19);
-        make.right.equalTo(@-19);
-        make.top.equalTo(self.contactLabel.mas_bottom).offset(10);
-        make.bottom.equalTo(@-17);
-    }];
+    [self prepareActions];
 }
 
 - (void)getData {
     MJWeakSelf
-    [MineNetworkService gainMyRefundDetailWithParams:@{@"refundId": self.refundId} headerParams:@{} Success:^(id  _Nonnull response) {
+    [MineNetworkService gainMyRefundDetailWithParams:[@{@"refundId": self.refundId} mutableCopy] headerParams:[@{} mutableCopy] Success:^(id  _Nonnull response) {
         RefundDetailModel *model=response;
-        //NSLog(@"message:%@",model.message);
+        
         weakSelf.contactLabel.text = [NSString stringWithFormat:@"联系人：%@", model.receiver];
         weakSelf.mobileLabel.text = [NSString stringWithFormat:@"电话：%@", model.contact];
         weakSelf.addressLabel.text = [NSString stringWithFormat:@"收货地址：%@", model.address];
-        
         weakSelf.productView.model = response;
-        
         weakSelf.priceLabel.text = [NSString stringWithFormat:@"总价：￥%@", model.amount];
-        
+        [weakSelf addActionsView:model];
         [weakSelf addRefundView:model];
         [weakSelf addSellerInfoView:model];
-        
         [weakSelf addRefundSellerView:model];
+        [weakSelf addRefundSellerGoodsView:model];
+        [weakSelf addOrderView:model];
+        [weakSelf addMessageView:model];
         
-
         [weakSelf.contentView layoutIfNeeded];
         CGFloat maxY = CGRectGetMaxY(weakSelf.contentView.subviews.lastObject.frame);
         [weakSelf.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@(maxY));
         }];
-        weakSelf.scrollView.contentSize = CGSizeMake(ScreenWidth, maxY + NAV_HEIGHT);
-        //设置一个行高上限
-//        CGSize size = CGSizeMake(self.addressLabel.frame.size.width, self.addressLabel.frame.size.height*2);
-//        CGSize expect = [self.addressLabel sizeThatFits:size];
-//        self.addressLabel.frame = CGRectMake( self.addressLabel.frame.origin.x, self.addressLabel.frame.origin.y, expect.width, expect.height );
-//
-//        NSURL *url = [NSURL URLWithString:model.productDetailImg];
-//        [self.productView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"url_no_access_image"]];
-//        self.nameLabel.text=model.productName;
-//        self.skuLabel.text=model.productSku;
-//        self.skuLabel.numberOfLines=0;
-//        self.skuLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//        //设置一个行高上限
-//        size = CGSizeMake(self.skuLabel.frame.size.width, self.skuLabel.frame.size.height*2);
-//        expect = [self.skuLabel sizeThatFits:size];
-//        self.skuLabel.frame = CGRectMake( self.skuLabel.frame.origin.x, self.skuLabel.frame.origin.y, expect.width, expect.height );
-//        self.companyLabel.text=model.supplierName;
-//        self.priceLabel.text=[NSString stringWithFormat:@"%@%@",model.price,model.priceUnit];
-//        self.countLabel.text=model.quantity;
-//        self.amountLabel.text=[NSString stringWithFormat:@"总价: ¥%@",model.amount ];
-//        self.orderSnLabel.text=model.orderSn;
-//        self.chexiaoshenqingButon.layer.cornerRadius = 3;
-//
-//        if ([model.refundStatus integerValue] == 0) {
-//            self.statuLabel.text = @"待审核";
-//        } else if ([model.refundStatus integerValue] == 1) {
-//            self.statuLabel.text = @"已退款";
-//            self.successOrFail.text=@"审核通过时间:";
-//            self.timeOrReson.text=@"退款时间:";
-//            self.timeOrResonLabel.text=model.refundPayTime;
-//            self.successOrFailTime.text=model.auditTime;
-//            self.chexiaoshenqingButon.alpha = 1;
-//
-//        } else if([model.refundStatus integerValue] ==2){
-//            self.statuLabel.text = @"已拒绝";
-//            self.successOrFail.text=@"审核失败时间:";
-//            self.successOrFailTime.text=model.auditTime;
-//            self.timeOrReson.text=@"审核失败原因:";
-//            self.timeOrResonLabel.text=model.auditMsg;
-//            self.chexiaoshenqingButon.alpha = 0;
-//
-//        }else if([model.refundStatus integerValue] ==3){
-//            self.statuLabel.text = @"待打款";
-//            self.successOrFail.text=@"审核通过时间:";
-//            self.successOrFailTime.text=model.auditTime;
-//            self.chexiaoshenqingButon.alpha = 0;
-//
-//        }else{
-//            self.statuLabel.text = @"已打款";
-//            self.successOrFail.text=@"审核通过时间:";
-//            self.timeOrReson.text=@"退款时间:";
-//            self.timeOrResonLabel.text=model.refundPayTime;
-//            self.successOrFailTime.text=model.auditTime;
-//            self.chexiaoshenqingButon.alpha = 0;
-//
-//        }
-//        self.createTimeLabel.text=model.createTime;
-//        self.payTimeLabel.text=model.payTime;
-//        self.refundTimeLabel.text=model.refundApplyTime;
-//        self.messageLabel.text=model.message;
-//
-//        //设置一个行高上限
-//        size = CGSizeMake(self.addressLabel.frame.size.width, self.addressLabel.frame.size.height*2);
-//        expect = [self.addressLabel sizeThatFits:size];
-//        self.addressLabel.frame = CGRectMake( self.addressLabel.frame.origin.x, self.addressLabel.frame.origin.y, expect.width, expect.height );
-
+        weakSelf.scrollView.contentSize = CGSizeMake(ScreenWidth, maxY);
     } failure:^(id  _Nonnull response) {
         NSLog(@"网络错误");
+    }];
+}
 
+// MARK: - 留言
+- (void)addMessageView:(RefundDetailModel *)model {
+    if (model.message) {
+        UIView *lastView = self.contentView.subviews.lastObject;
+        
+        UIView *view = [UIView new];
+        view.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:view];
+        
+        UIView *msgView = [self addRowToView:view title:@"留言：" value:model.message isFirst:YES];
+        
+        [view mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(lastView.mas_bottom).offset(10);
+            make.left.right.equalTo(self.contentView);
+        }];
+        
+        [msgView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@10);
+            make.left.right.equalTo(view);
+            make.bottom.equalTo(@-20);
+        }];
+    }
+}
+
+// MARK: - 订单信息
+- (void)addOrderView:(RefundDetailModel *)model {
+    UIView *lastView = self.contentView.subviews.lastObject;
+    
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:view];
+    
+    UIView *titleView = [UIView new];
+    [view addSubview:titleView];
+    [titleView addBottomLineLeft:12 right:12];
+    
+    UILabel *orderTitle = [UILabel title:@"订单信息" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+    [titleView addSubview:orderTitle];
+    
+    UIView *contentView = [UIView new];
+    [view addSubview:contentView];
+    
+    [self addRowToView:contentView title:@"订单编号：" value:model.orderSn isFirst:YES];
+    [self addRowToView:contentView title:@"订单状态：" value:[self getStatus:model] isFirst:NO];
+    [self addRowToView:contentView title:@"下单时间：" value:model.createTime isFirst:NO];
+    [self addRowToView:contentView title:@"支付时间：" value:model.payTime isFirst:NO];
+    [self addRowToView:contentView title:@"申请退款时间：" value:model.refundApplyTime isFirst:NO];
+    
+    if (model.auditTime) {
+        [self addRowToView:contentView title:@"审核通过时间：" value:model.auditTime isFirst:NO];
+    }
+    
+    if (model.refundPayTime) {
+        [self addRowToView:contentView title:@"退款时间：" value:model.refundPayTime isFirst:NO];
+    }
+    
+    [contentView.subviews.lastObject mas_remakeConstraints:^(MASConstraintMaker *make) {
+        UIView *v = contentView.subviews[contentView.subviews.count - 2];
+        make.top.equalTo(v.mas_bottom);
+        make.left.right.equalTo(contentView);
+        make.bottom.equalTo(@-20);
+    }];
+    
+    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lastView.mas_bottom).offset(10);
+        make.left.right.equalTo(self.contentView);
+    }];
+    
+    [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.right.left.equalTo(view);
+        make.height.equalTo(@36);
+    }];
+    
+    [orderTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@19);
+        make.centerY.equalTo(titleView);
+    }];
+    
+    [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(titleView.mas_bottom);
+        make.left.right.bottom.equalTo(view);
+    }];
+}
+
+// MARK: - 退货给卖家
+- (void)addRefundSellerGoodsView:(RefundDetailModel *)model {
+    UIView *lastView = self.contentView.subviews.lastObject;
+    
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:view];
+    
+    UIView *titleView = [UIView new];
+    [view addSubview:titleView];
+    [titleView addBottomLineLeft:12 right:12];
+    
+    UILabel *refundTitle = [UILabel title:@"退货退款状态" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+    [titleView addSubview:refundTitle];
+    
+    UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"退货退款状态：%@", [self getStatus:model]] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+    UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"原因：%@", model.refundReason ?: @""] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+    
+    [view addSubview:sallerAddressLabel];
+    [view addSubview:sallerMsgLabel];
+    
+    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lastView.mas_bottom).offset(10);
+        make.left.right.equalTo(self.contentView);
+    }];
+    
+    [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.right.left.equalTo(view);
+        make.height.equalTo(@36);
+    }];
+    
+    [refundTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@19);
+        make.centerY.equalTo(titleView);
+    }];
+    
+    [sallerAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(titleView.mas_bottom).offset(13);
+        make.left.equalTo(@19);
+        make.right.equalTo(@-19);
+    }];
+    
+    [sallerMsgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(sallerAddressLabel.mas_bottom).offset(15);
+        make.left.right.equalTo(sallerAddressLabel);
+        make.right.equalTo(@-19);
+        make.bottom.equalTo(@-20);
     }];
 }
 
@@ -269,10 +234,10 @@
         UILabel *refundTitle = [UILabel title:@"退货给卖家" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         [titleView addSubview:refundTitle];
         
-        UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"物流公司：%@", model.returnLogisticsCompany] txtColor:UIColorFromHEX(0xe6e6e6) font:UIFontWithSize(13)];
-        UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"运单号：%@", model.returnLogisticsDocument] txtColor:UIColorFromHEX(0xe6e6e6) font:UIFontWithSize(13)];
+        UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"物流公司：%@", model.returnLogisticsCompany] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+        UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"运单号：%@", model.returnLogisticsDocument] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         
-        UILabel *pzLabel = [UILabel title:@"凭证：" txtColor:UIColorFromHEX(0xe6e6e6) font:UIFontWithSize(13)];
+        UILabel *pzLabel = [UILabel title:@"凭证：" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         
         [view addSubview:sallerAddressLabel];
         [view addSubview:sallerMsgLabel];
@@ -310,7 +275,7 @@
                 make.top.equalTo(sallerMsgLabel.mas_bottom).offset(15);
                 make.left.right.equalTo(sallerAddressLabel);
             }];
-
+            
             UIView *picView = [UIView new];
             [view addSubview:picView];
             
@@ -323,7 +288,7 @@
             }
             
             [picView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(lastView.mas_bottom).offset(10);
+                make.top.equalTo(pzLabel.mas_bottom).offset(10);
                 make.left.equalTo(@19);
                 make.height.equalTo(@60);
                 make.width.equalTo(@280);
@@ -355,9 +320,9 @@
         UILabel *refundTitle = [UILabel title:@"退货信息" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         [titleView addSubview:refundTitle];
         
-        UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"卖家收货地址：%@", model.auditSellerInfo] txtColor:UIColorFromHEX(0xe6e6e6) font:UIFontWithSize(13)];
+        UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"卖家收货地址：%@", model.auditSellerInfo] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         sallerAddressLabel.numberOfLines = 0;
-        UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"卖家留言：%@", model.auditSellerMsg] txtColor:UIColorFromHEX(0xe6e6e6) font:UIFontWithSize(13)];
+        UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"卖家留言：%@", model.auditSellerMsg] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         sallerMsgLabel.numberOfLines = 0;
         
         [view addSubview:sallerAddressLabel];
@@ -534,8 +499,8 @@
     }];
     
     [rightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@90);
-        make.right.equalTo(@-19);
+        make.left.equalTo(leftLabel.mas_right).offset(5);
+        make.right.lessThanOrEqualTo(@-19);
         make.top.equalTo(@5);
         make.bottom.lessThanOrEqualTo(@-5);
     }];
@@ -543,114 +508,278 @@
     return view;
 }
 
-
--(void)gainRefundDetail{
-//    NSMutableDictionary *params=[[NSMutableDictionary alloc]init];
-//    if (self.refundId!=nil) {
-//        [params setObject:self.refundId forKey:@"refundId"];
-//    }
-//    NSMutableDictionary* paramsHeader = [[NSMutableDictionary alloc] init];
-//    if (self.token != nil) {
-//        [paramsHeader setObject:self.token forKey:@"token"];
-//    }
-//     __weak __typeof__ (self) wself = self;
-//    [MineNetworkService gainMyRefundDetailWithParams:params headerParams:paramsHeader Success:^(id  _Nonnull response) {
-//
-//        RefundDetailModel *model=response;
-//        //NSLog(@"message:%@",model.message);
-//        self.receiverLabel.text=model.receiver;
-//        self.phoneLabel.text=model.contact;
-//        self.addressLabel.text=model.address;
-//
-//        //设置一个行高上限
-//        CGSize size = CGSizeMake(self.addressLabel.frame.size.width, self.addressLabel.frame.size.height*2);
-//        CGSize expect = [self.addressLabel sizeThatFits:size];
-//        self.addressLabel.frame = CGRectMake( self.addressLabel.frame.origin.x, self.addressLabel.frame.origin.y, expect.width, expect.height );
-//
-//        NSURL *url = [NSURL URLWithString:model.productDetailImg];
-//        [self.productView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"url_no_access_image"]];
-//        self.nameLabel.text=model.productName;
-//        self.skuLabel.text=model.productSku;
-//        self.skuLabel.numberOfLines=0;
-//        self.skuLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//        //设置一个行高上限
-//        size = CGSizeMake(self.skuLabel.frame.size.width, self.skuLabel.frame.size.height*2);
-//        expect = [self.skuLabel sizeThatFits:size];
-//        self.skuLabel.frame = CGRectMake( self.skuLabel.frame.origin.x, self.skuLabel.frame.origin.y, expect.width, expect.height );
-//        self.companyLabel.text=model.supplierName;
-//        self.priceLabel.text=[NSString stringWithFormat:@"%@%@",model.price,model.priceUnit];
-//        self.countLabel.text=model.quantity;
-//        self.amountLabel.text=[NSString stringWithFormat:@"总价: ¥%@",model.amount ];
-//        self.orderSnLabel.text=model.orderSn;
-//        self.chexiaoshenqingButon.layer.cornerRadius = 3;
-//
-//        if ([model.refundStatus integerValue] == 0) {
-//            self.statuLabel.text = @"待审核";
-//        } else if ([model.refundStatus integerValue] == 1) {
-//            self.statuLabel.text = @"已退款";
-//            self.successOrFail.text=@"审核通过时间:";
-//            self.timeOrReson.text=@"退款时间:";
-//            self.timeOrResonLabel.text=model.refundPayTime;
-//            self.successOrFailTime.text=model.auditTime;
-//            self.chexiaoshenqingButon.alpha = 1;
-//
-//        } else if([model.refundStatus integerValue] ==2){
-//            self.statuLabel.text = @"已拒绝";
-//            self.successOrFail.text=@"审核失败时间:";
-//            self.successOrFailTime.text=model.auditTime;
-//            self.timeOrReson.text=@"审核失败原因:";
-//            self.timeOrResonLabel.text=model.auditMsg;
-//            self.chexiaoshenqingButon.alpha = 0;
-//
-//        }else if([model.refundStatus integerValue] ==3){
-//            self.statuLabel.text = @"待打款";
-//            self.successOrFail.text=@"审核通过时间:";
-//            self.successOrFailTime.text=model.auditTime;
-//            self.chexiaoshenqingButon.alpha = 0;
-//
-//        }else{
-//            self.statuLabel.text = @"已打款";
-//            self.successOrFail.text=@"审核通过时间:";
-//            self.timeOrReson.text=@"退款时间:";
-//            self.timeOrResonLabel.text=model.refundPayTime;
-//            self.successOrFailTime.text=model.auditTime;
-//            self.chexiaoshenqingButon.alpha = 0;
-//
-//        }
-//        self.createTimeLabel.text=model.createTime;
-//        self.payTimeLabel.text=model.payTime;
-//        self.refundTimeLabel.text=model.refundApplyTime;
-//        self.messageLabel.text=model.message;
-//
-//        //设置一个行高上限
-//        size = CGSizeMake(self.addressLabel.frame.size.width, self.addressLabel.frame.size.height*2);
-//        expect = [self.addressLabel sizeThatFits:size];
-//        self.addressLabel.frame = CGRectMake( self.addressLabel.frame.origin.x, self.addressLabel.frame.origin.y, expect.width, expect.height );
-//
-//    } failure:^(id  _Nonnull response) {
-//        NSLog(@"网络错误");
-//
-//    }];
+- (void)setMainView {
+    self.view.backgroundColor = BackGroundColor;
     
-}
-- (void)chexiaoshenqingAction:(id)sender {
-//    NSMutableDictionary* params = [[NSMutableDictionary alloc] init];
-//
-//    [params setObject:self.refundId forKey:@"refundId"];
-//
-//    NSMutableDictionary* paramsHeader = [[NSMutableDictionary alloc] init];
-//    if (self.token != nil) {
-//        [paramsHeader setObject:self.token forKey:@"token"];
-//    }
-//    __weak __typeof__ (self) wself = self;
-//    [MineNetworkService discharageMyRefundItemWithParams:params headerParams:paramsHeader Success:^(id  _Nonnull response) {
-//        [wself showHint:response];
-//        [wself.navigationController popViewControllerAnimated:YES];
-//    } failure:^(id  _Nonnull response) {
-//        [wself showHint:@"撤销申请失败"];
-//    }];
-
+    self.scrollView = [UIScrollView new];
+    self.scrollView.backgroundColor = BackGroundColor;
+    self.scrollView.alwaysBounceVertical = YES;
+    if (@available(iOS 11.0, *)) {
+        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    [self.view addSubview:self.scrollView];
     
+    self.contentView = [UIView new];
+    self.contentView.backgroundColor = BackGroundColor;
+    [self.scrollView addSubview:self.contentView];
+    
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(NAV_HEIGHT);
+        make.left.right.bottom.equalTo(self.view);
+    }];
+    
+    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.scrollView);
+        make.left.right.equalTo(self.view);
+        make.width.equalTo(@(ScreenWidth));
+        make.height.equalTo(@(ScreenHeight));
+    }];
 }
+
+- (void)addProductView {
+    self.productView = [OrderProductBaseInfoView new];
+    [self.contentView addSubview:self.productView];
+    
+    self.actionsView = [UIView new];
+    self.priceLabel = [UILabel title:@"总价：￥0" txtColor:UIColorFromHEX(0x515C6F) font:UIFontWithSize(12)];
+    [self.actionsView addSubview:self.priceLabel];
+    self.actionsView.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:self.actionsView];
+    
+    [self.productView addBottomLineLeft:12 right:12];
+    
+    [self.productView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.addressView.mas_bottom).offset(10);
+        make.left.right.equalTo(self.contentView);
+        make.height.equalTo(@124);
+    }];
+    
+    [self.actionsView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.productView.mas_bottom);
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(@30);
+    }];
+    
+    [self.priceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@17);
+        make.centerY.equalTo(self.actionsView);
+    }];
+}
+
+- (void)addAddressView {
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor whiteColor];
+    [self.contentView addSubview:view];
+    self.addressView = view;
+    
+    self.contactLabel = [UILabel title:@"联系人：" txtColor:UIColorFromHEX(0x6e6e6e) font:UIFontWithSize(13)];
+    [view addSubview:self.contactLabel];
+    
+    self.mobileLabel = [UILabel title:@"电话：" txtColor:UIColorFromHEX(0x6e6e6e) font:UIFontWithSize(13)];
+    [view addSubview:self.mobileLabel];
+    
+    self.addressLabel = [UILabel title:@"收货地址：" txtColor:UIColorFromHEX(0x6e6e6e) font:UIFontWithSize(13)];
+    self.addressLabel.numberOfLines = 0;
+    [view addSubview:self.addressLabel];
+    
+    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView);
+        make.left.right.equalTo(self.contentView);
+    }];
+    
+    [self.contactLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@14);
+        make.left.equalTo(@19);
+        make.right.equalTo(view.mas_centerX).offset(-5);
+    }];
+    
+    [self.mobileLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contactLabel);
+        make.left.equalTo(view.mas_centerX).offset(5);
+        make.right.equalTo(@-19);
+    }];
+    
+    [self.addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@19);
+        make.right.equalTo(@-19);
+        make.top.equalTo(self.contactLabel.mas_bottom).offset(10);
+        make.bottom.equalTo(@-17);
+    }];
+}
+
+- (NSString *)getStatus:(RefundDetailModel *)model {
+    NSString *status = @"";
+    switch (model.refundStatus.integerValue) {
+        case 0:
+            status = @"待审核";
+            break;
+        case 1:
+            status = @"已同意";
+            break;
+        case 2:
+            status = @"已拒绝";
+            break;
+        case 3:
+            status = @"待打款";
+            break;
+        case 4:
+            status = @"已退款";
+            break;
+        case 5:
+            status = @"待退货";
+            break;
+        case 6:
+            status = @"待卖家收货";
+            break;
+        case 7:
+            status = @"待打款";
+            break;
+        case 8:
+            status = @"已拒绝";
+            break;
+    }
+    return status;
+}
+
+- (void)addActionsView:(RefundDetailModel *)model {
+    switch (model.refundStatus.integerValue) {
+        case 0:
+            [self addActions:@[self.changeApplyBtn, self.cancelApplyBtn]];
+            break;
+        case 1:
+            break;
+        case 2:
+            if (model.refundType == 1) {
+                [self addActions:@[self.serviceBtn, self.cancelApplyBtn]];
+            } else if (model.refundType == 2 || model.refundType == 3) {
+                [self addActions:@[self.serviceBtn, self.changeApplyBtn, self.cancelApplyBtn]];
+            }
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            [self addActions:@[self.returnBtn]];
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            if (model.refundType == 2) {
+                [self addActions:@[self.serviceBtn]];
+            }
+            break;
+    }
+}
+
+- (void)addActions:(NSArray *)btns {
+    CGFloat maxX = ScreenWidth - 16;
+    for (NSInteger i = btns.count - 1; i >= 0; i--) {
+        UIButton *btn = btns[i];
+        btn.mj_x = maxX - btn.mj_w;
+        maxX = btn.mj_x - 10;
+        btn.hidden = NO;
+    }
+}
+
+- (void)prepareActions {
+    self.returnBtn.hidden = YES;
+    self.serviceBtn.hidden = YES;
+    self.cancelApplyBtn.hidden = YES;
+    self.changeApplyBtn.hidden = YES;
+    
+    [self.actionsView addSubview:self.returnBtn];
+    [self.actionsView addSubview:self.serviceBtn];
+    [self.actionsView addSubview:self.cancelApplyBtn];
+    [self.actionsView addSubview:self.changeApplyBtn];
+    
+    self.btns = @[self.returnBtn, self.serviceBtn, self.cancelApplyBtn, self.changeApplyBtn];
+}
+
+- (void)cancelApplyAction {
+    MJWeakSelf
+    [MineNetworkService discharageMyRefundItemWithParams: [@{@"refundId": self.refundId} mutableCopy] headerParams:[@{} mutableCopy] Success:^(id  _Nonnull response) {
+        [weakSelf showHint:response];
+    } failure:^(id  _Nonnull response) {
+        [weakSelf showHint:@"撤销申请失败"];
+    }];
+}
+
+- (void)changeApplyAction {
+    MyAfterSaleController *vc = [MyAfterSaleController new];
+    vc.refundModel = self.model;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)serviceAction {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://15900594090"] options:@{} completionHandler:nil];
+}
+
+- (void)returnAction {
+    RefundController *vc = [RefundController new];
+    vc.model = self.model;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (UIButton *)cancelApplyBtn {
+    if (_cancelApplyBtn == nil) {
+        _cancelApplyBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 5, 68, 20)];
+        [_cancelApplyBtn setTitle:@"撤销申请" forState:UIControlStateNormal];
+        [_cancelApplyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _cancelApplyBtn.backgroundColor = UIColorFromHEX(0x9ACCFF);
+        _cancelApplyBtn.titleLabel.font = UIFontWithSize(13);
+        _cancelApplyBtn.layer.cornerRadius = 3;
+        _cancelApplyBtn.layer.masksToBounds = YES;
+        [_cancelApplyBtn addTarget:self action:@selector(cancelApplyAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _cancelApplyBtn;
+}
+
+- (UIButton *)changeApplyBtn {
+    if (_changeApplyBtn == nil) {
+        _changeApplyBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 5, 68, 20)];
+        [_changeApplyBtn setTitle:@"修改申请" forState:UIControlStateNormal];
+        [_changeApplyBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _changeApplyBtn.backgroundColor = UIColorFromHEX(0x9ACCFF);
+        _changeApplyBtn.titleLabel.font = UIFontWithSize(13);
+        _changeApplyBtn.layer.cornerRadius = 3;
+        _changeApplyBtn.layer.masksToBounds = YES;
+        [_changeApplyBtn addTarget:self action:@selector(changeApplyAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _changeApplyBtn;
+}
+
+- (UIButton *)serviceBtn {
+    if (_serviceBtn == nil) {
+        _serviceBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 5, 68, 20)];
+        [_serviceBtn setTitle:@"联系客服" forState:UIControlStateNormal];
+        [_serviceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _serviceBtn.backgroundColor = UIColorFromHEX(0x9ACCFF);
+        _serviceBtn.titleLabel.font = UIFontWithSize(13);
+        _serviceBtn.layer.cornerRadius = 3;
+        _serviceBtn.layer.masksToBounds = YES;
+        [_serviceBtn addTarget:self action:@selector(serviceAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _serviceBtn;
+}
+
+- (UIButton *)returnBtn {
+    if (_returnBtn == nil) {
+        _returnBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 5, 68, 20)];
+        [_returnBtn setTitle:@"退货" forState:UIControlStateNormal];
+        [_returnBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _returnBtn.backgroundColor = UIColorFromHEX(0x9ACCFF);
+        _returnBtn.titleLabel.font = UIFontWithSize(13);
+        _returnBtn.layer.cornerRadius = 3;
+        _returnBtn.layer.masksToBounds = YES;
+        [_returnBtn addTarget:self action:@selector(returnAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _returnBtn;
+}
+
 
 @end

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MyRefundDetailVC : BaseViewController
 @property (nonatomic, copy)  NSString *refundId;//退款单ID
 
+
 @end
 
 NS_ASSUME_NONNULL_END
