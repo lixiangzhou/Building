@@ -36,9 +36,9 @@
     [self.navigationItem setTitle:@"登录注册"];
 
     //ygz test
-    self.usernameField.text =   @"18270747102";
-    self.passwordField.text = @"465237";
-    [self login:self.loginBtn];
+//    self.usernameField.text =   @"18270747102";
+//    self.passwordField.text = @"465237";
+//    [self login:self.loginBtn];
     //self.usernameField.text = @"15951708537";
 
     self.usernameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入手机号码" attributes:@{NSForegroundColorAttributeName: UIColorFromHEX(0x888888)}];

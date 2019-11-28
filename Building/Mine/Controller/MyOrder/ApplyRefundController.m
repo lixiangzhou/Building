@@ -11,6 +11,7 @@
 #import "FSTextView.h"
 #import "ApplyRefundStateView.h"
 #import "TZImagePickerController.h"
+#import <YBImageBrowser/YBImageBrowser.h>
 
 @interface ApplyRefundController ()
 @property (nonatomic, strong) OrderProductBaseInfoView *productView;
@@ -23,6 +24,7 @@
 @property (nonatomic, strong) NSMutableArray<NSString *> *selectedImgResults;
 @property (nonatomic, strong) NSMutableArray<UIImage *> *selectedImgs;
 @property (nonatomic, strong) NSMutableArray *selectedAssets;
+@property (nonatomic, strong) NSArray *photos;
 @end
 
 @implementation ApplyRefundController
@@ -309,19 +311,47 @@
 
 #pragma mark - Action
 - (void)imgAction:(UITapGestureRecognizer *)tap {
+    NSInteger idx = tap.view.tag;
+    MJWeakSelf
+    if (self.photos.count > 0 && idx < self.photos.count) {
+        // 本地图片
+        YBIBImageData *data0 = [YBIBImageData new];
+        data0.image = ^UIImage * _Nullable{
+            return weakSelf.photos[idx];
+        };
+        data0.projectiveView = tap.view;
         
-    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:nil];
-    imagePickerVc.selectedAssets = self.selectedAssets;
-    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        [self.selectedAssets removeAllObjects];
-        [self.selectedAssets addObjectsFromArray:assets];
+        NSMutableArray *datas = [NSMutableArray array];
+        [self.photos enumerateObjectsUsingBlock:^(NSString *_Nonnull img, NSUInteger idx, BOOL * _Nonnull stop) {
+            // 本地图片
+            YBIBImageData *data = [YBIBImageData new];
+            data.image = ^UIImage * _Nullable{
+                return weakSelf.photos[idx];
+            };
+            data.projectiveView = tap.view;
+            [datas addObject:data];
+        }];
         
-        [self.selectedImgs removeAllObjects];
-        [self.selectedImgs addObjectsFromArray:photos];
-        
-        [self uploadImage:photos];
-    }];
-    [self presentViewController:imagePickerVc animated:YES completion:nil];
+        YBImageBrowser *browser = [YBImageBrowser new];
+        browser.dataSourceArray = datas;
+        browser.currentPage = idx;
+        browser.defaultToolViewHandler.topView.operationType = YBIBTopViewOperationTypeSave;
+        [browser show];
+
+    } else {
+        TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:nil];
+        imagePickerVc.selectedAssets = self.selectedAssets;
+        [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+            [self.selectedAssets removeAllObjects];
+            [self.selectedAssets addObjectsFromArray:assets];
+            
+            [self.selectedImgs removeAllObjects];
+            [self.selectedImgs addObjectsFromArray:photos];
+            
+            [self uploadImage:photos];
+        }];
+        [self presentViewController:imagePickerVc animated:YES completion:nil];
+    }
 }
 
 - (void)stateAction:(UITapGestureRecognizer *)tap {
@@ -329,6 +359,7 @@
 }
 
 - (void)setPhotos:(NSArray *)photos {
+    _photos = photos;
     for (NSInteger i = 0; i < self.uploadView.subviews.count; i++) {
         UIImageView *view = self.uploadView.subviews[i];
         view.hidden = NO;

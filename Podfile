@@ -26,5 +26,6 @@ target 'Building' do
     pod 'BMKLocationKit'
     pod 'BaiduMapKit' #百度地图SDK
     pod 'TZImagePickerController'
+    pod 'YBImageBrowser'
 
 end

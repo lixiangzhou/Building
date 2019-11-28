@@ -35,6 +35,14 @@ PODS:
   - TUSafariActivity (1.0.4)
   - TZImagePickerController (3.2.7)
   - "UITableView+FDTemplateLayoutCell (1.6)"
+  - YBImageBrowser (3.0.6):
+    - YBImageBrowser/Core (= 3.0.6)
+  - YBImageBrowser/Core (3.0.6):
+    - SDWebImage (>= 5.0.0)
+    - YYImage
+  - YYImage (1.0.4):
+    - YYImage/Core (= 1.0.4)
+  - YYImage/Core (1.0.4)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
@@ -53,10 +61,11 @@ DEPENDENCIES:
   - SVProgressHUD
   - TZImagePickerController
   - "UITableView+FDTemplateLayoutCell (~> 1.6.beta)"
+  - YBImageBrowser
   - YYModel
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - ARChromeActivity
     - BaiduMapKit
@@ -74,6 +83,8 @@ SPEC REPOS:
     - TUSafariActivity
     - TZImagePickerController
     - "UITableView+FDTemplateLayoutCell"
+    - YBImageBrowser
+    - YYImage
     - YYModel
 
 SPEC CHECKSUMS:
@@ -94,8 +105,10 @@ SPEC CHECKSUMS:
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   TZImagePickerController: 821b81f83594a736e831a018f2a2ce31822ddf0b
   "UITableView+FDTemplateLayoutCell": 5c949b4a5059c404b442926c0e80f81d10a2d66f
+  YBImageBrowser: 59d3e8e035351a9f2f89760742628329378a634b
+  YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 66cc7524c479b10e555fb8a7ca19e79ff21c08a0
+PODFILE CHECKSUM: 6ebed9cf54ed6f12f060de1ec2e81779e1ce534e
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.8.4

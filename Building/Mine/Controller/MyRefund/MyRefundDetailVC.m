@@ -11,6 +11,7 @@
 #import "OrderProductBaseInfoView.h"
 #import "MyAfterSaleController.h"
 #import "RefundController.h"
+#import <YBImageBrowser/YBImageBrowser.h>
 
 @interface MyRefundDetailVC ()
 @property(nonatomic,strong)RefundDetailModel *model;
@@ -36,6 +37,10 @@
 /// 退货
 @property (strong, nonatomic) UIButton *returnBtn;
 @property (strong, nonatomic) NSArray *btns;
+
+@property (strong, nonatomic) NSArray *logisticsProofArray;
+@property (strong, nonatomic) NSArray *refundProofArray;
+
 @end
 
 @implementation MyRefundDetailVC
@@ -65,6 +70,7 @@
         weakSelf.addressLabel.text = [NSString stringWithFormat:@"收货地址：%@", model.address];
         weakSelf.productView.model = response;
         weakSelf.priceLabel.text = [NSString stringWithFormat:@"总价：￥%@", model.amount];
+        
         [weakSelf addActionsView:model];
         [weakSelf addRefundView:model];
         [weakSelf addSellerInfoView:model];
@@ -84,9 +90,43 @@
     }];
 }
 
+- (void)logisticsProofAction:(UITapGestureRecognizer *)tap {
+    NSMutableArray *datas = [NSMutableArray array];
+    [self.logisticsProofArray enumerateObjectsUsingBlock:^(NSString *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        // 网络图片
+        YBIBImageData *data = [YBIBImageData new];
+        data.imageURL = [NSURL URLWithString:obj];
+        data.projectiveView = tap.view;
+        [datas addObject:data];
+    }];
+    
+    YBImageBrowser *browser = [YBImageBrowser new];
+    browser.dataSourceArray = datas;
+    browser.currentPage = tap.view.tag;
+    browser.defaultToolViewHandler.topView.operationType = YBIBTopViewOperationTypeSave;
+    [browser show];
+}
+
+- (void)refundProofAction:(UITapGestureRecognizer *)tap {
+    NSMutableArray *datas = [NSMutableArray array];
+    [self.refundProofArray enumerateObjectsUsingBlock:^(NSString *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        // 网络图片
+        YBIBImageData *data = [YBIBImageData new];
+        data.imageURL = [NSURL URLWithString:obj];
+        data.projectiveView = tap.view;
+        [datas addObject:data];
+    }];
+    
+    YBImageBrowser *browser = [YBImageBrowser new];
+    browser.dataSourceArray = datas;
+    browser.currentPage = tap.view.tag;
+    browser.defaultToolViewHandler.topView.operationType = YBIBTopViewOperationTypeSave;
+    [browser show];
+}
+
 // MARK: - 留言
 - (void)addMessageView:(RefundDetailModel *)model {
-    if (model.message) {
+    if (model.message.length) {
         UIView *lastView = self.contentView.subviews.lastObject;
         
         UIView *view = [UIView new];
@@ -170,57 +210,59 @@
 
 // MARK: - 退货给卖家
 - (void)addRefundSellerGoodsView:(RefundDetailModel *)model {
-    UIView *lastView = self.contentView.subviews.lastObject;
-    
-    UIView *view = [UIView new];
-    view.backgroundColor = [UIColor whiteColor];
-    [self.contentView addSubview:view];
-    
-    UIView *titleView = [UIView new];
-    [view addSubview:titleView];
-    [titleView addBottomLineLeft:12 right:12];
-    
-    UILabel *refundTitle = [UILabel title:@"退货退款状态" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-    [titleView addSubview:refundTitle];
-    
-    UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"退货退款状态：%@", [self getStatus:model]] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-    UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"原因：%@", model.refundReason ?: @""] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-    
-    [view addSubview:sallerAddressLabel];
-    [view addSubview:sallerMsgLabel];
-    
-    [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lastView.mas_bottom).offset(10);
-        make.left.right.equalTo(self.contentView);
-    }];
-    
-    [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.right.left.equalTo(view);
-        make.height.equalTo(@36);
-    }];
-    
-    [refundTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@19);
-        make.centerY.equalTo(titleView);
-    }];
-    
-    [sallerAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(titleView.mas_bottom).offset(13);
-        make.left.equalTo(@19);
-        make.right.equalTo(@-19);
-    }];
-    
-    [sallerMsgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(sallerAddressLabel.mas_bottom).offset(15);
-        make.left.right.equalTo(sallerAddressLabel);
-        make.right.equalTo(@-19);
-        make.bottom.equalTo(@-20);
-    }];
+    if (model.refundReason.length) {
+        UIView *lastView = self.contentView.subviews.lastObject;
+        
+        UIView *view = [UIView new];
+        view.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:view];
+        
+        UIView *titleView = [UIView new];
+        [view addSubview:titleView];
+        [titleView addBottomLineLeft:12 right:12];
+        
+        UILabel *refundTitle = [UILabel title:@"退货退款状态" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+        [titleView addSubview:refundTitle];
+        
+        UILabel *statusLabel = [UILabel title:[NSString stringWithFormat:@"退货退款状态：%@", [self getStatus:model]] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+        UILabel *reasonLabel = [UILabel title:[NSString stringWithFormat:@"原因：%@", model.refundReason ?: @""] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+        
+        [view addSubview:statusLabel];
+        [view addSubview:reasonLabel];
+        
+        [view mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(lastView.mas_bottom).offset(10);
+            make.left.right.equalTo(self.contentView);
+        }];
+        
+        [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.right.left.equalTo(view);
+            make.height.equalTo(@36);
+        }];
+        
+        [refundTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(@19);
+            make.centerY.equalTo(titleView);
+        }];
+        
+        [statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(titleView.mas_bottom).offset(13);
+            make.left.equalTo(@19);
+            make.right.equalTo(@-19);
+        }];
+        
+        [reasonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(statusLabel.mas_bottom).offset(15);
+            make.left.right.equalTo(statusLabel);
+            make.right.equalTo(@-19);
+            make.bottom.equalTo(@-20);
+        }];
+    }
 }
 
 // MARK: - 退货给卖家
 - (void)addRefundSellerView:(RefundDetailModel *)model {
-    if (model.returnLogisticsProof.count || model.returnLogisticsDocument.length || model.returnLogisticsCompany.length) {
+    if (model.returnLogisticsCompany.length || model.returnLogisticsDocument.length) {
         UIView *lastView = self.contentView.subviews.lastObject;
         
         UIView *view = [UIView new];
@@ -235,13 +277,11 @@
         [titleView addSubview:refundTitle];
         
         UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"物流公司：%@", model.returnLogisticsCompany] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-        UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"运单号：%@", model.returnLogisticsDocument] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         
-        UILabel *pzLabel = [UILabel title:@"凭证：" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+        UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"运单号：%@", model.returnLogisticsDocument] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         
         [view addSubview:sallerAddressLabel];
         [view addSubview:sallerMsgLabel];
-        [view addSubview:pzLabel];
         
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(lastView.mas_bottom).offset(10);
@@ -271,6 +311,10 @@
         }];
         
         if (model.returnLogisticsProof.count) {
+            self.logisticsProofArray = model.returnLogisticsProof;
+            UILabel *pzLabel = [UILabel title:@"凭证：" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+            [view addSubview:pzLabel];
+            
             [pzLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(sallerMsgLabel.mas_bottom).offset(15);
                 make.left.right.equalTo(sallerAddressLabel);
@@ -284,6 +328,9 @@
                 UIImageView *pv = [[UIImageView alloc] initWithFrame:CGRectMake(x, 0, 60, 60)];
                 [pv sd_setImageWithURL:[NSURL URLWithString:model.returnLogisticsProof[i]]];
                 [picView addSubview:pv];
+                pv.tag = i;
+                pv.userInteractionEnabled = YES;
+                [pv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(logisticsProofAction:)]];
                 x = CGRectGetMaxX(pv.frame) + 20;
             }
             
@@ -295,10 +342,11 @@
                 make.bottom.equalTo(@-18);
             }];
         } else {
-            [pzLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(sallerMsgLabel.mas_bottom).offset(15);
+            [sallerMsgLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(sallerAddressLabel.mas_bottom).offset(15);
                 make.left.right.equalTo(sallerAddressLabel);
-                make.bottom.equalTo(@-20);
+                make.right.equalTo(@-19);
+                make.bottom.equalTo(@-18);
             }];
         }
     }
@@ -385,41 +433,41 @@
             make.right.left.equalTo(contentView);
             make.bottom.equalTo(@-5);
         }];
-    } else if (model.refundType == 2) {
-        [self addRowToView:contentView title:@"退款类型：" value:@"售后退款" isFirst:YES];
-        NSString *status = @"";
-        if ([model.goodsStatus isEqualToString:@"1"]) {
-            status = @"未收到货";
-        } else if ([model.goodsStatus isEqualToString:@"2"]) {
-            status = @"已收到货";
-        }
-        [self addRowToView:contentView title:@"货物状态：" value:status isFirst:NO];
-        [self addRowToView:contentView title:@"退款原因：" value:model.refundReason isFirst:NO];
-        [self addRowToView:contentView title:@"退款金额：" value:[NSString stringWithFormat:@"￥%@", model.refundAmount ?: @""] isFirst:NO];
-        UIView *remarkView = [self addRowToView:contentView title:@"退款说明：" value:model.refundRemark isFirst:NO];
-        UIView *pzView = [self addRowToView:contentView title:@"凭证：" value:@"" isFirst:NO];
-                if (model.refundProof.count) {
-            [self addPicViewToView:contentView pics:model.refundProof];
-        } else {
-            [pzView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(remarkView.mas_bottom);
-                make.left.right.equalTo(contentView);
-                make.bottom.equalTo(@-8);
-            }];
-        }
     } else {
-        [self addRowToView:contentView title:@"退款类型：" value:@"售后退货退款" isFirst:YES];
-        [self addRowToView:contentView title:@"退款原因：" value:model.refundReason isFirst:NO];
-        [self addRowToView:contentView title:@"退款金额：" value:[NSString stringWithFormat:@"￥%@", model.refundAmount ?: @""] isFirst:NO];
-        UIView *remarkView = [self addRowToView:contentView title:@"退款说明：" value:model.refundRemark isFirst:NO];
-        UIView *pzView = [self addRowToView:contentView title:@"凭证：" value:@"" isFirst:NO];
-                if (model.refundProof.count) {
+        if (model.refundType == 2) {
+            [self addRowToView:contentView title:@"退款类型：" value:@"售后退款" isFirst:YES];
+            NSString *status = @"";
+            if ([model.goodsStatus isEqualToString:@"1"]) {
+                status = @"未收到货";
+            } else if ([model.goodsStatus isEqualToString:@"2"]) {
+                status = @"已收到货";
+            }
+            if (status.length) {
+                [self addRowToView:contentView title:@"货物状态：" value:status isFirst:NO];
+            }
+        } else {
+            [self addRowToView:contentView title:@"退款类型：" value:@"售后退货退款" isFirst:YES];
+        }
+        
+        if (model.refundReason.length) {
+            [self addRowToView:contentView title:@"退款原因：" value:model.refundReason isFirst:NO];
+        }
+        if (model.refundAmount.length) {
+            [self addRowToView:contentView title:@"退款金额：" value:[NSString stringWithFormat:@"￥%@", model.refundAmount ?: @""] isFirst:NO];
+        }
+        if (model.refundRemark.length) {
+            [self addRowToView:contentView title:@"退款说明：" value:model.refundRemark isFirst:NO];
+        }
+        if (model.refundProof.count) {
+            self.refundProofArray = model.refundProof;
+            [self addRowToView:contentView title:@"凭证：" value:@"" isFirst:NO];
             [self addPicViewToView:contentView pics:model.refundProof];
         } else {
-            [pzView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(remarkView.mas_bottom);
+            UIView *lastView = contentView.subviews.lastObject;
+            [lastView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(contentView.subviews[contentView.subviews.count - 2].mas_bottom);
                 make.left.right.equalTo(contentView);
-                make.bottom.equalTo(@-8);
+                make.bottom.equalTo(@-10);
             }];
         }
     }
@@ -459,6 +507,9 @@
         [pv sd_setImageWithURL:[NSURL URLWithString:pics[i]]];
         [picView addSubview:pv];
         x = CGRectGetMaxX(pv.frame) + 20;
+        pv.tag = i;
+        pv.userInteractionEnabled = YES;
+        [pv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(refundProofAction:)]];
     }
     
     [picView mas_makeConstraints:^(MASConstraintMaker *make) {

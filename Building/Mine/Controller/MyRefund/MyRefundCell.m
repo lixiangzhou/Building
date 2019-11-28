@@ -74,10 +74,10 @@
     }];
     
     self.orderStatuLabel.textColor = UIColorFromHEX(0x515C6F);
+    self.orderStatuLabel.text = @"";
     switch (model.refundStatus.integerValue) {
         case 0:
             self.orderStatuLabel.text = @"待审核";
-            
             [self addActions:@[self.changeApplyBtn, self.cancelApplyBtn]];
             break;
         case 1:
