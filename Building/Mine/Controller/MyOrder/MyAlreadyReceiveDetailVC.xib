@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyAlreadyReceiveDetailVC">
             <connections>
                 <outlet property="addressLabel" destination="JKS-mb-kTt" id="1FS-pp-cEf"/>
+                <outlet property="afterSaleBtn" destination="Ah5-1b-1nl" id="Tvn-HY-PdB"/>
                 <outlet property="amountLabel" destination="gwc-ww-WU1" id="YcS-rO-MYX"/>
                 <outlet property="companyLabel" destination="bw0-tw-FBg" id="qKh-8E-bfh"/>
                 <outlet property="countLabel" destination="MWu-h8-n0d" id="aaV-X8-b1G"/>
@@ -37,7 +36,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rYw-lz-fli" userLabel="contentView">
-                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqP-G8-ZUj">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="77"/>
@@ -236,10 +235,27 @@
                                     <color key="textColor" red="0.31764705879999999" green="0.36078431370000003" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ah5-1b-1nl">
+                                    <rect key="frame" x="291" y="5" width="68" height="20"/>
+                                    <color key="backgroundColor" red="0.60392156862745094" green="0.80000000000000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="68" id="98e-UH-hVu"/>
+                                        <constraint firstAttribute="height" constant="20" id="ADJ-jr-5Q8"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <state key="normal" title="申请售后">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="afterSaleAction:" destination="-1" eventType="touchUpInside" id="RV3-d3-BD7"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Ah5-1b-1nl" secondAttribute="trailing" constant="16" id="3ew-CO-LUg"/>
                                 <constraint firstItem="gwc-ww-WU1" firstAttribute="leading" secondItem="uHD-6Y-IUY" secondAttribute="leading" constant="17" id="PgJ-GL-PId"/>
+                                <constraint firstItem="Ah5-1b-1nl" firstAttribute="centerY" secondItem="uHD-6Y-IUY" secondAttribute="centerY" id="iiV-0J-24p"/>
                                 <constraint firstItem="gwc-ww-WU1" firstAttribute="top" secondItem="uHD-6Y-IUY" secondAttribute="top" constant="7" id="l4j-dX-BdE"/>
                                 <constraint firstAttribute="height" constant="30" id="q6W-6y-Ixd"/>
                             </constraints>
@@ -403,7 +419,7 @@
                             <rect key="frame" x="0.0" y="444" width="375" height="100"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brI-fD-hhi">
-                                    <rect key="frame" x="66" y="17" width="200" height="18"/>
+                                    <rect key="frame" x="23" y="17" width="200" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="200" id="KsQ-n8-imM"/>
                                         <constraint firstAttribute="height" constant="18" id="RWS-s1-wc0"/>
@@ -417,7 +433,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="100" id="8IR-m5-C63"/>
                                 <constraint firstItem="brI-fD-hhi" firstAttribute="top" secondItem="X6p-Af-vZW" secondAttribute="top" constant="17" id="Trf-VL-VIi"/>
-                                <constraint firstItem="brI-fD-hhi" firstAttribute="leading" secondItem="X6p-Af-vZW" secondAttribute="leading" constant="66" id="fzl-LF-F4M"/>
+                                <constraint firstItem="brI-fD-hhi" firstAttribute="leading" secondItem="X6p-Af-vZW" secondAttribute="leading" constant="23" id="fzl-LF-F4M"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -460,6 +476,7 @@
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="rYw-lz-fli" secondAttribute="bottom" id="xBa-4q-wQZ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="954" y="90"/>
         </view>
     </objects>
 </document>

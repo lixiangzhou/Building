@@ -8,6 +8,7 @@
 
 #import "MyAlreadyReceiveDetailVC.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "MyAfterSaleController.h"
 
 @interface MyAlreadyReceiveDetailVC ()
 @property (weak, nonatomic) IBOutlet UILabel *receiverLabel;
@@ -27,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *receiveTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property(nonatomic,copy)NSString *token;
+@property (weak, nonatomic) IBOutlet UIButton *afterSaleBtn;
+@property(nonatomic,strong)NSString *model;
 @end
 
 @implementation MyAlreadyReceiveDetailVC
@@ -39,10 +42,15 @@
     } else {
         self.token = [GlobalConfigClass shareMySingle].userAndTokenModel.token;
     }
+    
     [self.addressLabel setNumberOfLines:0];
     self.addressLabel.lineBreakMode = NSLineBreakByWordWrapping;
     self.addressLabel.adjustsFontSizeToFitWidth = YES;
     self.addressLabel.minimumScaleFactor = 0.5;
+    
+    self.afterSaleBtn.layer.borderWidth=1;
+    self.afterSaleBtn.layer.cornerRadius=3;
+    self.afterSaleBtn.layer.borderColor=([UIColor colorWithRed:154/255.0 green:204/255.0 blue:255/255.0 alpha:1].CGColor);
 
     [self gainData];
 }
@@ -59,6 +67,7 @@
     __weak __typeof__ (self) wself = self;
     [MineNetworkService gainMyOrderDetailWithParams:params headerParams:paramsHeader Success:^(id  _Nonnull response) {
         MyOrderDetailModel *model=response;
+        self.model = response;
         self.receiverLabel.text=model.receiver;
         self.phoneLabel.text=model.contact;
         self.addressLabel.text=model.address;
@@ -94,6 +103,12 @@
     }];
     
     
+}
+
+- (IBAction)afterSaleAction:(id)sender {
+    MyAfterSaleController *vc = [MyAfterSaleController new];
+    vc.model = self.model;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
