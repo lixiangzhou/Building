@@ -147,6 +147,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,copy)NSString *returnLogisticsDocument;//退货物流
 @property(nonatomic,strong)NSArray *returnLogisticsProof;//退款凭证
 
+@property(nonatomic,copy)NSString *logisticsCompany;//卖家发货的物流信息
+@property(nonatomic,copy)NSString *logisticsDocument;//卖家发货的物流信息
 
 @end
 

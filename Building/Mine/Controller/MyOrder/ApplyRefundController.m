@@ -438,7 +438,11 @@
     
     NSString *imgs = @"";
     if (self.selectedImgResults.count) {
-        imgs = [self.selectedImgResults componentsJoinedByString:@","];
+        NSMutableArray *arr = [NSMutableArray new];
+        for (NSInteger i = 0; i < self.selectedImgResults.count; i++) {
+            [arr addObject:[NSString stringWithFormat:@"\"%@\"", self.selectedImgResults[i]]];
+        }
+        imgs = [arr componentsJoinedByString:@","];
         imgs = [NSString stringWithFormat:@"[%@]", imgs];
     } else {
         imgs = @"[]";
@@ -475,6 +479,8 @@
         } else {
             if ([response[@"msg"] length]) {
                 [SVProgressHUD showErrorWithStatus:response[@"msg"]];
+            } else {
+                [SVProgressHUD showErrorWithStatus:@"提交失败"];
             }
         }
     } fail:^(NSError *error) {

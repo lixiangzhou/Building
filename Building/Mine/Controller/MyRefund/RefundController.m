@@ -253,19 +253,15 @@
     
     NSString *imgs = @"";
     if (self.selectedImgResults.count) {
-        imgs = [self.selectedImgResults componentsJoinedByString:@","];
+        NSMutableArray *arr = [NSMutableArray new];
+        for (NSInteger i = 0; i < self.selectedImgResults.count; i++) {
+            [arr addObject:[NSString stringWithFormat:@"\"%@\"", self.selectedImgResults[i]]];
+        }
+        imgs = [arr componentsJoinedByString:@","];
         imgs = [NSString stringWithFormat:@"[%@]", imgs];
     } else {
         imgs = @"[]";
     }
-    
-//    {
-//        "logisticsCompany": "来咯摸摸",
-//        "logisticsDocument": "226988545",
-//        "logisticsProof": "[]",
-//        "refundId": "211",
-//        "token": "3f69a2ecbbada2fca77a6caa8b15fe2d"
-//    }
     
     NSMutableDictionary *dict = dict = [@{
         @"logisticsCompany": company,

@@ -64,6 +64,7 @@
     MJWeakSelf
     [MineNetworkService gainMyRefundDetailWithParams:[@{@"refundId": self.refundId} mutableCopy] headerParams:[@{} mutableCopy] Success:^(id  _Nonnull response) {
         RefundDetailModel *model=response;
+        self.model = response;
         
         weakSelf.contactLabel.text = [NSString stringWithFormat:@"联系人：%@", model.receiver];
         weakSelf.mobileLabel.text = [NSString stringWithFormat:@"电话：%@", model.contact];
@@ -77,6 +78,7 @@
         [weakSelf addRefundSellerView:model];
         [weakSelf addRefundSellerGoodsView:model];
         [weakSelf addOrderView:model];
+        [weakSelf addLogisticsView:model];
         [weakSelf addMessageView:model];
         
         [weakSelf.contentView layoutIfNeeded];
@@ -210,7 +212,7 @@
 
 // MARK: - 退货给卖家
 - (void)addRefundSellerGoodsView:(RefundDetailModel *)model {
-    if (model.refundReason.length) {
+    if (model.refundReason.length && model.refundStatus.integerValue == 8) {
         UIView *lastView = self.contentView.subviews.lastObject;
         
         UIView *view = [UIView new];
@@ -226,6 +228,7 @@
         
         UILabel *statusLabel = [UILabel title:[NSString stringWithFormat:@"退货退款状态：%@", [self getStatus:model]] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         UILabel *reasonLabel = [UILabel title:[NSString stringWithFormat:@"原因：%@", model.refundReason ?: @""] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+        reasonLabel.numberOfLines = 0;
         
         [view addSubview:statusLabel];
         [view addSubview:reasonLabel];
@@ -262,7 +265,9 @@
 
 // MARK: - 退货给卖家
 - (void)addRefundSellerView:(RefundDetailModel *)model {
-    if (model.returnLogisticsCompany.length || model.returnLogisticsDocument.length) {
+    NSInteger status = model.refundStatus.integerValue;
+    BOOL canShow = status == 6 || status == 8 || status == 3 || status == 7 || status == 4;
+    if ((model.returnLogisticsCompany.length || model.returnLogisticsDocument.length) && canShow) {
         UIView *lastView = self.contentView.subviews.lastObject;
         
         UIView *view = [UIView new];
@@ -352,6 +357,41 @@
     }
 }
 
+- (void)addLogisticsView:(RefundDetailModel *)model {
+    if (model.logisticsCompany.length || model.logisticsDocument.length) {
+        UIView *lastView = self.contentView.subviews.lastObject;
+        
+        UIView *view = [UIView new];
+        view.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:view];
+        
+        UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"物流公司：%@", model.logisticsCompany] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+        
+        UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"运单号：%@", model.logisticsDocument] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+        
+        [view addSubview:sallerAddressLabel];
+        [view addSubview:sallerMsgLabel];
+        
+        [view mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(lastView.mas_bottom).offset(10);
+            make.left.right.equalTo(self.contentView);
+        }];
+        
+        [sallerAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@15);
+            make.left.equalTo(@19);
+            make.right.equalTo(@-19);
+        }];
+        
+        [sallerMsgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(sallerAddressLabel.mas_bottom).offset(15);
+            make.left.right.equalTo(sallerAddressLabel);
+            make.right.equalTo(@-19);
+            make.bottom.equalTo(@-18);
+        }];
+    }
+}
+
 // MARK: - 退货信息
 - (void)addSellerInfoView:(RefundDetailModel *)model {
     if (model.auditSellerMsg.length || model.auditSellerInfo.length) {
@@ -435,7 +475,7 @@
         }];
     } else {
         if (model.refundType == 2) {
-            [self addRowToView:contentView title:@"退款类型：" value:@"售后退款" isFirst:YES];
+            [self addRowToView:contentView title:@"退款类型：" value:@"仅退款" isFirst:YES];
             NSString *status = @"";
             if ([model.goodsStatus isEqualToString:@"1"]) {
                 status = @"未收到货";
@@ -446,7 +486,7 @@
                 [self addRowToView:contentView title:@"货物状态：" value:status isFirst:NO];
             }
         } else {
-            [self addRowToView:contentView title:@"退款类型：" value:@"售后退货退款" isFirst:YES];
+            [self addRowToView:contentView title:@"退款类型：" value:@"退货退款" isFirst:YES];
         }
         
         if (model.refundReason.length) {
@@ -465,7 +505,8 @@
         } else {
             UIView *lastView = contentView.subviews.lastObject;
             [lastView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(contentView.subviews[contentView.subviews.count - 2].mas_bottom);
+                UIView *v = contentView.subviews[contentView.subviews.count - 2];
+                make.top.equalTo(v.mas_bottom);
                 make.left.right.equalTo(contentView);
                 make.bottom.equalTo(@-10);
             }];
@@ -531,6 +572,7 @@
     [view addSubview:leftLabel];
     
     UILabel *rightLabel = [UILabel title:value ?: @"" txtColor:UIColorFromHEX(0x6e6e6e) font:UIFontWithSize(13)];
+    rightLabel.numberOfLines = 0;
     [view addSubview:rightLabel];
     
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -543,7 +585,7 @@
         make.left.right.equalTo(toView);
     }];
     
-    CGFloat lw = [title sizeWithAttributes:@{NSFontAttributeName: leftLabel.font}].width;
+    CGFloat lw = [title sizeWithAttributes:@{NSFontAttributeName: leftLabel.font}].width + 5;
     [leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@19);
         make.top.equalTo(@5);
@@ -699,7 +741,11 @@
 - (void)addActionsView:(RefundDetailModel *)model {
     switch (model.refundStatus.integerValue) {
         case 0:
-            [self addActions:@[self.cancelApplyBtn]];
+            if (model.refundType == 1) {
+                [self addActions:@[self.cancelApplyBtn]];
+            } else {
+                [self addActions:@[self.changeApplyBtn, self.cancelApplyBtn]];
+            }
             break;
         case 1:
             break;

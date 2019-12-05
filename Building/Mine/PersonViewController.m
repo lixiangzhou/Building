@@ -340,6 +340,7 @@
             [GlobalConfigClass shareMySingle].userAndTokenModel.authStatus = response.authStatus;
             getDataArr();
         } failure:^(id  _Nonnull response) {
+            getDataArr();
         }];
     }
     
