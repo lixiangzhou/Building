@@ -222,7 +222,7 @@
     if (self.model) {
         txtView.text = self.model.price;
     } else if (self.refundModel) {
-        txtView.text = self.refundModel.price;
+        txtView.text = self.refundModel.refundAmount;
     }
     
     if (self.type == 1) {

@@ -165,6 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,copy)NSString *refundStatus;//退款状态
 @property(nonatomic,copy)NSString *supplierName;//供应商
 @property(nonatomic,assign) NSInteger refundType;//退款类型，1：售中退款；2：售后退款；3：售后退货退款
+@property(nonatomic,copy)NSString *refundAmount;//退款金额
 @end
 
 //退款单列表
@@ -240,6 +241,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,copy)NSString *productSku;//产品规格
 @property(nonatomic,copy)NSString *quantity;//产品数量
 @property(nonatomic,copy)NSString *supplierName;//供应商
+
 @end
 //我的订单列表
 @interface MyOrderListModel : NSObject

@@ -34,7 +34,7 @@
     UIView *itemView1 = [self addItemViewIcon:@"ic_tuikuan_1" title:@"我要退款（无需退货）" subtitle:@"没收到货，或与卖家协商同意不同退货只退款"];
     itemView1.tag = 1;
     
-    UIView *itemView2 = [self addItemViewIcon:@"ic_tuikuan_2" title:@"我要退货退款" subtitle:@"我要退货退款"];
+    UIView *itemView2 = [self addItemViewIcon:@"ic_tuikuan_2" title:@"我要退货退款" subtitle:@"已收到货，需要退还收到的货物"];
     itemView2.tag = 2;
     
     [self.productView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -71,7 +71,7 @@
     [view addSubview:iconView];
     
     UILabel *titleLabel = [UILabel title:title txtColor:UIColorFromHEX(0x333333) font:UIFontWithSize(13)];
-    UILabel *subTitleLabel = [UILabel title:title txtColor:UIColorFromHEX(0x999999) font:UIFontWithSize(12)];
+    UILabel *subTitleLabel = [UILabel title:subtitle txtColor:UIColorFromHEX(0x999999) font:UIFontWithSize(12)];
     
     [view addSubview:titleLabel];
     [view addSubview:subTitleLabel];

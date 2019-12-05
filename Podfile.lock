@@ -65,7 +65,7 @@ DEPENDENCIES:
   - YYModel
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - AFNetworking
     - ARChromeActivity
     - BaiduMapKit
@@ -111,4 +111,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6ebed9cf54ed6f12f060de1ec2e81779e1ce534e
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.7.4
