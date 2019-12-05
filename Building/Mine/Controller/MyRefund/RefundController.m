@@ -253,12 +253,7 @@
     
     NSString *imgs = @"";
     if (self.selectedImgResults.count) {
-        NSMutableArray *arr = [NSMutableArray new];
-        for (NSInteger i = 0; i < self.selectedImgResults.count; i++) {
-            [arr addObject:[NSString stringWithFormat:@"\"%@\"", self.selectedImgResults[i]]];
-        }
-        imgs = [arr componentsJoinedByString:@","];
-        imgs = [NSString stringWithFormat:@"[%@]", imgs];
+        imgs = self.selectedImgResults.yy_modelToJSONString;
     } else {
         imgs = @"[]";
     }

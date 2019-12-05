@@ -77,9 +77,9 @@
             weakSelf.stateField.text = @"未收到货";
             weakSelf.priceView.userInteractionEnabled = NO;
             if (weakSelf.model) {
-                weakSelf.priceView.text = weakSelf.model.price;
+                weakSelf.priceView.text = weakSelf.model.amount;
             } else if (weakSelf.refundModel) {
-                weakSelf.priceView.text = weakSelf.refundModel.price;
+                weakSelf.priceView.text = weakSelf.refundModel.amount;
             }
         } else if (state == 2) {
             weakSelf.priceView.userInteractionEnabled = YES;
@@ -220,9 +220,9 @@
     txtView.font = UIFontWithSize(16);
     
     if (self.model) {
-        txtView.text = self.model.price;
+        txtView.text = self.model.amount;
     } else if (self.refundModel) {
-        txtView.text = self.refundModel.refundAmount;
+        txtView.text = self.refundModel.amount;
     }
     
     if (self.type == 1) {
@@ -438,12 +438,7 @@
     
     NSString *imgs = @"";
     if (self.selectedImgResults.count) {
-        NSMutableArray *arr = [NSMutableArray new];
-        for (NSInteger i = 0; i < self.selectedImgResults.count; i++) {
-            [arr addObject:[NSString stringWithFormat:@"\"%@\"", self.selectedImgResults[i]]];
-        }
-        imgs = [arr componentsJoinedByString:@","];
-        imgs = [NSString stringWithFormat:@"[%@]", imgs];
+        imgs = self.selectedImgResults.yy_modelToJSONString;
     } else {
         imgs = @"[]";
     }
