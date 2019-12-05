@@ -38,7 +38,8 @@
 
 #define BasicUrl @"http://129.211.120.147:9000/api"      // 打包端口
 //#define BasicUrl @"https://s.ueserve.com/api/"
-#define BaseFileUrl @"http://172.16.1.63:8080/dima-file"
+
+#define BaseFileUrl @"http://s.ueserve.com:8091"
 //#define BasicImgUrl @"https://www.isunnyhealth.com/medical-service"
 #define     BuglyChannel   @"TestEnv"
 

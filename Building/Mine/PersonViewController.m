@@ -68,7 +68,6 @@
 
     //数据初始化
     self.tableViewArr = @[@"实名认证", @"我的预约", @"我的订单", @"退款/售后", @"收货地址", @"关于我们"].mutableCopy;
-    self.isLogin = NO;
     
 }
 
@@ -124,11 +123,6 @@
         cell.titleLabel.text = self.tableViewArr[indexPath.row];
         if ([rowTitle  isEqual: @"实名认证"]) {//实名认证
             cell.myImageView.image = [UIImage imageNamed:@"my_list_ic_01"];
-            if ([GlobalConfigClass shareMySingle].userAndTokenModel == nil) {//未登录
-                self.isLogin = NO;
-            } else {
-                self.isLogin = YES;
-            }
             //[GlobalConfigClass shareMySingle].LoginStatus = self.isLogin;
             //NSLog(@"LoginStatus:%@", [GlobalConfigClass shareMySingle].LoginStatus);
             // 0：未认证，1：审核中，9：已认证，-1：未通过
@@ -330,11 +324,9 @@
         }
     };
     
-    if ([GlobalConfigClass shareMySingle].userAndTokenModel == nil) {//未登录
-        self.isLogin = NO;
+    if (!self.isLogin) {//未登录
         getDataArr();
     } else {
-        self.isLogin = YES;
         [MineNetworkService gainAuthinfoWithSuccess:^(AuthInfoModel *response) {
             [GlobalConfigClass shareMySingle].userAndTokenModel.memberType = response.memberType;
             [GlobalConfigClass shareMySingle].userAndTokenModel.authStatus = response.authStatus;
@@ -343,8 +335,10 @@
             getDataArr();
         }];
     }
-    
-    
+}
+
+- (BOOL)isLogin {
+    return [GlobalConfigClass shareMySingle].userAndTokenModel != nil;
 }
 
 

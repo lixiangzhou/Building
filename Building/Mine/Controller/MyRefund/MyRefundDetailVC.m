@@ -545,7 +545,8 @@
     CGFloat x = 0;
     for (NSInteger i = 0; i < pics.count; i++) {
         UIImageView *pv = [[UIImageView alloc] initWithFrame:CGRectMake(x, 0, 60, 60)];
-        [pv sd_setImageWithURL:[NSURL URLWithString:pics[i]]];
+        NSString *url = [NSString stringWithFormat:@"%@%@", BaseFileUrl, pics[i]];
+        [pv sd_setImageWithURL:[NSURL URLWithString:url]];
         [picView addSubview:pv];
         x = CGRectGetMaxX(pv.frame) + 20;
         pv.tag = i;

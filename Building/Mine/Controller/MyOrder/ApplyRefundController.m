@@ -392,12 +392,16 @@
     NSString *url = [NSString stringWithFormat:@"%@/resource/file/upload", BasicUrl];
     
     dispatch_group_t group = dispatch_group_create();
+    
+    NSMutableArray *newImgs = [NSMutableArray new];
     [self.selectedImgResults removeAllObjects];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     for (NSInteger i = 0; i < images.count; i++) {
         dispatch_group_enter(group);
-        [QSNetworking uploadWithImage:images[i] url:url filename:@"file" name:@"file" mimeType:@"image/png" parameters:nil headerParams:nil progress:nil success:^(id response) {
+        UIImage *img = images[i];
+        [QSNetworking uploadWithImage:img url:url filename:@"file" name:@"file" mimeType:@"image/png" parameters:nil headerParams:nil progress:nil success:^(id response) {
             if (response[@"result"]) {
+                [newImgs addObject:img];
                 [self.selectedImgResults addObject:response[@"result"]];
             }
             dispatch_group_leave(group);
@@ -405,8 +409,8 @@
             dispatch_group_leave(group);
         }];
     }
-    dispatch_group_async(group, dispatch_get_main_queue(), ^{
-        [self setPhotos:images];
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        [self setPhotos:newImgs];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     });
 }
@@ -426,9 +430,9 @@
     
     NSInteger value = [self.priceView.text integerValue];
     
-    NSInteger price = self.model.price.integerValue;
+    NSInteger price = self.model.amount.integerValue;
     if (self.refundModel) {
-        price = self.refundModel.price.integerValue;
+        price = self.refundModel.amount.integerValue;
     }
     
     if (value > price) {
@@ -457,7 +461,7 @@
         @"token": [GlobalConfigClass shareMySingle].userAndTokenModel.token ?: @""
     } mutableCopy];
     
-    NSString *url = [NSString stringWithFormat:@"%@/order/refundGoodsAndMone", BasicUrl];
+    NSString *url = [NSString stringWithFormat:@"%@/order/refundGoodsAndMoney", BasicUrl];
     
     if (self.type == 1) {
         dict[@"goodsStatus"] = @(self.stateView.state);

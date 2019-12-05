@@ -218,13 +218,16 @@
 - (void)uploadImage:(NSArray *)images {
     NSString *url = [NSString stringWithFormat:@"%@/resource/file/upload", BasicUrl];
     
+    NSMutableArray *newImgs = [NSMutableArray new];
     dispatch_group_t group = dispatch_group_create();
     [self.selectedImgResults removeAllObjects];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     for (NSInteger i = 0; i < images.count; i++) {
         dispatch_group_enter(group);
-        [QSNetworking uploadWithImage:images[i] url:url filename:@"file" name:@"file" mimeType:@"image/png" parameters:nil headerParams:nil progress:nil success:^(id response) {
+        UIImage *img = images[i];
+        [QSNetworking uploadWithImage:img url:url filename:@"file" name:@"file" mimeType:@"image/png" parameters:nil headerParams:nil progress:nil success:^(id response) {
             if (response[@"result"]) {
+                [newImgs addObject:img];
                 [self.selectedImgResults addObject:response[@"result"]];
             }
             dispatch_group_leave(group);
@@ -232,8 +235,8 @@
             dispatch_group_leave(group);
         }];
     }
-    dispatch_group_async(group, dispatch_get_main_queue(), ^{
-        [self setPhotos:images];
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        [self setPhotos:newImgs];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     });
 }
