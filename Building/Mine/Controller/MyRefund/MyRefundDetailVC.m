@@ -543,9 +543,11 @@
         make.left.right.equalTo(toView);
     }];
     
+    CGFloat lw = [title sizeWithAttributes:@{NSFontAttributeName: leftLabel.font}].width;
     [leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@19);
         make.top.equalTo(@5);
+        make.width.equalTo(@(lw));
         make.bottom.lessThanOrEqualTo(@-5);
     }];
     
