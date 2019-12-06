@@ -226,12 +226,18 @@
         UILabel *refundTitle = [UILabel title:@"退货退款状态" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         [titleView addSubview:refundTitle];
         
-        UILabel *statusLabel = [UILabel title:[NSString stringWithFormat:@"退货退款状态：%@", [self getStatus:model]] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-        UILabel *reasonLabel = [UILabel title:[NSString stringWithFormat:@"原因：%@", model.refundReason ?: @""] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-        reasonLabel.numberOfLines = 0;
+        UIView *contentView = [UIView new];
+        [view addSubview:contentView];
         
-        [view addSubview:statusLabel];
-        [view addSubview:reasonLabel];
+        [self addRowToView:contentView title:@"退货退款状态：" value:[self getStatus:model] isFirst:YES];
+        [self addRowToView:contentView title:@"原因：" value:model.refundReason ?: @"" isFirst:NO];
+        
+        [contentView.subviews.lastObject mas_remakeConstraints:^(MASConstraintMaker *make) {
+            UIView *v = contentView.subviews[contentView.subviews.count - 2];
+            make.top.equalTo(v.mas_bottom);
+            make.left.right.equalTo(view);
+            make.bottom.equalTo(@-20);
+        }];
         
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(lastView.mas_bottom).offset(10);
@@ -248,18 +254,45 @@
             make.centerY.equalTo(titleView);
         }];
         
-        [statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(titleView.mas_bottom).offset(13);
-            make.left.equalTo(@19);
-            make.right.equalTo(@-19);
+        [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(titleView.mas_bottom);
+            make.left.right.bottom.equalTo(view);
         }];
         
-        [reasonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(statusLabel.mas_bottom).offset(15);
-            make.left.right.equalTo(statusLabel);
-            make.right.equalTo(@-19);
-            make.bottom.equalTo(@-20);
-        }];
+//        UILabel *statusLabel = [UILabel title:[NSString stringWithFormat:@"退货退款状态：%@", [self getStatus:model]] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+//        UILabel *reasonLabel = [UILabel title:[NSString stringWithFormat:@"原因：%@", model.refundReason ?: @""] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
+//        reasonLabel.numberOfLines = 0;
+//
+//        [view addSubview:statusLabel];
+//        [view addSubview:reasonLabel];
+//
+//        [view mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(lastView.mas_bottom).offset(10);
+//            make.left.right.equalTo(self.contentView);
+//        }];
+//
+//        [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.right.left.equalTo(view);
+//            make.height.equalTo(@36);
+//        }];
+//
+//        [refundTitle mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.equalTo(@19);
+//            make.centerY.equalTo(titleView);
+//        }];
+//
+//        [statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(titleView.mas_bottom).offset(13);
+//            make.left.equalTo(@19);
+//            make.right.equalTo(@-19);
+//        }];
+//
+//        [reasonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(statusLabel.mas_bottom).offset(15);
+//            make.left.right.equalTo(statusLabel);
+//            make.right.equalTo(@-19);
+//            make.bottom.equalTo(@-20);
+//        }];
     }
 }
 
@@ -331,7 +364,8 @@
             CGFloat x = 0;
             for (NSInteger i = 0; i < model.returnLogisticsProof.count; i++) {
                 UIImageView *pv = [[UIImageView alloc] initWithFrame:CGRectMake(x, 0, 60, 60)];
-                [pv sd_setImageWithURL:[NSURL URLWithString:model.returnLogisticsProof[i]]];
+                NSString *url = [NSString stringWithFormat:@"%@%@", BaseFileUrl, model.returnLogisticsProof[i]];
+                [pv sd_setImageWithURL:[NSURL URLWithString:url]];
                 [picView addSubview:pv];
                 pv.tag = i;
                 pv.userInteractionEnabled = YES;
@@ -408,13 +442,18 @@
         UILabel *refundTitle = [UILabel title:@"退货信息" txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
         [titleView addSubview:refundTitle];
         
-        UILabel *sallerAddressLabel = [UILabel title:[NSString stringWithFormat:@"卖家收货地址：%@", model.auditSellerInfo] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-        sallerAddressLabel.numberOfLines = 0;
-        UILabel *sallerMsgLabel = [UILabel title:[NSString stringWithFormat:@"卖家留言：%@", model.auditSellerMsg] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-        sallerMsgLabel.numberOfLines = 0;
+        UIView *contentView = [UIView new];
+        [view addSubview:contentView];
         
-        [view addSubview:sallerAddressLabel];
-        [view addSubview:sallerMsgLabel];
+        [self addRowToView:contentView title:@"卖家收货地址：" value:model.auditSellerInfo isFirst:YES];
+        [self addRowToView:contentView title:@"卖家留言：" value:model.auditSellerMsg isFirst:NO];
+        
+        [contentView.subviews.lastObject mas_remakeConstraints:^(MASConstraintMaker *make) {
+            UIView *v = contentView.subviews[contentView.subviews.count - 2];
+            make.top.equalTo(v.mas_bottom);
+            make.left.right.equalTo(view);
+            make.bottom.equalTo(@-20);
+        }];
         
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(lastView.mas_bottom).offset(10);
@@ -431,17 +470,11 @@
             make.centerY.equalTo(titleView);
         }];
         
-        [sallerAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(titleView.mas_bottom).offset(13);
-            make.left.equalTo(@19);
-            make.right.equalTo(@-19);
+        [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(titleView.mas_bottom);
+            make.left.right.bottom.equalTo(view);
         }];
-        
-        [sallerMsgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(sallerAddressLabel.mas_bottom).offset(15);
-            make.left.right.equalTo(sallerAddressLabel);
-            make.bottom.equalTo(@-20);
-        }];
+
     }
 }
 

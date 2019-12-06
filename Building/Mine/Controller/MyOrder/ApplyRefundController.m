@@ -452,7 +452,7 @@
         orderId = self.refundModel.orderId;
     }
     
-    NSMutableDictionary *dict = dict = [@{
+    NSMutableDictionary *dict = [@{
         @"orderId": orderId,
         @"refundAmount": @(value ?: 0),
         @"refundProof": imgs,
