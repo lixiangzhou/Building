@@ -41,6 +41,9 @@
         [contentView addSubview:btn];
         [contentView addSubview:btn2];
         
+        [contentView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:nil action:nil]];
+        [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)]];
+        
         [contentView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.left.right.equalTo(self);
         }];
