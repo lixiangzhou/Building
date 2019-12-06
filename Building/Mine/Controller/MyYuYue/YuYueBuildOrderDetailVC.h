@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 typedef void(^MyYuYueCellCancelBlock)(UIButton *button);
 
-@interface YuYueBuildOrderDetailVC : UIViewController
+@interface YuYueBuildOrderDetailVC : BaseViewController
 @property (nonatomic, copy)  NSString *orderId;//订单ID
 @property (nonatomic, copy) MyYuYueCellCancelBlock cancelBlock;
 @end

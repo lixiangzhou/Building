@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AddAddressVC : UIViewController
+@interface AddAddressVC : BaseViewController
 @property (strong, nonatomic) AddressModel *addressModel;//有则代表是修改地址
 @property (nonatomic, assign)  NSInteger editMode;
 @end

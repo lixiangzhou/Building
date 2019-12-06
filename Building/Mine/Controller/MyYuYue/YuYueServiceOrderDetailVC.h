@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YuYueServiceOrderDetailVC : UIViewController
+@interface YuYueServiceOrderDetailVC : BaseViewController
 @property (nonatomic, copy)  NSString *orderId;//订单ID
 @end
 
