@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BuildAndCropServiceOrderVC : UIViewController
+@interface BuildAndCropServiceOrderVC : BaseViewController
 @property (strong, nonatomic) ServiceDetailModel *detailModel;
 @end
 

@@ -1080,7 +1080,18 @@ static inline NSString *cachePath() {
 
 + (void)successResponse:(id)responseData callback:(QSResponseSuccess)success {
   if (success) {
-    success([self tryToParseData:responseData]);
+      id response = [self tryToParseData:responseData];
+      
+      if ([response[@"code"] integerValue] == 1040) {
+          [GlobalConfigClass shareMySingle].userAndTokenModel = nil;
+          UITabBarController *tabBarVC = (UITabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+          UINavigationController *navVC = (UINavigationController *)tabBarVC.selectedViewController;
+          
+          LoginViewController * loginVC = [[LoginViewController alloc] init];
+          [loginVC setHidesBottomBarWhenPushed:YES];
+          [navVC pushViewController:loginVC animated:YES];
+      }
+    success(response);
   }
 }
 

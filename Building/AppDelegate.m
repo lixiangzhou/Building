@@ -100,6 +100,7 @@
             [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
                 NSLog(@"result = %@",resultDic);
                 [HomeNetworkService analysisAlipayWithCallBackResult:resultDic success:^(NSString *msg, BOOL isOK) {
+                    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"AlipaySuccessNotification" object:nil]];
                     [[PayManager shared] showAlert:msg isOK:isOK];
                 }];
             }];
@@ -124,6 +125,7 @@
             case WXSuccess:
                 strMsg = @"支付成功！";
                 NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"WxpaySuccessNotification" object:nil]];
                 break;
                 
             default:

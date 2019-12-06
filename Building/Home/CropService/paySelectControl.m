@@ -52,6 +52,11 @@
     [super awakeFromNib];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)commonInit
 {
     if ([GlobalConfigClass shareMySingle].userAndTokenModel == nil) {//未登录
@@ -59,6 +64,9 @@
     } else {
         self.token = [GlobalConfigClass shareMySingle].userAndTokenModel.token;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hide) name:@"AlipaySuccessNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hide) name:@"WxpaySuccessNotification" object:nil];
 
     //self.paySelectView = [[UIView alloc] init];
     self.paySelectView.alpha = 1;
@@ -163,6 +171,7 @@
             [HomeNetworkService analysisAlipayWithCallBackResult:resultDic success:^(NSString *msg, BOOL isOK) {
                 [[PayManager shared] showAlert:msg isOK:isOK];
             }];
+            [self.pscd coverViewTapActionOfpsOkView];
         }];
         
         [self.pscd coverViewTapActionOfpsView];
