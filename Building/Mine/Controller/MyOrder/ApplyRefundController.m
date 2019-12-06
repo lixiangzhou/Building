@@ -51,7 +51,7 @@
     
     UIView *stateView = [self addStateView];
     
-    NSArray *temp = [self addInputViewWithTitle:@"退款原因" placeholder:@"必选"];
+    NSArray *temp = [self addInputViewWithTitle:@"退款原因" placeholder:@"必填"];
     UIView *reasonView = temp[0];
     self.reasonView = temp[1];
     

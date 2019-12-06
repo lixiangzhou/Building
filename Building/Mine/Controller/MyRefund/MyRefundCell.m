@@ -114,7 +114,7 @@
             break;
         case 8:
             self.orderStatuLabel.text = @"已拒绝";
-            if (model.refundType == 2) {
+            if (model.refundType == 3) {
                 [self addActions:@[self.serviceBtn]];
             }
             break;

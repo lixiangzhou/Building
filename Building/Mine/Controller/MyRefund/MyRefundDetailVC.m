@@ -174,12 +174,17 @@
     [self addRowToView:contentView title:@"支付时间：" value:model.payTime isFirst:NO];
     [self addRowToView:contentView title:@"申请退款时间：" value:model.refundApplyTime isFirst:NO];
     
-    if (model.auditTime) {
-        [self addRowToView:contentView title:@"审核通过时间：" value:model.auditTime isFirst:NO];
-    }
-    
-    if (model.refundPayTime) {
-        [self addRowToView:contentView title:@"退款时间：" value:model.refundPayTime isFirst:NO];
+    if ([model.refundStatus integerValue] == 2 && (model.refundType == 2 || model.refundType == 3)) {
+        [self addRowToView:contentView title:@"审核失败时间：" value:model.auditTime isFirst:NO];
+        [self addRowToView:contentView title:@"审核失败原因：" value:model.auditMsg isFirst:NO];
+    } else {
+        if (model.auditTime) {
+            [self addRowToView:contentView title:@"审核通过时间：" value:model.auditTime isFirst:NO];
+        }
+        
+        if (model.refundPayTime) {
+            [self addRowToView:contentView title:@"退款时间：" value:model.refundPayTime isFirst:NO];
+        }
     }
     
     [contentView.subviews.lastObject mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -258,41 +263,6 @@
             make.top.equalTo(titleView.mas_bottom);
             make.left.right.bottom.equalTo(view);
         }];
-        
-//        UILabel *statusLabel = [UILabel title:[NSString stringWithFormat:@"退货退款状态：%@", [self getStatus:model]] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-//        UILabel *reasonLabel = [UILabel title:[NSString stringWithFormat:@"原因：%@", model.refundReason ?: @""] txtColor:UIColorFromHEX(0x6E6E6E) font:UIFontWithSize(13)];
-//        reasonLabel.numberOfLines = 0;
-//
-//        [view addSubview:statusLabel];
-//        [view addSubview:reasonLabel];
-//
-//        [view mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.equalTo(lastView.mas_bottom).offset(10);
-//            make.left.right.equalTo(self.contentView);
-//        }];
-//
-//        [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.right.left.equalTo(view);
-//            make.height.equalTo(@36);
-//        }];
-//
-//        [refundTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.equalTo(@19);
-//            make.centerY.equalTo(titleView);
-//        }];
-//
-//        [statusLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.equalTo(titleView.mas_bottom).offset(13);
-//            make.left.equalTo(@19);
-//            make.right.equalTo(@-19);
-//        }];
-//
-//        [reasonLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.equalTo(statusLabel.mas_bottom).offset(15);
-//            make.left.right.equalTo(statusLabel);
-//            make.right.equalTo(@-19);
-//            make.bottom.equalTo(@-20);
-//        }];
     }
 }
 
@@ -802,7 +772,7 @@
         case 7:
             break;
         case 8:
-            if (model.refundType == 2) {
+            if (model.refundType == 3) {
                 [self addActions:@[self.serviceBtn]];
             }
             break;
