@@ -97,7 +97,7 @@
     [self.logisticsProofArray enumerateObjectsUsingBlock:^(NSString *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         // 网络图片
         YBIBImageData *data = [YBIBImageData new];
-        data.imageURL = [NSURL URLWithString:obj];
+        data.imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BaseFileUrl, obj]];
         data.projectiveView = tap.view;
         [datas addObject:data];
     }];
@@ -114,7 +114,7 @@
     [self.refundProofArray enumerateObjectsUsingBlock:^(NSString *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         // 网络图片
         YBIBImageData *data = [YBIBImageData new];
-        data.imageURL = [NSURL URLWithString:obj];
+        data.imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BaseFileUrl, obj]];
         data.projectiveView = tap.view;
         [datas addObject:data];
     }];
@@ -174,7 +174,7 @@
     [self addRowToView:contentView title:@"支付时间：" value:model.payTime isFirst:NO];
     [self addRowToView:contentView title:@"申请退款时间：" value:model.refundApplyTime isFirst:NO];
     
-    if ([model.refundStatus integerValue] == 2 && (model.refundType == 2 || model.refundType == 3)) {
+    if ([model.refundStatus integerValue] == 2) {
         [self addRowToView:contentView title:@"审核失败时间：" value:model.auditTime isFirst:NO];
         [self addRowToView:contentView title:@"审核失败原因：" value:model.auditMsg isFirst:NO];
     } else {
