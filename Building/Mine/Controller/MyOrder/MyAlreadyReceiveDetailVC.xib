@@ -457,6 +457,13 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X6p-Af-vZW">
                             <rect key="frame" x="0.0" y="519" width="375" height="100"/>
                             <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="163-uv-zmH">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                    <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="Cv7-Yg-UJH"/>
+                                    </constraints>
+                                </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="brI-fD-hhi">
                                     <rect key="frame" x="23" y="17" width="200" height="18"/>
                                     <constraints>
@@ -471,8 +478,11 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="100" id="8IR-m5-C63"/>
+                                <constraint firstAttribute="trailing" secondItem="163-uv-zmH" secondAttribute="trailing" id="NFe-Th-Yx1"/>
                                 <constraint firstItem="brI-fD-hhi" firstAttribute="top" secondItem="X6p-Af-vZW" secondAttribute="top" constant="17" id="Trf-VL-VIi"/>
                                 <constraint firstItem="brI-fD-hhi" firstAttribute="leading" secondItem="X6p-Af-vZW" secondAttribute="leading" constant="23" id="fzl-LF-F4M"/>
+                                <constraint firstItem="163-uv-zmH" firstAttribute="leading" secondItem="X6p-Af-vZW" secondAttribute="leading" id="tf9-pz-xej"/>
+                                <constraint firstItem="163-uv-zmH" firstAttribute="top" secondItem="X6p-Af-vZW" secondAttribute="top" id="y3r-vN-BC1"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -519,13 +529,6 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
             <point key="canvasLocation" x="952.79999999999995" y="89.505247376311857"/>
-        </view>
-        <view contentMode="scaleToFill" id="Px3-73-dmr">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-            <viewLayoutGuide key="safeArea" id="Wfr-Ed-OYE"/>
-            <point key="canvasLocation" x="946" y="752"/>
         </view>
     </objects>
 </document>

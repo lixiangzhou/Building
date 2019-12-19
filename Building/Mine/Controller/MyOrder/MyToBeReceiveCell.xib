@@ -191,7 +191,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="refundClick:" destination="fXl-G9-yzt" eventType="touchUpInside" id="Btx-qY-g7m"/>
+                                    <action selector="refundClick:" destination="fXl-G9-yzt" eventType="touchUpInside" id="4s1-si-Ki5"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFj-QP-CXX">
@@ -206,7 +206,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="confirmClick:" destination="fXl-G9-yzt" eventType="touchUpInside" id="7sc-MZ-iAv"/>
+                                    <action selector="confirmClick:" destination="fXl-G9-yzt" eventType="touchUpInside" id="Yz6-ZW-nSA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -247,16 +247,16 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="ygo-e2-QdC"/>
             <connections>
-                <outlet property="amountLabel" destination="Kic-Uc-PwF" id="iXp-q4-ZQP"/>
-                <outlet property="companyLabel" destination="6vi-Me-3MH" id="lEC-lm-FRb"/>
-                <outlet property="confirmBtn" destination="yFj-QP-CXX" id="dPq-xj-djV"/>
-                <outlet property="countLabel" destination="H4m-0d-CN6" id="Kt7-o6-9aj"/>
-                <outlet property="nameLabel" destination="tdX-6w-aeW" id="s4I-I8-pJr"/>
-                <outlet property="orderSnLabel" destination="cn1-dk-czb" id="4A2-fh-1Ha"/>
-                <outlet property="priceLabel" destination="eEd-RA-gNj" id="iB1-z8-8Pv"/>
-                <outlet property="productView" destination="FWe-bP-YsA" id="4X2-AR-ZIn"/>
-                <outlet property="refundBtn" destination="6U3-b3-KhM" id="fiH-zH-pWc"/>
-                <outlet property="skuLabel" destination="P56-2F-ZVQ" id="t7m-AH-2BV"/>
+                <outlet property="amountLabel" destination="Kic-Uc-PwF" id="iZI-0n-Mp3"/>
+                <outlet property="companyLabel" destination="6vi-Me-3MH" id="Zah-WV-naQ"/>
+                <outlet property="confirmBtn" destination="yFj-QP-CXX" id="dwu-nw-A4b"/>
+                <outlet property="countLabel" destination="H4m-0d-CN6" id="CuG-2k-p01"/>
+                <outlet property="nameLabel" destination="tdX-6w-aeW" id="Rpn-Tf-wjs"/>
+                <outlet property="orderSnLabel" destination="cn1-dk-czb" id="gFK-hc-Skv"/>
+                <outlet property="priceLabel" destination="eEd-RA-gNj" id="VuD-Nz-4Dc"/>
+                <outlet property="productView" destination="FWe-bP-YsA" id="HH6-LD-pe2"/>
+                <outlet property="refundBtn" destination="6U3-b3-KhM" id="SIj-wL-Soz"/>
+                <outlet property="skuLabel" destination="P56-2F-ZVQ" id="g9M-E4-zBM"/>
             </connections>
             <point key="canvasLocation" x="37.600000000000001" y="37.781109445277366"/>
         </tableViewCell>
