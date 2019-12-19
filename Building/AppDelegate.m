@@ -13,9 +13,10 @@
 #import "WxApi.h"
 #import "PayManager.h"
 #import "WRNavigationBar.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate ()
-
+@property (strong, nonatomic) CLLocationManager *locationMgr;
 @end
 
 @implementation AppDelegate
@@ -42,6 +43,11 @@
                                                                 @"TZPhotoPreviewController",
                                                                 @"TZVideoPlayerController"]];
     [SVProgressHUD setMaximumDismissTimeInterval:2];
+    
+    if ([CLLocationManager locationServicesEnabled]) {
+        self.locationMgr = [CLLocationManager new];
+        [self.locationMgr requestWhenInUseAuthorization];
+    }
     //百度定位
     [[BMKLocationAuth sharedInstance] checkPermisionWithKey:BMK_AK authDelegate:nil];
     //要使用百度地图，请先启动BaiduMapManager

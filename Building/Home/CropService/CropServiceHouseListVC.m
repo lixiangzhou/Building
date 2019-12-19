@@ -88,7 +88,7 @@
     self.sortArr = @[@"默认", @"发布 新->旧", @"价格 低->高", @"价格 高->低"];
     self.zhujinArr = @[@"不限", @"1500以下", @"1500-2500", @"2500-3500", @"3500-4500", @"4500以上"];
     
-    CJDropDownMenuView *menuView = [[CJDropDownMenuView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 47) titleArr:@[@"区域", @"租金", @"默认"]];
+    CJDropDownMenuView *menuView = [[CJDropDownMenuView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 47) titleArr:@[@"区域", @"金额", @"默认"]];
     menuView.delegate = self;
     menuView.backgroundColor = [UIColor whiteColor];
     self.sectionView = menuView;

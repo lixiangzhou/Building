@@ -29,6 +29,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property(nonatomic,copy)NSString *token;
 
+@property (weak, nonatomic) IBOutlet UIView *wuliuView;
+@property (weak, nonatomic) IBOutlet UILabel *wuliuCompanyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *wuliuNoLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *wuliuHeightConstraint;
+
 @end
 
 @implementation MyToBeReceiveDetailVC
@@ -94,6 +99,15 @@
         expect = [self.addressLabel sizeThatFits:size];
         self.addressLabel.frame = CGRectMake( self.addressLabel.frame.origin.x, self.addressLabel.frame.origin.y, expect.width, expect.height );
         
+        if (model.logisticsCompany.length && model.logisticsDocument.length) {
+            self.wuliuView.hidden = NO;
+            self.wuliuHeightConstraint.constant = 75;
+            self.wuliuCompanyLabel.text = [NSString stringWithFormat:@"物流公司：%@", model.logisticsCompany];
+            self.wuliuNoLabel.text = [NSString stringWithFormat:@"物流单号：%@", model.logisticsDocument];
+        } else {
+            self.wuliuView.hidden = YES;
+            self.wuliuHeightConstraint.constant = 0;
+        }
     } failure:^(id  _Nonnull response) {
         [wself showHint:response];
     }];

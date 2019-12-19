@@ -39,6 +39,7 @@
     
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.tableView registerNib:[UINib nibWithNibName:@"MyToBeReceiveCell" bundle:nil] forCellReuseIdentifier:@"MyToBeReceiveCell"];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         self.page = 1;
         self.tableView.mj_footer.hidden = YES;
@@ -145,6 +146,7 @@
     [refundParams setObject:@"REFUND" forKey:@"operate"];
     [refundParams setObject:model.idStr forKey:@"orderId"];
     MyToBeReceiveCell *cell = (MyToBeReceiveCell *)[self getCellFromXibName:MyToBeReceiveCellXibName dequeueTableView:tableView];
+//    MyToBeReceiveCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyToBeReceiveCell" forIndexPath:indexPath];
     cell.model = model;
     cell.refundBlock=^(UIButton *btn){
         __weak __typeof__ (self) wself = self;

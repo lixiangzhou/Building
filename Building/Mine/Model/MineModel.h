@@ -273,6 +273,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,copy)NSString *receiveTime;//收货时间
 @property(nonatomic,copy)NSString *receiver;//收货人
 @property(nonatomic,copy)NSString *supplierName;//供应商
+@property(nonatomic,copy)NSString *logisticsCompany;//物流公司
+@property(nonatomic,copy)NSString *logisticsDocument;//物流单号
+
 @end
 
 //委托出租列表

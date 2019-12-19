@@ -89,9 +89,12 @@
     }
     
     __weak __typeof__ (self) wself = self;
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [MineNetworkService addAddressWithParams:params headerParams:paramsHeader Success:^(NSInteger code) {
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         [wself.navigationController popViewControllerAnimated:YES];
     } failure:^(id  _Nonnull response) {
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         [wself showHint:response];
     }];
 }
@@ -115,9 +118,12 @@
     }
     
     __weak __typeof__ (self) wself = self;
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     [MineNetworkService updateAddressWithParams:params headerParams:paramsHeader Success:^(NSInteger code) {
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         [wself.navigationController popViewControllerAnimated:YES];
     } failure:^(id  _Nonnull response) {
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         [wself showHint:response];
     }];
     
