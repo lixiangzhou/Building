@@ -792,18 +792,23 @@
 - (void)configDragView{
     //创建拖拽视图
     if ([GlobalConfigClass shareMySingle].userAndTokenModel.token!=nil && ([[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqualToString:@"2"] || [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"5"]) && [[GlobalConfigClass shareMySingle].userAndTokenModel.authStatus isEqual:@"9"]) {
-        //NSLog(@"8888888888888888888888888");
-    self.dragView = [[WMDragView alloc] initWithFrame:CGRectMake(0, 150, 50, 50)];
-//    [self.dragView.button setImage:[UIImage imageNamed:@"btn_weituochuzu"] forState:UIControlStateNormal];
-    [self.dragView.button setBackgroundImage:[UIImage imageNamed:@"btn_weituochuzu"] forState:UIControlStateNormal];
-    self.dragView.layer.cornerRadius = 25;
-    self.dragView.isKeepBounds = YES;
-    self.dragView.freeRect = CGRectMake(0, 88, ScreenWidth, ScreenHeight-180);
-    [self.view addSubview:self.dragView];
-    __weak typeof(self) weakSelf = self;
-    self.dragView.clickDragViewBlock = ^(WMDragView *dragView){
-        [weakSelf gainDelegateHouseData];
-    };
-}
+        
+        if (self.dragView == nil) {
+            self.dragView = [[WMDragView alloc] initWithFrame:CGRectMake(0, 150, 50, 50)];
+            //    [self.dragView.button setImage:[UIImage imageNamed:@"btn_weituochuzu"] forState:UIControlStateNormal];
+            [self.dragView.button setBackgroundImage:[UIImage imageNamed:@"btn_weituochuzu"] forState:UIControlStateNormal];
+            self.dragView.layer.cornerRadius = 25;
+            self.dragView.isKeepBounds = YES;
+            self.dragView.freeRect = CGRectMake(0, 88, ScreenWidth, ScreenHeight-180);
+            [self.view addSubview:self.dragView];
+            __weak typeof(self) weakSelf = self;
+            self.dragView.clickDragViewBlock = ^(WMDragView *dragView){
+                [weakSelf gainDelegateHouseData];
+            };
+        }
+    } else {
+        [self.dragView removeFromSuperview];
+        self.dragView = nil;
+    }
 }
 @end

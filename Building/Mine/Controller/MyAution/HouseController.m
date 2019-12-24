@@ -44,7 +44,7 @@
 @property(nonatomic,strong)roomNoListModel      *roomNoListData;
 
 @property(nonatomic,strong)NSMutableArray *nameArray;
-@property (nonatomic, strong) NSMutableArray<selectedHouseModel *> *dataArray;
+//@property (nonatomic, strong) NSMutableArray<selectedHouseModel *> *dataArray;
 @property(nonatomic,strong)selectedHouseModel *sha;
 @property (weak, nonatomic) IBOutlet UIView *houseView;
 
@@ -76,7 +76,7 @@ static UITextField *txzw;
     self.unitNoArray=[[NSMutableArray alloc] init];
     self.floorNoArray=[[NSMutableArray alloc] init];
     self.roomNoArray=[[NSMutableArray alloc] init];
-    self.dataArray=[[NSMutableArray alloc]init];
+//    self.dataArray=[[NSMutableArray alloc]init];
     self.sha = [[selectedHouseModel alloc]init];
     
     
@@ -746,7 +746,7 @@ static UITextField *txzw;
     
     [self.idArray removeObjectAtIndex:tag];
     [self.nameArray removeObjectAtIndex:tag];
-    [self.dataArray removeObjectAtIndex:tag];
+//    [self.dataArray removeObjectAtIndex:tag];
     self.roomNoMenu.selectNumber = -1;
     
     for (UIView *view in [lui subviews]){
@@ -770,7 +770,7 @@ static UITextField *txzw;
 
 - (void)tableArrayAdd:(selectedHouseModel *) sh ui:(UIView *)views{
     //NSLog(@"tableArrayAdd sh:%@,%@", sh.title, sh.houseId );
-    [self.dataArray addObject:(selectedHouseModel *)sh];
+//    [self.dataArray addObject:(selectedHouseModel *)sh];
     NSUInteger n = 0;
     if( self.idArray.count > 0 )
         n = self.idArray.count - 1;
