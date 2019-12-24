@@ -258,7 +258,7 @@
     
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    self.dragView.hidden=YES;
+//    self.dragView.hidden=YES;
 }
 
 #pragma mark - requests
@@ -805,6 +805,8 @@
             self.dragView.clickDragViewBlock = ^(WMDragView *dragView){
                 [weakSelf gainDelegateHouseData];
             };
+        } else {
+            [self.view bringSubviewToFront:self.dragView];
         }
     } else {
         [self.dragView removeFromSuperview];
