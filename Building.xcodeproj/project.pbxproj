@@ -145,8 +145,6 @@
 		1002D4C92243758C003DBB62 /* launchlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1002D4C62243758C003DBB62 /* launchlogo.png */; };
 		1002D4CA2243758C003DBB62 /* launchlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1002D4C72243758C003DBB62 /* launchlogo@2x.png */; };
 		101015B5220085D50005CD9F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 101015B4220085D50005CD9F /* AppDelegate.m */; };
-		101015B8220085D50005CD9F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 101015B7220085D50005CD9F /* ViewController.m */; };
-		101015BB220085D50005CD9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 101015B9220085D50005CD9F /* Main.storyboard */; };
 		101015BD220085D70005CD9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 101015BC220085D70005CD9F /* Assets.xcassets */; };
 		101015C0220085D70005CD9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 101015BE220085D70005CD9F /* LaunchScreen.storyboard */; };
 		101015C3220085D70005CD9F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 101015C2220085D70005CD9F /* main.m */; };
@@ -492,9 +490,6 @@
 		101015B0220085D50005CD9F /* Building.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Building.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		101015B3220085D50005CD9F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		101015B4220085D50005CD9F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		101015B6220085D50005CD9F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		101015B7220085D50005CD9F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		101015BA220085D50005CD9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		101015BC220085D70005CD9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		101015BF220085D70005CD9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		101015C1220085D70005CD9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -975,15 +970,12 @@
 				101015ED220086870005CD9F /* Service */,
 				101015B3220085D50005CD9F /* AppDelegate.h */,
 				101015B4220085D50005CD9F /* AppDelegate.m */,
-				101015B6220085D50005CD9F /* ViewController.h */,
-				101015B7220085D50005CD9F /* ViewController.m */,
-				101015B9220085D50005CD9F /* Main.storyboard */,
-				101015BC220085D70005CD9F /* Assets.xcassets */,
 				1002D4AC22437516003DBB62 /* launchScreenImage */,
 				101015BE220085D70005CD9F /* LaunchScreen.storyboard */,
+				101015BC220085D70005CD9F /* Assets.xcassets */,
 				101015C1220085D70005CD9F /* Info.plist */,
-				1002D47E223CA017003DBB62 /* readme.txt */,
 				101015FB220086870005CD9F /* PrefixHeader.pch */,
+				1002D47E223CA017003DBB62 /* readme.txt */,
 				101015C2220085D70005CD9F /* main.m */,
 			);
 			path = Building;
@@ -1816,7 +1808,6 @@
 				102601D722282CE400864F14 /* YuYueOrderVC.xib in Resources */,
 				102601BE2222D6BB00864F14 /* BuildServiceHouseListVC.xib in Resources */,
 				1026025D2231666A00864F14 /* ServiceBuyView.xib in Resources */,
-				101015BB220085D50005CD9F /* Main.storyboard in Resources */,
 				1002D477223C9E4D003DBB62 /* AuthHeaderView.xib in Resources */,
 				101015FF220086870005CD9F /* HouseResourceViewController.xib in Resources */,
 				04CD1AB1224381AB00C45BF2 /* MyToBeShipDetailVC.xib in Resources */,
@@ -1945,7 +1936,6 @@
 				04CD1AAA224381AB00C45BF2 /* MyAlreadyReceiveDetailVC.m in Sources */,
 				102602672232C00500864F14 /* AddressListVC.m in Sources */,
 				10E067F722753D51006AD683 /* MonthTimePicker.m in Sources */,
-				101015B8220085D50005CD9F /* ViewController.m in Sources */,
 				1001C2822239590B00BB06E4 /* ServiceYuYueView.m in Sources */,
 				1026019622218EDA00864F14 /* ServiceViewController.m in Sources */,
 				1029E843220594ED00E987A7 /* RSAEncode.m in Sources */,
@@ -2099,14 +2089,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		101015B9220085D50005CD9F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				101015BA220085D50005CD9F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		101015BE220085D70005CD9F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
