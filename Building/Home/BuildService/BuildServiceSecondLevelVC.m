@@ -10,6 +10,7 @@
 #import "CJMenuSelectOneConCell.h"
 #import "FYServiceSecondLevelCollectionCell.h"
 #import "BuildServiceHouseListVC.h"
+#import "WMDragViewManager.h"
 
 #define FYServiceSecondLevelCellHeight       49
 #define FYServiceSecondLevelCellXibName                @"CJMenuSelectOneConCell"
@@ -25,6 +26,7 @@ static NSInteger itemNumOfSection = 2;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray *datasource;
 @property (nonatomic, assign) float collectionItemWidth;
+@property (nonatomic, strong) WMDragViewManager *dragViewManager;
 @end
 
 @implementation BuildServiceSecondLevelVC
@@ -53,6 +55,12 @@ static NSInteger itemNumOfSection = 2;
 //    }];
     
     [self gainFYServiceSecondLevelVCData];
+    self.dragViewManager = [WMDragViewManager new];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.dragViewManager showDragViewFrom:self];
 }
 
 #pragma mark - requests
