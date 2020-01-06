@@ -178,7 +178,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = [indexPath row];
     if (tableView == self.leftTableView) {//左侧
-        if (self.leftSelectedRow == row) {//选中了当前行，什么也不用做
+        if (self.leftSelectedRow == row && row != 0) {//选中了当前行，什么也不用做
             return;
         }
         
