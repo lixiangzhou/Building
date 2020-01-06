@@ -191,18 +191,31 @@
         self.leftSelectedRow = row;
         self.rightTableViewArr = [[NSMutableArray alloc] init];
         if (0 == row) {//不限
+            
             NSMutableArray *array = [NSMutableArray new];
             [array addObjectsFromArray:self.currentCityModel.countryInfoList];
             [array addObjectsFromArray:self.currentCityModel.metroList];
+            // 全部默认不选择
+            for (FYShangQuanCountryModel *model in array) {
+                model.isSelect = NO;
+            }
             
             self.centerTableViewArr = array;
         } else if (1 == row) {//商圈
+            // 默认选择第一项
+            for (NSInteger i = 0; i < self.currentCityModel.countryInfoList.count; i++) {
+                FYShangQuanCountryModel *model = self.currentCityModel.countryInfoList[i];
+                model.isSelect = i == 0;
+            }
             self.centerTableViewArr = self.currentCityModel.countryInfoList;
         } else {//地铁
+            // 默认选择第一项
             self.centerTableViewArr = self.currentCityModel.metroList;
-        }
-        for (FYShangQuanCountryModel *model in self.centerTableViewArr) {
-            model.isSelect = NO;
+            
+            for (NSInteger i = 0; i < self.currentCityModel.metroList.count; i++) {
+                FYShangQuanMetroModel *model = self.currentCityModel.metroList[i];
+                model.isSelect = i == 0;
+            }
         }
         
         [self.leftTableView reloadData];
@@ -215,7 +228,7 @@
             model.isSelect = NO;
         }
         model.isSelect = YES;
-        
+
         if ([model isKindOfClass:[FYShangQuanMetroModel class]]) {
             self.metro = ((FYShangQuanMetroModel *)model).metroName;
             self.countryModel = nil;
@@ -226,6 +239,18 @@
             self.countryModel = model;
             self.tradingModel = nil;
             self.rightTableViewArr = model.tradingInfoList;
+            
+            if (self.leftSelectedRow == 0) { // 不限
+                // 默认都不选中
+                for (FYShangQuanTradingModel *m in model.tradingInfoList) {
+                    m.isSelect = NO;
+                }
+            } else { // 商圈 和 地铁
+                // 默认选中第一项
+                for (NSInteger i = 0; i < model.tradingInfoList.count; i++) {
+                    model.tradingInfoList[i].isSelect = i == 0;
+                }
+            }
         }
         
         [self.leftTableView reloadData];

@@ -791,7 +791,7 @@
 
 - (void)configDragView{
     //创建拖拽视图
-    if ([GlobalConfigClass shareMySingle].userAndTokenModel.token!=nil && ([[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqualToString:@"2"] || [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"5"]) && [[GlobalConfigClass shareMySingle].userAndTokenModel.authStatus isEqual:@"9"]) {
+    if ([GlobalConfigClass shareMySingle].userAndTokenModel.token!=nil && [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqualToString:@"2"] && [[GlobalConfigClass shareMySingle].userAndTokenModel.authStatus isEqual:@"9"]) {
         
         if (self.dragView == nil) {
             self.dragView = [[WMDragView alloc] initWithFrame:CGRectMake(0, 150, 50, 50)];
