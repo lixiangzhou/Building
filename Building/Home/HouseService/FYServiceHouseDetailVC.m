@@ -15,6 +15,7 @@
 #include <libxml2/libxml/tree.h>
 #import "bsDescription.h"
 #import "FYServiceMoreViewController.h"
+#import "WMDragViewManager.h"
 
 @interface FYServiceHouseDetailVC ()<SDCycleScrollViewDelegate, BMKMapViewDelegate>
 @property (strong, nonatomic) FYServiceDetailModel *detailModel;
@@ -73,6 +74,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *houseZhiNanTitleLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 //@property (nonatomic, strong) BMKMapView *mapView;//地图
+@property (nonatomic, strong) WMDragViewManager *dragViewManager;
 @end
 
 @implementation FYServiceHouseDetailVC
@@ -126,8 +128,20 @@
 
     //获取数据
     [self gainFYServiceSecondLevelVCData];
+    self.dragViewManager = [WMDragViewManager new];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.dragViewManager showDragViewFrom:self];
+    [self.dituSupperView viewWillAppear];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.dituSupperView viewWillDisappear];
+}
 
 #pragma mark - Actions
 -(void) labelTouchUpInside:(UITapGestureRecognizer *)recognizer{
@@ -136,18 +150,6 @@
     bsd.mydescription = self.mydescriptionStr;
     [bsd setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:bsd animated:YES];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.dituSupperView viewWillAppear];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.dituSupperView viewWillDisappear];
 }
 
 #pragma mark - SDCycleScrollViewDelegate

@@ -14,6 +14,7 @@
 #import "FYCommonModel.h"
 #import "FYServiceHouseDetailVC.h"
 #import "EmptyView.h"
+#import "WMDragViewManager.h"
 
 #define FangYuanCellXibName       @"FangYuanCell"
 #define FangYuanCellSectionHeight       47
@@ -52,6 +53,7 @@
 @property (nonatomic, strong) NSArray *sortArr;
 @property (nonatomic, strong) NSArray *zhujinArr;
 @property (weak, nonatomic) EmptyView *emptyView;
+@property (nonatomic, strong) WMDragViewManager *dragViewManager;
 @end
 
 @implementation FYServiceHouseListVC
@@ -114,7 +116,15 @@
     
     //请求数据
     [self gainCityShangQuanList];
+    
+    self.dragViewManager = [WMDragViewManager new];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.dragViewManager showDragViewFrom:self];
+}
+
 
 - (void)setUpNav
 {

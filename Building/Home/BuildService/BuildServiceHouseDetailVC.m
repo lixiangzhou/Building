@@ -17,6 +17,7 @@
 #import "FYServiceMoreViewController.h"
 #include <libxml2/libxml/parser.h>
 #include <libxml2/libxml/tree.h>
+#import "WMDragViewManager.h"
 
 @interface BuildServiceHouseDetailVC ()<SDCycleScrollViewDelegate, ServiceBuyViewDelegate, ServiceYuYueViewDelegate>
 @property (strong, nonatomic) ServiceDetailModel *detailModel;
@@ -40,6 +41,7 @@
 @property (strong, nonatomic) SDCycleScrollView *cycleScrollView;
 
 @property (nonatomic, copy)  NSString  * mydescriptionStr;//产品描述
+@property (nonatomic, strong) WMDragViewManager *dragViewManager;
 
 @end
 
@@ -87,6 +89,12 @@
     [self.desview sizeToFit];
     //获取数据
     [self gainBuildServiceDetailVCData];
+    self.dragViewManager = [WMDragViewManager new];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.dragViewManager showDragViewFrom:self];
 }
 
 #pragma mark - SDCycleScrollViewDelegate

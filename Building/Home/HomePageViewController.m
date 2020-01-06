@@ -20,8 +20,7 @@
 //#import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
 //#import <BaiduMapAPI_Search/BMKSearchComponent.h>//引入检索功能所有的头文件
 #import "SelectLocationCityVC.h"
-#import "WMDragView.h"//拖拽视图
-#import "DelegateToSaleView.h"
+#import "WMDragViewManager.h"
 #import "LoginViewController.h"
 #import "EmptyView.h"
 
@@ -59,9 +58,7 @@
 @property (strong, nonatomic) NSArray <FYProvinceModel *> *provinceList;
 @property (strong, nonatomic) NSMutableDictionary *cityDic;//城市分组
 
-@property(nonatomic, strong) WMDragView *dragView;//拖拽视图
-
-@property (nonatomic, strong) DelegateToSaleView *delegateView;//委托视图
+@property (nonatomic, strong) WMDragViewManager *dragViewManager;
 @property (weak, nonatomic) IBOutlet UIButton *moreFangYuanButon;
 @property (weak, nonatomic) IBOutlet UIButton *moreLouYuButon;
 @property (weak, nonatomic) IBOutlet UIButton *moreiYeButon;
@@ -69,8 +66,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *moreFyimg;
 @property (weak, nonatomic) IBOutlet UIImageView *moreLyImg;
 @property (weak, nonatomic) IBOutlet UIImageView *moreQyImg;
-//@property (weak, nonatomic) IBOutlet UIImageView *locationImg;
-//@property (weak, nonatomic) IBOutlet UILabel *locationCityLabal;
 @property (nonatomic, strong ) UILabel *mapCityLabal;
 @property (assign, nonatomic) int navBarHeight;
     
@@ -193,9 +188,7 @@
     self.cycleScrollView.currentPageDotColor = BAR_TINTCOLOR;
     
     //拖拽视图
-    //ygz test
-    [self configDragView];
-    [self configdelegateViewTo];
+    self.dragViewManager = [WMDragViewManager new];
     
     //请求网络
     //ygz test
@@ -231,34 +224,14 @@
     [self gainHomeServiceList];
     
     // 拖拽视图
-    //ygz test
-    [self configDragView];
-    [self configdelegateViewTo];
+    [self.dragViewManager showDragViewFrom:self];
     
-}
-
-- (void)configdelegateViewTo{
-    //委托视图
-    self.delegateView = [[DelegateToSaleView alloc] init];
-    self.delegateView.hidden = YES;
-    self.delegateView.delegate = self;
-    //self.delegateView.backgroundColor = [UIColor redColor];
-    self.delegateView.frame = CGRectMake(0, 0, ScreenWidth, 430);
-    [self.view addSubview:self.delegateView];
-    [self.delegateView mas_makeConstraints:^(MASConstraintMaker *make) {
-        //        make.edges.mas_equalTo(weakSelf.cycleSuperView);
-        make.bottom.mas_equalTo(self.view.mas_bottom);
-        make.left.mas_equalTo(self.view.mas_left);
-        make.right.mas_equalTo(self.view.mas_right);
-        make.height.mas_equalTo(self.view.mas_height);
-    }];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-//    self.dragView.hidden=YES;
 }
 
 #pragma mark - requests
@@ -288,12 +261,7 @@
 
 //首页服务列表
 - (void)gainHomeServiceList{
-    //NSLog(@"gainHomeServiceList");
-    //NSLog(@"gainHomeServiceList cityId:%@", [GlobalConfigClass shareMySingle].cityModel.cityId );
     __weak typeof(self) weakSelf = self;
-//    [weakSelf.choiceFYModelArr removeAllObjects];
-//    [weakSelf.choiceLYModelArr removeAllObjects];
-//    [weakSelf.choiceQYModelArr removeAllObjects];
 
     [HomeNetworkService getHomeServiceListSuccess:^(HomeServiceModel *serviceInfo) {
         [self.myScrollView.mj_header endRefreshing];
@@ -470,10 +438,6 @@
             cityItem.pinyin = @"nanjing";
             GlobalConfigClass *configer = [GlobalConfigClass shareMySingle];
             configer.cityModel = cityItem;
-            //[GlobalConfigClass shareMySingle].cityModel.cityId = @"1";
-            //[GlobalConfigClass shareMySingle].cityModel.cityName = @"北京";
-            //[GlobalConfigClass shareMySingle].cityModel.pinyin = @"beijing";
-            //NSLog(@"configer.cityModel:%@", [GlobalConfigClass shareMySingle].cityModel.cityId );
             self.mapCityLabal.text = cityItem.cityName;
             [self gainBannerData];
             [self gainHomeServiceList];
@@ -482,63 +446,6 @@
         
     }];
 }
-
-//获取委托的可选数据
-- (void)gainDelegateHouseData{
-    __weak typeof(self) weakSelf = self;
-    [HomeNetworkService gainDelegateHouseDataSuccess:^(DelegateModel *response) {
-        weakSelf.delegateView.hidden = NO;
-        weakSelf.tabBarController.tabBar.hidden = YES;
-        weakSelf.delegateView.delegateModel = response;
-        //NSLog(@"delegateModel:%@", weakSelf.delegateView.delegateModel );
-    } failure:^(NSString *response) {
-        [self showHint:response];
-    }];
-}
-
-//增加新的委托
-- (void)requestCreateDelegateHouseData:(NSMutableDictionary *)params{
-    __weak __typeof__ (self) wself = self;
-    [HomeNetworkService requestCreateDelegateHouseData:params Success:^(NSInteger code) {
-        [wself showHint:@"\n委托成功!\n请在个人中心及时关注委托状态\n"];
-    } failure:^(id response) {
-        [wself showHint:response];
-    }];
-}
-
-#pragma mark - DelegateToSaleViewDelegate
-- (void)doneBtnActionOfDelegateToSaleView:(NSMutableDictionary *)params{
-//    BuildAndCropServiceYuYueVC *hoseDetailVC = [[BuildAndCropServiceYuYueVC alloc] init];
-//    hoseDetailVC.detailModel = self.detailModel;
-//    [hoseDetailVC setHidesBottomBarWhenPushed:YES];
-//    [self.navigationController pushViewController:hoseDetailVC animated:YES];
-//    NSLog(@"doneBtnActionOfDelegateToSaleView:%@", params);
-    [self requestCreateDelegateHouseData:params];
-    
-    self.delegateView.hidden = YES;
-    self.tabBarController.tabBar.hidden = NO;
-    //[self.delegateView removeFromSuperview];
-    //NSLog(@"doneBtnActionOfDelegateToSaleView");
-    [self configdelegateViewTo];
-}
-
-- (void)cancelBtnActionOfDelegateToSaleView{
-    self.delegateView.hidden = YES;
-    self.tabBarController.tabBar.hidden = NO;
-    //[self.delegateView removeFromSuperview];
-    //NSLog(@"cancelBtnActionOfDelegateToSaleView");
-    [self configdelegateViewTo];
-}
-
-- (void)coverViewTapActionOfDelegateToSaleView{
-    self.delegateView.hidden = YES;
-    self.tabBarController.tabBar.hidden = NO;
-    //NSLog(@"coverViewTapActionOfDelegateToSaleView");
-    
-    [self configdelegateViewTo];
-    //[self.delegateView removeFromSuperview];
-}
-
 
 #pragma mark - BMKLocationManagerDelegate
 -(void) locationClickImage{
@@ -555,13 +462,8 @@
         NSLog(@"locError:{%ld - %@};", (long)error.code, error.localizedDescription);
     } if (location) {//得到定位信息，添加annotation
         if (location.location) {
-//            NSLog(@"CLLocation = %@",location.location);
-//            NSString *latitude = [NSString stringWithFormat:@"%f",location.location.coordinate.latitude];
-//            NSString *longitude = [NSString stringWithFormat:@"%f",location.location.coordinate.longitude];
         }
         if (location.rgcData) {
-//            NSLog(@"rgc = %@",[location.rgcData description]);
-//            NSLog(@"city = %@", location.rgcData.city);
             self.cityName = location.rgcData.city;
             [self.customNavBar wr_setLeftButtonWithNormal:[UIImage imageNamed:@"list_icon_map_2"] highlighted:[UIImage imageNamed:@"list_icon_map_2"] title:location.rgcData.city titleColor:UIColorFromHEX(0x666666)];
             
@@ -606,30 +508,12 @@
 
     if (-offsetY > 50) {
         NSLog(@"offsetY:%lf, 下拉刷新", offsetY );
-
-        // 调用下拉刷新方法
-//        [self gainBannerData];
-//        [self gainHomeServiceList];
-        
     }
 }
 
 #pragma mark - SDCycleScrollViewDelegate
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index; {
-    if (self.bannerModelArr.count > index) {
-//        BannerModel *bannerModel = self.bannerModelArr[index];
-//
-//        //统 计banner点击率
-//        [HomeNetworkService StatisticBannerClickRateWithBannerid:bannerModel.idStr Success:^(id response) {
-//        } failure:^(id response) {
-//        }];
-//
-//        //跳转对应的链接页
-//        self.webBrowser.navigationItem.title = bannerModel.title;
-//        self.webBrowser.KINWebType = CustomKINWebBrowserTypeHomeBanner;
-//        [self.navigationController pushViewController:self.webBrowser animated:YES];
-//        [self.webBrowser loadURLString:bannerModel.linkUrl];
-    }
+    if (self.bannerModelArr.count > index) {    }
 }
 
 #pragma mark - Actions
@@ -789,28 +673,4 @@
     return [pinYin substringToIndex:1];
 }
 
-- (void)configDragView{
-    //创建拖拽视图
-    if ([GlobalConfigClass shareMySingle].userAndTokenModel.token!=nil && [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqualToString:@"2"] && [[GlobalConfigClass shareMySingle].userAndTokenModel.authStatus isEqual:@"9"]) {
-        
-        if (self.dragView == nil) {
-            self.dragView = [[WMDragView alloc] initWithFrame:CGRectMake(0, 150, 50, 50)];
-            //    [self.dragView.button setImage:[UIImage imageNamed:@"btn_weituochuzu"] forState:UIControlStateNormal];
-            [self.dragView.button setBackgroundImage:[UIImage imageNamed:@"btn_weituochuzu"] forState:UIControlStateNormal];
-            self.dragView.layer.cornerRadius = 25;
-            self.dragView.isKeepBounds = YES;
-            self.dragView.freeRect = CGRectMake(0, 88, ScreenWidth, ScreenHeight-180);
-            [self.view addSubview:self.dragView];
-            __weak typeof(self) weakSelf = self;
-            self.dragView.clickDragViewBlock = ^(WMDragView *dragView){
-                [weakSelf gainDelegateHouseData];
-            };
-        } else {
-            [self.view bringSubviewToFront:self.dragView];
-        }
-    } else {
-        [self.dragView removeFromSuperview];
-        self.dragView = nil;
-    }
-}
 @end

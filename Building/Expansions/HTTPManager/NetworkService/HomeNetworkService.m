@@ -18,7 +18,8 @@
 + (void)getBannerInfoWithType:(NSString *)typeStr Success:(void(^)(NSArray *banners))success failure:(void(^)(id response))failure {
     NSString *url = [NSString stringWithFormat:@"%@/carousel/list",BasicUrl];
     NSString *urlPra = [NSString stringWithFormat:@"%@?position=%@",url,typeStr];
-    [QSNetworking getWithUrl:urlPra success:^(id response) {
+    
+    [QSNetworking getWithUrl:urlPra refreshCache:YES success:^(id response) {
         if ([[response objectForKey:@"code"] integerValue] == 200) {
             NSArray * articleArr = [NSArray yy_modelArrayWithClass:[BannerModel class] json:[response objectForKey:@"result"]];
             success(articleArr);
@@ -68,7 +69,7 @@
 + (void)gainCropServiceSecondLevelVCDataSuccess:(void(^)(NSArray *banners))success failure:(void(^)(id response))failure {
     NSString *url = [NSString stringWithFormat:@"%@/home/productType",BasicUrl];
     NSString *urlPra = [NSString stringWithFormat:@"%@?cityId=%@&serviceType=%@",url, [GlobalConfigClass shareMySingle].cityModel.cityId, @"corpService"];
-    [QSNetworking getWithUrl:urlPra success:^(id response) {
+    [QSNetworking getWithUrl:urlPra refreshCache:YES success:^(id response) {
         if ([[response objectForKey:@"code"] integerValue] == 200) {
             NSArray * articleArr = [NSArray yy_modelArrayWithClass:[BuildCropServiceTwoLevelModel class] json:[response objectForKey:@"result"]];
             success(articleArr);
@@ -88,7 +89,7 @@
 + (void)gainBuildServiceSecondLevelVCDataSuccess:(void(^)(NSArray *banners))success failure:(void(^)(id response))failure {
     NSString *url = [NSString stringWithFormat:@"%@/home/productType",BasicUrl];
     NSString *urlPra = [NSString stringWithFormat:@"%@?cityId=%@&serviceType=%@",url, [GlobalConfigClass shareMySingle].cityModel.cityId, @"buildService"];
-    [QSNetworking getWithUrl:urlPra success:^(id response) {
+    [QSNetworking getWithUrl:urlPra refreshCache:YES success:^(id response) {
         if ([[response objectForKey:@"code"] integerValue] == 200) {
             NSArray * articleArr = [NSArray yy_modelArrayWithClass:[BuildCropServiceTwoLevelModel class] json:[response objectForKey:@"result"]];
             success(articleArr);
@@ -108,7 +109,7 @@
 + (void)gainFYServiceSecondLevelVCDataSuccess:(void(^)(NSArray *banners))success failure:(void(^)(id response))failure {
     NSString *url = [NSString stringWithFormat:@"%@/home/houseType",BasicUrl];
     NSString *urlPra = [NSString stringWithFormat:@"%@?cityId=%@",url, [GlobalConfigClass shareMySingle].cityModel.cityId];
-    [QSNetworking getWithUrl:urlPra success:^(id response) {
+    [QSNetworking getWithUrl:urlPra refreshCache:YES success:^(id response) {
         if ([[response objectForKey:@"code"] integerValue] == 200) {
             NSArray * articleArr = [NSArray yy_modelArrayWithClass:[FYServiceTwoLevelModel class] json:[response objectForKey:@"result"]];
             success(articleArr);

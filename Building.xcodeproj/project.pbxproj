@@ -243,6 +243,7 @@
 		108BA42922D49F7E000ABAD2 /* CYLPlusButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 108BA41F22D49F7E000ABAD2 /* CYLPlusButton.m */; };
 		108BA42A22D49F7E000ABAD2 /* UIControl+CYLTabBarControllerExtention.m in Sources */ = {isa = PBXBuildFile; fileRef = 108BA42222D49F7E000ABAD2 /* UIControl+CYLTabBarControllerExtention.m */; };
 		108BA42B22D49F7E000ABAD2 /* UIViewController+CYLTabBarControllerExtention.m in Sources */ = {isa = PBXBuildFile; fileRef = 108BA42322D49F7E000ABAD2 /* UIViewController+CYLTabBarControllerExtention.m */; };
+		10B401E823C2E077006B6AB0 /* WMDragViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 10B401E723C2E077006B6AB0 /* WMDragViewManager.m */; };
 		10E067EA226EC8B9006AD683 /* EmptyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E067E9226EC8B9006AD683 /* EmptyView.m */; };
 		10E067F022714DA4006AD683 /* PayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E067EF22714DA4006AD683 /* PayManager.m */; };
 		10E067F722753D51006AD683 /* MonthTimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 10E067F622753D51006AD683 /* MonthTimePicker.m */; };
@@ -658,6 +659,8 @@
 		108BA42222D49F7E000ABAD2 /* UIControl+CYLTabBarControllerExtention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIControl+CYLTabBarControllerExtention.m"; sourceTree = "<group>"; };
 		108BA42322D49F7E000ABAD2 /* UIViewController+CYLTabBarControllerExtention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+CYLTabBarControllerExtention.m"; sourceTree = "<group>"; };
 		108BA42422D49F7E000ABAD2 /* CYLTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CYLTabBarController.h; sourceTree = "<group>"; };
+		10B401E623C2E077006B6AB0 /* WMDragViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WMDragViewManager.h; sourceTree = "<group>"; };
+		10B401E723C2E077006B6AB0 /* WMDragViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WMDragViewManager.m; sourceTree = "<group>"; };
 		10E067E8226EC8B9006AD683 /* EmptyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmptyView.h; sourceTree = "<group>"; };
 		10E067E9226EC8B9006AD683 /* EmptyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmptyView.m; sourceTree = "<group>"; };
 		10E067EE22714DA4006AD683 /* PayManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayManager.h; sourceTree = "<group>"; };
@@ -909,6 +912,8 @@
 			children = (
 				1002D486223DEDC1003DBB62 /* WMDragView.m */,
 				1002D487223DEDC1003DBB62 /* WMDragView.h */,
+				10B401E623C2E077006B6AB0 /* WMDragViewManager.h */,
+				10B401E723C2E077006B6AB0 /* WMDragViewManager.m */,
 			);
 			path = WMDragView;
 			sourceTree = "<group>";
@@ -1927,6 +1932,7 @@
 				1002D476223C9E4D003DBB62 /* AuthHeaderView.m in Sources */,
 				97D92322238C20BF006FAB4B /* RefundController.m in Sources */,
 				1029E8EF220DB94100E987A7 /* CJDropDownMenuView.m in Sources */,
+				10B401E823C2E077006B6AB0 /* WMDragViewManager.m in Sources */,
 				108BA42B22D49F7E000ABAD2 /* UIViewController+CYLTabBarControllerExtention.m in Sources */,
 				10E067F022714DA4006AD683 /* PayManager.m in Sources */,
 				1026019922219EC700864F14 /* ServiceCommonModel.m in Sources */,

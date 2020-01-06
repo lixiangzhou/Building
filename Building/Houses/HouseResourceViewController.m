@@ -16,6 +16,7 @@
 #import "WRCustomNavigationBar.h"
 #import "WRNavigationBar.h"
 #import "EmptyView.h"
+#import "WMDragViewManager.h"
 
 #define FangYuanCellXibName       @"FangYuanCell"
 #define FangYuanCellSectionHeight       47
@@ -65,6 +66,7 @@
 @property (nonatomic, strong) UIView *tabbarCoverView;
 @property (nonatomic, strong) NSArray *sortArr;
 @property (nonatomic, strong) FYCityModel *noLimitCityModel;
+@property (nonatomic, strong) WMDragViewManager *dragViewManager;
 @end
 
 @implementation HouseResourceViewController
@@ -151,7 +153,7 @@
 //    [self.tableView.mj_header beginRefreshing];
     
     //请求数据
-    
+    self.dragViewManager = [WMDragViewManager new];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -162,7 +164,7 @@
     [self gainCityList];
     [self gainCityShangQuanALL];
     [self getLouPanList];
-    
+    [self.dragViewManager showDragViewFrom:self];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 

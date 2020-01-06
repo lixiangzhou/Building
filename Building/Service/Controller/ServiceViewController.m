@@ -17,6 +17,7 @@
 #import "WRCustomNavigationBar.h"
 #import "WRNavigationBar.h"
 #import "EmptyView.h"
+#import "WMDragViewManager.h"
 
 #define FangYuanCellSectionHeight       47
 #define HomeServiceCellHeight       120
@@ -70,6 +71,7 @@
 @property (nonatomic, strong) NSArray *sortArray;
 @property (nonatomic, strong) NSArray *serverArray;
 @property (nonatomic, strong) FYCityModel *noLimitCityModel;
+@property (nonatomic, strong) WMDragViewManager *dragViewManager;
 @end
 
 @implementation ServiceViewController
@@ -167,6 +169,7 @@
     [self gainCityList];
 //    [self gainCityShangQuanALL];
     [self getLouPanList];
+    self.dragViewManager = [WMDragViewManager new];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -184,7 +187,7 @@
     [self gainCityList];
     [self getLouPanList];
     [self gainCityShangQuanALL];
-    
+    [self.dragViewManager showDragViewFrom:self];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     //NSLog(@"viewWillAppear animated");
 }
