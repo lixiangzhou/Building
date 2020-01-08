@@ -103,7 +103,7 @@
     //_mainBtn.layer.borderColor  = [UIColor blackColor].CGColor;
     _mainBtn.layer.borderWidth  = 1;
     
-    
+    _selectNumber = -1;
 
     [self addSubview:_mainBtn];
     
@@ -182,7 +182,7 @@
         }
     }];
     
-    
+    [_tableView reloadData];
     
     _mainBtn.selected = YES;
 }
@@ -234,17 +234,14 @@
     if (cell == nil) {
         //---------------------------下拉选项样式，可在此处自定义-------------------------
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.textLabel.font          = [UIFont systemFontOfSize:11.f];
-        cell.textLabel.textColor     = [UIColor blackColor];
+        cell.textLabel.font          = [UIFont systemFontOfSize:13.f];
         cell.selectionStyle          = UITableViewCellSelectionStyleNone;
-        
-        UIView * line = [[UIView alloc] initWithFrame:CGRectMake(0, _rowHeight -0.5, VIEW_WIDTH(cell), 0.5)];
-        line.backgroundColor = [UIColor blackColor];
-        [cell addSubview:line];
         //---------------------------------------------------------------------------
     }
     
-    cell.textLabel.text =[_titleArr objectAtIndex:indexPath.row];
+    cell.textLabel.text = [_titleArr objectAtIndex:indexPath.row];
+    cell.backgroundColor = self.selectNumber == indexPath.row ? UIColorFromHEX(0x73B8FD) : [UIColor whiteColor];
+    cell.textLabel.textColor = self.selectNumber == indexPath.row ? [UIColor whiteColor] : UIColorFromHEX(0x6e6e6e);
     
     return cell;
 }

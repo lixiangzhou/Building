@@ -26,6 +26,7 @@ static NSString * const DelegateToSaleCollectionCellIdentifier = @"DelegateToSal
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
+@property (weak, nonatomic) IBOutlet UIView *radiusView;
 
 
 
@@ -83,7 +84,22 @@ static NSString * const DelegateToSaleCollectionCellIdentifier = @"DelegateToSal
     self.moneyUnitDropdownMenu.delegate = self;
     self.serviceMoneyUnitDropdownMenu.delegate = self;
     
+    self.radiusView.layer.cornerRadius = 10;
+    self.radiusView.layer.masksToBounds = YES;
+    self.doneButton.backgroundColor = UIColorFromHEX(0x73B8FD);
     //self.currentHouseModel.houseId = nil;
+    
+    self.moneyTextField.textColor = UIColorFromHEX(0x6e6e6e);
+    self.serviceMoneyTextField.textColor = UIColorFromHEX(0x6e6e6e);
+    
+    [self.moneyTextField setBorderWidthColor:UIColorFromHEX(0xc6c6c6)];
+    [self.serviceMoneyTextField setBorderWidthColor:UIColorFromHEX(0xc6c6c6)];
+    self.moneyTextField.layer.cornerRadius = 4;
+    self.serviceMoneyTextField.layer.cornerRadius = 4;
+    
+    [self.LouPanDropdownMenu.mainBtn setBorderWidthColor:UIColorFromHEX(0xc6c6c6)];
+    [self.serviceMoneyUnitDropdownMenu.mainBtn setBorderWidthColor:UIColorFromHEX(0xc6c6c6)];
+    [self.moneyUnitDropdownMenu.mainBtn setBorderWidthColor:UIColorFromHEX(0xc6c6c6)];
     
     self.FJCollectionView.dataSource = self;
     self.FJCollectionView.delegate = self;
@@ -257,6 +273,7 @@ static NSString * const DelegateToSaleCollectionCellIdentifier = @"DelegateToSal
 #pragma mark - LMJDropdownMenuDelegate
 - (void)dropdownMenu:(LMJDropdownMenu *)menu selectedCellNumber:(NSInteger)number{
     [self endEditing:YES];
+    [menu.mainBtn setTitleColor:UIColorFromHEX(0x6e6e6e) forState:UIControlStateNormal];
     if (menu == self.LouPanDropdownMenu) {
         DelegateHouseModel *buildItem = self.buildList[number];
         self.collectionDatas = [self.buildDic objectForKey:buildItem.buildingId];
@@ -265,12 +282,14 @@ static NSString * const DelegateToSaleCollectionCellIdentifier = @"DelegateToSal
             self.currentHouseModel.isSelect = YES;
         }
         [self.FJCollectionView reloadData];
-        
+        self.LouPanDropdownMenu.selectNumber = number;
     } else if (menu == self.moneyUnitDropdownMenu) {//租金
         //self.currentServerMoneyUnit = self.delegateModel.unitList[number];
         self.currentMoneyUnit = self.delegateModel.unitList[number];
+        self.moneyUnitDropdownMenu.selectNumber = number;
     } else {//佣金
         self.currentServerMoneyUnit = self.delegateModel.unitList[number];
+        self.serviceMoneyUnitDropdownMenu.selectNumber = number;
     }
 }
 
@@ -295,10 +314,19 @@ static NSString * const DelegateToSaleCollectionCellIdentifier = @"DelegateToSal
     for (DelegateHouseModel *buildItem in self.buildList) {
         [louPanNameArr addObject:buildItem.buildingName];
     }
-    [self.LouPanDropdownMenu setMenuTitles:louPanNameArr rowHeight:36];
     
-    [self.moneyUnitDropdownMenu setMenuTitles:delegateModel.unitList rowHeight:36];
-    [self.serviceMoneyUnitDropdownMenu setMenuTitles:delegateModel.unitList rowHeight:36];
+    [self.LouPanDropdownMenu.mainBtn setTitleColor:UIColorFromHEX(0xA7ACB6) forState:UIControlStateNormal];
+    [self.LouPanDropdownMenu.mainBtn setTitle:@"请选择楼盘" forState:UIControlStateNormal];
+    
+    [self.moneyUnitDropdownMenu.mainBtn setTitleColor:UIColorFromHEX(0xA7ACB6) forState:UIControlStateNormal];
+    [self.moneyUnitDropdownMenu.mainBtn setTitle:@"请选择单位" forState:UIControlStateNormal];
+    
+    [self.serviceMoneyUnitDropdownMenu.mainBtn setTitleColor:UIColorFromHEX(0xA7ACB6) forState:UIControlStateNormal];
+    [self.serviceMoneyUnitDropdownMenu.mainBtn setTitle:@"请选择单位" forState:UIControlStateNormal];
+    
+    [self.LouPanDropdownMenu setMenuTitles:louPanNameArr rowHeight:49];
+    [self.moneyUnitDropdownMenu setMenuTitles:delegateModel.unitList rowHeight:49];
+    [self.serviceMoneyUnitDropdownMenu setMenuTitles:delegateModel.unitList rowHeight:49];
 }
 
 @end

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,35 +14,35 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NNL-0t-Gcg" userLabel="delegateView">
-                    <rect key="frame" x="0.0" y="167.5" width="328" height="391.5"/>
+                    <rect key="frame" x="0.0" y="168.5" width="328" height="390.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="委托房间：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGP-Af-H9z" userLabel="titleLabel">
-                            <rect key="frame" x="19" y="20" width="66.5" height="16"/>
+                            <rect key="frame" x="19" y="10" width="66.5" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.43137254901960786" green="0.43137254901960786" blue="0.43137254901960786" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="楼盘：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQj-aE-nA5" userLabel="titleLouPanLabel">
-                            <rect key="frame" x="19" y="72" width="40" height="16"/>
+                            <rect key="frame" x="19" y="62" width="40" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.43137254899999999" green="0.43137254899999999" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8GU-ZZ-Mgo" userLabel="LouPanDropdownMenu" customClass="LMJDropdownMenu">
-                            <rect key="frame" x="61" y="66.5" width="248" height="27"/>
+                            <rect key="frame" x="61" y="53" width="248" height="34"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="27" id="lba-Oj-bMy"/>
+                                <constraint firstAttribute="height" constant="34" id="lba-Oj-bMy"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="房间：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HaI-ya-rtA" userLabel="titleFangJianLabel">
-                            <rect key="frame" x="19" y="106" width="40" height="16"/>
+                            <rect key="frame" x="19" y="96" width="40" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.43137254899999999" green="0.43137254899999999" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vYC-O8-f93" userLabel="FJCollectionView">
-                            <rect key="frame" x="19" y="133" width="290" height="49"/>
+                            <rect key="frame" x="19" y="123" width="290" height="49"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="49" id="7US-n6-xEQ"/>
@@ -57,57 +55,55 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出租金额：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cZ2-xC-o34" userLabel="titleFangJianLabel">
-                            <rect key="frame" x="19" y="211" width="66.5" height="16"/>
+                            <rect key="frame" x="19" y="201" width="66.5" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.43137254899999999" green="0.43137254899999999" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3sl-Oc-2OJ" userLabel="moneyUnitDropdownMenu" customClass="LMJDropdownMenu">
-                            <rect key="frame" x="204.5" y="205.5" width="104.5" height="27"/>
+                            <rect key="frame" x="194.5" y="192" width="114.5" height="34"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="27" id="bhw-f9-Nov"/>
+                                <constraint firstAttribute="height" constant="34" id="bhw-f9-Nov"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Prn-81-kXf" userLabel="moneyTextField">
-                            <rect key="frame" x="86.5" y="205.5" width="110" height="27"/>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Prn-81-kXf" userLabel="moneyTextField">
+                            <rect key="frame" x="86.5" y="192" width="100" height="34"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="110" id="eP3-kF-WOP"/>
+                                <constraint firstAttribute="width" constant="100" id="eP3-kF-WOP"/>
                             </constraints>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4JJ-bZ-kBQ" userLabel="serviceMoneyUnitDropdownMenu" customClass="LMJDropdownMenu">
-                            <rect key="frame" x="204.5" y="247.5" width="104.5" height="27"/>
+                            <rect key="frame" x="194.5" y="241" width="114.5" height="34"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="27" id="NJZ-sO-xao"/>
+                                <constraint firstAttribute="height" constant="34" id="NJZ-sO-xao"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wMz-jc-dRW" userLabel="serviceMoneyTextField">
-                            <rect key="frame" x="86.5" y="246" width="110" height="30"/>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wMz-jc-dRW" userLabel="serviceMoneyTextField">
+                            <rect key="frame" x="86.5" y="241" width="100" height="34"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="110" id="VvW-pd-MOD"/>
+                                <constraint firstAttribute="width" constant="100" id="VvW-pd-MOD"/>
                             </constraints>
-                            <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="佣金金额：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IdC-Vu-ca6" userLabel="titleFangJianLabel">
-                            <rect key="frame" x="19" y="253" width="66.5" height="16"/>
+                            <rect key="frame" x="19" y="250" width="66.5" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.43137254899999999" green="0.43137254899999999" blue="0.43137254899999999" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提示：若无您的房间，请联系管理员添加" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eim-ra-tEW" userLabel="tipsLabel">
-                            <rect key="frame" x="53.5" y="301" width="221" height="14.5"/>
+                            <rect key="frame" x="53.5" y="300" width="221" height="14.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="1" green="0.38823529411764707" blue="0.30196078431372547" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PeL-p2-ptC" userLabel="bottomView">
-                            <rect key="frame" x="0.0" y="341.5" width="328" height="50"/>
+                            <rect key="frame" x="0.0" y="340.5" width="328" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMz-8Q-Rmc" userLabel="cancelButton">
                                     <rect key="frame" x="0.0" y="0.0" width="164" height="50"/>
@@ -165,6 +161,7 @@
                         <constraint firstItem="wMz-jc-dRW" firstAttribute="centerY" secondItem="IdC-Vu-ca6" secondAttribute="centerY" id="Mvv-aN-8qD"/>
                         <constraint firstItem="PGP-Af-H9z" firstAttribute="leading" secondItem="NNL-0t-Gcg" secondAttribute="leading" constant="19" id="Nm2-lQ-5Oy"/>
                         <constraint firstItem="4JJ-bZ-kBQ" firstAttribute="leading" secondItem="wMz-jc-dRW" secondAttribute="trailing" constant="8" id="O71-Gy-aV4"/>
+                        <constraint firstItem="wMz-jc-dRW" firstAttribute="height" secondItem="4JJ-bZ-kBQ" secondAttribute="height" id="QGQ-fc-6WG"/>
                         <constraint firstItem="cZ2-xC-o34" firstAttribute="top" secondItem="vYC-O8-f93" secondAttribute="bottom" constant="29" id="Tbh-K1-BcN"/>
                         <constraint firstItem="IdC-Vu-ca6" firstAttribute="leading" secondItem="NNL-0t-Gcg" secondAttribute="leading" constant="19" id="U5w-0d-sTD"/>
                         <constraint firstItem="3sl-Oc-2OJ" firstAttribute="centerY" secondItem="Prn-81-kXf" secondAttribute="centerY" id="Y4d-Us-Mje"/>
@@ -176,7 +173,7 @@
                         <constraint firstItem="8GU-ZZ-Mgo" firstAttribute="centerY" secondItem="VQj-aE-nA5" secondAttribute="centerY" id="hG2-ZE-ldq"/>
                         <constraint firstItem="HaI-ya-rtA" firstAttribute="leading" secondItem="NNL-0t-Gcg" secondAttribute="leading" constant="19" id="hRF-iT-pf6"/>
                         <constraint firstItem="Prn-81-kXf" firstAttribute="centerY" secondItem="cZ2-xC-o34" secondAttribute="centerY" id="oIm-Tb-4AK"/>
-                        <constraint firstItem="PGP-Af-H9z" firstAttribute="top" secondItem="NNL-0t-Gcg" secondAttribute="top" constant="20" id="qxX-LN-DQn"/>
+                        <constraint firstItem="PGP-Af-H9z" firstAttribute="top" secondItem="NNL-0t-Gcg" secondAttribute="top" constant="10" id="qxX-LN-DQn"/>
                         <constraint firstItem="4JJ-bZ-kBQ" firstAttribute="top" secondItem="3sl-Oc-2OJ" secondAttribute="bottom" constant="15" id="s6k-5o-cWM"/>
                         <constraint firstItem="3sl-Oc-2OJ" firstAttribute="height" secondItem="Prn-81-kXf" secondAttribute="height" id="sta-uo-gSZ"/>
                         <constraint firstAttribute="trailing" secondItem="3sl-Oc-2OJ" secondAttribute="trailing" constant="19" id="wV9-BG-PKJ"/>
@@ -184,12 +181,22 @@
                         <constraint firstItem="4JJ-bZ-kBQ" firstAttribute="centerY" secondItem="wMz-jc-dRW" secondAttribute="centerY" id="yZh-ML-E5i"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jJ-pc-6bB">
+                    <rect key="frame" x="0.0" y="158.5" width="328" height="20"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="hH5-GU-pbs"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.45000000000000001" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="NNL-0t-Gcg" secondAttribute="bottom" id="2XZ-g8-Ylg"/>
+                <constraint firstItem="8jJ-pc-6bB" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BCU-l0-Cxj"/>
                 <constraint firstAttribute="trailing" secondItem="NNL-0t-Gcg" secondAttribute="trailing" id="KBJ-K9-u0O"/>
+                <constraint firstAttribute="trailing" secondItem="8jJ-pc-6bB" secondAttribute="trailing" id="KNl-oZ-32j"/>
                 <constraint firstItem="NNL-0t-Gcg" firstAttribute="height" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="3:4" id="OEY-q0-U5V"/>
+                <constraint firstItem="NNL-0t-Gcg" firstAttribute="top" secondItem="8jJ-pc-6bB" secondAttribute="bottom" constant="-10" id="vOC-Wu-D2X"/>
                 <constraint firstItem="NNL-0t-Gcg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="z2l-ji-DcZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -202,6 +209,7 @@
                 <outlet property="doneButton" destination="bRG-6u-hEU" id="acK-eW-KuR"/>
                 <outlet property="moneyTextField" destination="Prn-81-kXf" id="V0A-Fv-rmt"/>
                 <outlet property="moneyUnitDropdownMenu" destination="3sl-Oc-2OJ" id="R12-cO-Q5s"/>
+                <outlet property="radiusView" destination="8jJ-pc-6bB" id="aLn-fM-aWm"/>
                 <outlet property="serviceMoneyTextField" destination="wMz-jc-dRW" id="NNc-Cy-lMM"/>
                 <outlet property="serviceMoneyUnitDropdownMenu" destination="4JJ-bZ-kBQ" id="pOp-dk-NAx"/>
             </connections>

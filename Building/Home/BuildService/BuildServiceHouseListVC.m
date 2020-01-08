@@ -463,8 +463,11 @@
                 weakSelf.sectionView.titleLabels[0].text = weakSelf.quyuView.tradingModel.tradingName;
             } else if (weakSelf.countyId.length) {
                 weakSelf.sectionView.titleLabels[0].text = weakSelf.quyuView.countryModel.countryName;
+            } else {
+                weakSelf.sectionView.titleLabels[0].text = @"不限";
             }
             
+            weakSelf.quyuViewIsShow = NO;
             [weakSelf gainServiceListWithRefresh:YES];
         };
     }

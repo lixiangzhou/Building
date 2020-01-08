@@ -182,6 +182,12 @@
             return;
         }
         
+        if (row == 0) {
+            self.metro = nil;
+            self.countryModel = nil;
+            self.tradingModel = nil;
+        }
+        
         for (FYShangQuanOneLevelModel *model in self.leftTableViewArr) {
             model.isSelect = NO;
         }
