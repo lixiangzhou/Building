@@ -221,8 +221,15 @@
     [FangYuanNetworkService getLouPanList:param Success:^(NSArray<FYBuildListModel *> * _Nonnull loupanList) {
         NSMutableArray *array = [@[@"全部"] mutableCopy];
 //        [array addObjectsFromArray:[loupanList valueForKeyPath:@"name"]];
+        // 是否包含当前选择的楼盘
+        BOOL alreadContainCurrent = NO;
+        NSString *name = self.sectionView.titleLabels[0].text;
         for (FYBuildListModel *model in loupanList) {
             [array addObject:model.name];
+            if (!alreadContainCurrent &&
+                self.buildId == model.id.intValue && [name isEqualToString:model.name]) {
+                alreadContainCurrent = YES;
+            }
         }
         
         self.loupanArr = array;
@@ -231,14 +238,16 @@
             [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"3"] ||
             [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"5"]) &&
             [[GlobalConfigClass shareMySingle].userAndTokenModel.authStatus isEqual:@"9"]) {
-            if (self.loupanArr.count > 1) {
+            if (self.loupanArr.count > 1 && !alreadContainCurrent) {
                 self.loupanView.selectIdx = 1;
                 self.sectionView.titleLabels[0].text = self.loupanArr[1];
                 self.buildId = loupanList[0].id.integerValue;
             }
         }
         
-        [self gainServiceListWithRefresh:YES];
+        if (!alreadContainCurrent) {    // 如果包含选择的楼盘，就不去刷新了
+            [self gainServiceListWithRefresh:YES];
+        }
     } failure:^(id  _Nonnull response) {
         [self gainServiceListWithRefresh:YES];
     }];
