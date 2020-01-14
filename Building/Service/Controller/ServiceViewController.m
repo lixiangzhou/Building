@@ -72,6 +72,9 @@
 @property (nonatomic, strong) NSArray *serverArray;
 @property (nonatomic, strong) FYCityModel *noLimitCityModel;
 @property (nonatomic, strong) WMDragViewManager *dragViewManager;
+@property (nonatomic, assign) CGFloat navBarLastY;
+@property (nonatomic, assign) CGFloat toolBarLastY;
+
 @end
 
 @implementation ServiceViewController
@@ -130,11 +133,11 @@
     [self.customNavBar wr_setBackgroundAlpha:0];
     [self.view insertSubview:self.customNavBar aboveSubview:self.tableView];
 
-    CJDropDownMenuView *menuView = [[CJDropDownMenuView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 47) titleArr:@[@"楼盘", @"服务分类", @"区域", @"默认"]];
+    CJDropDownMenuView *menuView = [[CJDropDownMenuView alloc] initWithFrame:CGRectMake(0, self.cycleScrollViewheight, ScreenWidth, 47) titleArr:@[@"楼盘", @"服务分类", @"区域", @"默认"]];
     menuView.delegate = self;
     self.sectionView = menuView;
     self.sectionView.backgroundColor = [UIColor whiteColor];
-    [self.view insertSubview:self.sectionView belowSubview:self.customNavBar];
+    [self.view addSubview:menuView];
 
     EmptyView *emptyView = [EmptyView new];
     self.emptyView = emptyView;
@@ -375,54 +378,36 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsetY = scrollView.contentOffset.y;
-    if (offsetY > self.cycleScrollViewheight - 130)
-    {
+    if (offsetY > self.cycleScrollViewheight - 130) {
         CGFloat alpha = (offsetY - self.cycleScrollViewheight + 130) / NAV_HEIGHT;
         [self.customNavBar wr_setBackgroundAlpha:alpha];
         self.customNavBar.title = @"服务";
         [self.customNavBar wr_setTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
         [self wr_setStatusBarStyle:UIStatusBarStyleDefault];
-        //self.sectionView.frame=CGRectMake(0, offsetY, ScreenWidth, self.cycleScrollViewheight);
-
-    }
-    else
-    {
+    } else {
         self.customNavBar.title = @"";
         [self.customNavBar wr_setBackgroundAlpha:0];
         [self.customNavBar wr_setTintColor:UIColorFromHEX(0x707070)];
         [self wr_setStatusBarStyle:UIStatusBarStyleLightContent];
-        
     }
     
-    if( offsetY > self.customNavBar.height )
-    {
-        scrollView.contentInset = UIEdgeInsetsMake(self.customNavBar.height, 0, 0, 0);
-        self.sectionView.backgroundColor = [UIColor whiteColor];
-
+    if (offsetY > (self.cycleScrollViewheight - self.customNavBar.height)) {
+        self.sectionView.y = self.customNavBar.height;
+    } else {
+        CGRect rect = [self.cycleScrollView convertRect:self.cycleScrollView.bounds toView:self.view];
+        self.sectionView.y = CGRectGetMaxY(rect);
     }
-    else
-    {
-        self.sectionView.backgroundColor = [UIColor whiteColor];
-        scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 
-    }
-//    CGFloat sectionHeaderHeight = 47;
-//    NSLog(@"contentOffset:%lf,%lf", scrollView.contentOffset.x,scrollView.contentOffset.y);
-// if(scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-//        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0,0);
-//
-//    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-//
-//        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-//
-//    }
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float y = rect.origin.y + rect.size.height;
-    CGRect frame = CGRectMake(0, y, ScreenWidth, self.view.frame.size.height - y);
-    self.orderView.frame = frame;
-    self.quyuView.frame = frame;
-    self.loupanView.frame = frame;
-    self.serviceTypeView.frame = frame;
+    if (y != self.toolBarLastY) {
+        self.toolBarLastY = y;
+        CGRect frame = CGRectMake(0, y, ScreenWidth, self.view.frame.size.height - y);
+        self.orderView.frame = frame;
+        self.quyuView.frame = frame;
+        self.loupanView.frame = frame;
+        self.serviceTypeView.frame = frame;
+    }
 }
 #pragma mark - getters and setters
 - (WRCustomNavigationBar *)customNavBar
@@ -435,13 +420,8 @@
 
 #pragma mark - UITableView Delegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    //ygz test
-//    CJDropDownMenuView *menuView = [[CJDropDownMenuView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 47) titleArr:@[@"楼盘", @"服务分类", @"区域", @"默认"]];
-//    menuView.delegate = self;
-//    self.sectionView = menuView;
-//    return menuView;
-    
-    return self.sectionView;
+//    return self.sectionView;
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -537,13 +517,6 @@
                 self.noLimitCityModel = [FYCityModel new];
                 self.noLimitCityModel.cityName = @"不限";
                 self.noLimitCityModel.countryInfoList = cmode.countryInfoList;
-//                NSMutableArray *array = [NSMutableArray new];
-//                [pmodel.cityList enumerateObjectsUsingBlock:^(FYCityModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//                    [array addObjectsFromArray:obj.countryInfoList];
-//                }];
-//
-//                self.noLimitCityModel.countryInfoList = array;
-                
                 return @[self.noLimitCityModel, cmode];
                 
             }
@@ -551,7 +524,6 @@
     }
     
     FYProvinceModel *model = self.cityList[0];
-    //NSLog(@"model.cityList[0]:%@", model.cityList[0].cityName );
     return @[model.cityList[0]];//===写死的北京，应该是首页定位的城市或者选择的城市
 }
 
@@ -590,7 +562,6 @@
 //row从0开始，分别为@[@"默认", @"价格 低->高", @"价格 高->低"]
 - (void)selectOneConViewSelectRow:(NSInteger)row selfView:(CJMenuSelectOneConView *)oneConView{
     if (oneConView == self.orderView) {//排序
-        //price_desc:价格从高到底; price_asc:价格从低到高；
         if( row == 1 ){
             self.sort = @"update_desc";
         }
@@ -675,20 +646,6 @@
 
 #pragma mark - SDCycleScrollViewDelegate
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index; {
-//    if (self.bannerModelArr.count > index) {
-        //        BannerModel *bannerModel = self.bannerModelArr[index];
-        //
-        //        //统计banner点击率
-        //        [HomeNetworkService StatisticBannerClickRateWithBannerid:bannerModel.idStr Success:^(id response) {
-        //        } failure:^(id response) {
-        //        }];
-        //
-        //        //跳转对应的链接页
-        //        self.webBrowser.navigationItem.title = bannerModel.title;
-        //        self.webBrowser.KINWebType = CustomKINWebBrowserTypeHomeBanner;
-        //        [self.navigationController pushViewController:self.webBrowser animated:YES];
-        //        [self.webBrowser loadURLString:bannerModel.linkUrl];
-//    }
 }
 
 #pragma mark - getters
@@ -757,7 +714,6 @@
 
 #pragma - privates
 - (void)showLoupanView{
-    //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float loupanViewY = rect.origin.y + rect.size.height;
     self.loupanView.frame = CGRectMake(0, loupanViewY, ScreenWidth, self.view.frame.size.height - loupanViewY);
@@ -775,7 +731,6 @@
 }
 
 - (void)showServiceTypeView{
-    //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float orderY = rect.origin.y + rect.size.height;
     self.serviceTypeView.frame = CGRectMake(0, orderY, ScreenWidth, self.view.frame.size.height - orderY);
@@ -792,7 +747,6 @@
 }
 
 - (void)showQuYuView{
-    //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float quyuY = rect.origin.y + rect.size.height;
     self.quyuView.frame = CGRectMake(0, quyuY, ScreenWidth, self.view.frame.size.height - quyuY);
@@ -809,12 +763,9 @@
 }
 
 - (void)showOrderView{
-    //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float orderY = rect.origin.y + rect.size.height;
     self.orderView.frame = CGRectMake(0, orderY, ScreenWidth, self.view.frame.size.height - orderY);
-    
-    //self.orderView.tintColor = UIColorFromHEX(0x73b8ee);
     
     self.orderView.hidden = NO;
     self.orderViewIsShow = YES;
@@ -822,8 +773,6 @@
 }
 
 - (void)hiddenOrderView{
-    //self.orderView.tintColor = UIColorFromHEX(0x6e6e6e);
-
     self.orderView.hidden = YES;
     self.orderViewIsShow = NO;
     [self hideTabBar];

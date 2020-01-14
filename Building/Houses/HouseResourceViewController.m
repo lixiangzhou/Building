@@ -67,6 +67,8 @@
 @property (nonatomic, strong) NSArray *sortArr;
 @property (nonatomic, strong) FYCityModel *noLimitCityModel;
 @property (nonatomic, strong) WMDragViewManager *dragViewManager;
+@property (nonatomic, assign) CGFloat navBarLastY;
+@property (nonatomic, assign) CGFloat toolBarLastY;
 @end
 
 @implementation HouseResourceViewController
@@ -128,10 +130,11 @@
     self.tableView.tableHeaderView = [self myTableHeaderView];
     self.tableView.backgroundColor = [UIColor clearColor];
     
-    CJDropDownMenuView *menuView = [[CJDropDownMenuView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 47) titleArr:@[@"楼盘", @"区域",@"默认"]];
+    CJDropDownMenuView *menuView = [[CJDropDownMenuView alloc] initWithFrame:CGRectMake(0, self.cycleScrollViewheight, ScreenWidth, 47) titleArr:@[@"楼盘", @"区域",@"默认"]];
     menuView.delegate = self;
     menuView.backgroundColor = [UIColor whiteColor];
     self.sectionView = menuView;
+    [self.view addSubview:menuView];
     
     [self.emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(self.cycleScrollViewheight + 47 + 65));
@@ -154,6 +157,13 @@
     
     //请求数据
     self.dragViewManager = [WMDragViewManager new];
+    
+    [self.sectionView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSLog(@"%@", change);
+    NSLog(@"-----------");
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -341,17 +351,12 @@
         }
     }
     
-    CGFloat h = (offsetY > self.customNavBar.height) ? self.customNavBar.height : 0;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        scrollView.contentInset = UIEdgeInsetsMake(h
-                                                   
-                                                   , 0, 0, 0);
-    });
-//    self.tableViewTopConstraint.constant = h;
-//    if (offsetY > self.customNavBar.height) {
-//        self.sectionView.frame = CGRectMake(0, self.customNavBar.height, ScreenWidth, 47);
-//        [self.view addSubview:self.sectionView];
-//    }
+    if (offsetY > (self.cycleScrollViewheight - self.customNavBar.height)) {
+        self.sectionView.y = self.customNavBar.height;
+    } else {
+        CGRect rect = [self.cycleScrollView convertRect:self.cycleScrollView.bounds toView:self.view];
+        self.sectionView.y = CGRectGetMaxY(rect);
+    }
     
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float y = rect.origin.y + rect.size.height;
@@ -365,7 +370,8 @@
 }
 #pragma mark - UITableView Delegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    return self.sectionView;
+//    return self.sectionView;
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -373,7 +379,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    //NSLog(@"self.houseList.count:%ld", self.houseList.count);
     return self.houseList.count;
 }
 
@@ -383,18 +388,6 @@
     cell.model = model;
     
     return cell;
-    
-    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
-//    if (!cell) {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewCell"];
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    }
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//
-//    cell.textLabel.text = @"测试";
-//
-//    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -474,13 +467,6 @@
                 self.noLimitCityModel = [FYCityModel new];
                 self.noLimitCityModel.cityName = @"不限";
                 self.noLimitCityModel.countryInfoList = cmode.countryInfoList;
-//                NSMutableArray *array = [NSMutableArray new];
-//                [pmodel.cityList enumerateObjectsUsingBlock:^(FYCityModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//                    [array addObjectsFromArray:obj.countryInfoList];
-//                }];
-//
-//                self.noLimitCityModel.countryInfoList = array;
-                
                 return @[self.noLimitCityModel, cmode];
 
             }
@@ -488,7 +474,6 @@
     }
 
     FYProvinceModel *model = self.cityList[0];
-    //NSLog(@"model.cityList[0]:%@", model.cityList[0].cityName );
     return @[model.cityList[0]];//===写死的北京，应该是首页定位的城市或者选择的城市
 }
 
@@ -499,7 +484,6 @@
 }
 
 - (void)doneButtonActionSelectCity:(FYCityModel *)city selectCountryArr:(NSArray *)countryArr{
-    //NSLog(@"city.cityId:%ld", city.cityId );
     if (city != nil) {
         if (city.cityId.length) {
             self.cityId = [city.cityId intValue];
@@ -697,7 +681,6 @@
 }
 
 - (void)showQuYuView{
-    //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float quyuY = rect.origin.y + rect.size.height;
     self.quyuView.frame = CGRectMake(0, quyuY, ScreenWidth, self.view.frame.size.height - quyuY);
@@ -714,7 +697,6 @@
 }
 
 - (void)showOrderView{
-    //    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float orderY = rect.origin.y + rect.size.height;
     self.orderView.frame = CGRectMake(0, orderY, ScreenWidth, self.view.frame.size.height - orderY);
