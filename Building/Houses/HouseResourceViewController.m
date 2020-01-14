@@ -106,7 +106,7 @@
     self.keyWord = nil;
     self.houseTypeId = -1;
     self.countyId = nil;
-    self.cityId = [[GlobalConfigClass shareMySingle].cityModel.cityId integerValue];
+//    self.cityId = [[GlobalConfigClass shareMySingle].cityModel.cityId integerValue];
     self.tradingId = -1;
     
     //UIView *headView = [self myTableHeaderView];
@@ -130,8 +130,8 @@
     
     CJDropDownMenuView *menuView = [[CJDropDownMenuView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 47) titleArr:@[@"楼盘", @"区域",@"默认"]];
     menuView.delegate = self;
-    self.sectionView = menuView;
     menuView.backgroundColor = [UIColor whiteColor];
+    self.sectionView = menuView;
     
     [self.emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(self.cycleScrollViewheight + 47 + 65));
@@ -160,6 +160,7 @@
     [super viewWillAppear:animated];
     
     self.cityId = [[GlobalConfigClass shareMySingle].cityModel.cityId integerValue];
+
     [self gainBannerData];
     [self gainCityList];
     [self gainCityShangQuanALL];
@@ -262,10 +263,12 @@
     }
     [FangYuanNetworkService getLouPanList:param Success:^(NSArray<FYBuildListModel *> * _Nonnull loupanList) {
         NSMutableArray *array = [@[@"全部"] mutableCopy];
-//        [array addObjectsFromArray:[loupanList valueForKeyPath:@"name"]];
         // 是否包含当前选择的楼盘
         BOOL alreadContainCurrent = NO;
         NSString *name = self.sectionView.titleLabels[0].text;
+        if ([name isEqualToString:@"全部"]) {
+            alreadContainCurrent = YES;
+        }
         for (FYBuildListModel *model in loupanList) {
             [array addObject:model.name];
             if (!alreadContainCurrent &&
@@ -275,18 +278,15 @@
         }
         self.loupanArr = array;
 
-        if (([[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"2"] ||
-             [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"3"] ||
-             [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"5"]) &&
-            [[GlobalConfigClass shareMySingle].userAndTokenModel.authStatus isEqual:@"9"]) {
-            if (self.loupanArr.count > 1 && !alreadContainCurrent) {
+        if (self.loupanArr.count > 1) {
+            if (!alreadContainCurrent) {
                 self.loupanView.selectIdx = 1;
                 self.sectionView.titleLabels[0].text = self.loupanArr[1];
                 self.buildId = loupanList[0].id.integerValue;
+                [self gainHouseResourceListWithRefresh:YES];
             }
-        }
-        if (!alreadContainCurrent) {    // 如果包含选择的楼盘，就不去刷新了
-            [self gainHouseResourceListWithRefresh:YES];
+        } else {
+            self.sectionView.titleLabels[0].text = self.loupanArr[0];
         }
     } failure:^(id  _Nonnull response) {
         [self gainHouseResourceListWithRefresh:YES];
@@ -324,62 +324,47 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    {
-        CGFloat offsetY = scrollView.contentOffset.y;
-        if (offsetY > self.cycleScrollViewheight - 130)
-        {
-            CGFloat alpha = (offsetY - self.cycleScrollViewheight + 130) / NAV_HEIGHT;
-            [self.customNavBar wr_setBackgroundAlpha:alpha];
-            self.customNavBar.title = @"房源";
-            [self.customNavBar wr_setTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
-            [self wr_setStatusBarStyle:UIStatusBarStyleDefault];
-            //self.sectionView.frame=CGRectMake(0, offsetY, ScreenWidth, self.cycleScrollViewheight);
-            
-        }
-        else
-        {
+    CGFloat offsetY = scrollView.contentOffset.y;
+    if (offsetY > self.cycleScrollViewheight - 130) {
+        CGFloat alpha = (offsetY - self.cycleScrollViewheight + 130) / NAV_HEIGHT;
+        [self.customNavBar wr_setBackgroundAlpha:alpha];
+        self.customNavBar.title = @"房源";
+        [self.customNavBar wr_setTintColor:[[UIColor blackColor] colorWithAlphaComponent:alpha]];
+        [self wr_setStatusBarStyle:UIStatusBarStyleDefault];
+    } else {
+        if (offsetY != self.navBarLastY) {
+            self.navBarLastY = offsetY;
             self.customNavBar.title = @"";
             [self.customNavBar wr_setBackgroundAlpha:0];
             [self.customNavBar wr_setTintColor:UIColorFromHEX(0x707070)];
             [self wr_setStatusBarStyle:UIStatusBarStyleLightContent];
-            
         }
-        
-        if( offsetY > self.customNavBar.height )
-        {
-            scrollView.contentInset = UIEdgeInsetsMake(self.customNavBar.height, 0, 0, 0);
-            self.sectionView.backgroundColor = [UIColor whiteColor];
-            
-        }
-        else
-        {
-            self.sectionView.backgroundColor = [UIColor whiteColor];
-            scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-            
-        }
-        //    CGFloat sectionHeaderHeight = 47;
-        //    NSLog(@"contentOffset:%lf,%lf", scrollView.contentOffset.x,scrollView.contentOffset.y);
-        // if(scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-        //        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0,0);
-        //
-        //    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-        //
-        //        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-        //
-        //    }
     }
     
+    CGFloat h = (offsetY > self.customNavBar.height) ? self.customNavBar.height : 0;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        scrollView.contentInset = UIEdgeInsetsMake(h
+                                                   
+                                                   , 0, 0, 0);
+    });
+//    self.tableViewTopConstraint.constant = h;
+//    if (offsetY > self.customNavBar.height) {
+//        self.sectionView.frame = CGRectMake(0, self.customNavBar.height, ScreenWidth, 47);
+//        [self.view addSubview:self.sectionView];
+//    }
     
     CGRect rect = [self.sectionView convertRect:self.sectionView.bounds toView:self.view];
     float y = rect.origin.y + rect.size.height;
-    CGRect frame = CGRectMake(0, y, ScreenWidth, self.view.frame.size.height - y);
-    self.orderView.frame = frame;
-    self.quyuView.frame = frame;
-    self.loupanView.frame = frame;
+    if (y != self.toolBarLastY) {
+        self.toolBarLastY = y;
+        CGRect frame = CGRectMake(0, y, ScreenWidth, self.view.frame.size.height - y);
+        self.orderView.frame = frame;
+        self.quyuView.frame = frame;
+        self.loupanView.frame = frame;
+    }
 }
 #pragma mark - UITableView Delegate
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    [self.view insertSubview:self.sectionView belowSubview:self.customNavBar];
     return self.sectionView;
 }
 

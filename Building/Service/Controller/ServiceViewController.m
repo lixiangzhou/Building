@@ -165,10 +165,10 @@
     }
     
     //请求数据
-    [self gainBannerData];
-    [self gainCityList];
+//    [self gainBannerData];
+//    [self gainCityList];
 //    [self gainCityShangQuanALL];
-    [self getLouPanList];
+//    [self getLouPanList];
     self.dragViewManager = [WMDragViewManager new];
 }
 
@@ -220,10 +220,12 @@
     }
     [FangYuanNetworkService getLouPanList:param Success:^(NSArray<FYBuildListModel *> * _Nonnull loupanList) {
         NSMutableArray *array = [@[@"全部"] mutableCopy];
-//        [array addObjectsFromArray:[loupanList valueForKeyPath:@"name"]];
         // 是否包含当前选择的楼盘
         BOOL alreadContainCurrent = NO;
         NSString *name = self.sectionView.titleLabels[0].text;
+        if ([name isEqualToString:@"全部"]) {
+            alreadContainCurrent = YES;
+        }
         for (FYBuildListModel *model in loupanList) {
             [array addObject:model.name];
             if (!alreadContainCurrent &&
@@ -233,20 +235,15 @@
         }
         
         self.loupanArr = array;
-        
-        if (([[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"2"] ||
-            [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"3"] ||
-            [[GlobalConfigClass shareMySingle].userAndTokenModel.memberType isEqual:@"5"]) &&
-            [[GlobalConfigClass shareMySingle].userAndTokenModel.authStatus isEqual:@"9"]) {
-            if (self.loupanArr.count > 1 && !alreadContainCurrent) {
+        if (self.loupanArr.count > 1) {
+            if (!alreadContainCurrent) {
                 self.loupanView.selectIdx = 1;
                 self.sectionView.titleLabels[0].text = self.loupanArr[1];
                 self.buildId = loupanList[0].id.integerValue;
+                [self gainServiceListWithRefresh:YES];
             }
-        }
-        
-        if (!alreadContainCurrent) {    // 如果包含选择的楼盘，就不去刷新了
-            [self gainServiceListWithRefresh:YES];
+        } else {
+            self.sectionView.titleLabels[0].text = self.loupanArr[0];
         }
     } failure:^(id  _Nonnull response) {
         [self gainServiceListWithRefresh:YES];
