@@ -23,7 +23,8 @@ target 'Building' do
 #    pod 'ReactiveCocoa'
 #    pod 'ReactiveObjC'
     pod 'UITableView+FDTemplateLayoutCell', '~> 1.6.beta'
-    pod 'BMKLocationKit'
+#    pod 'BMKLocationKit'
+    pod 'BMKLocationKit-NO-IDFA'
     pod 'BaiduMapKit' #百度地图SDK
     pod 'TZImagePickerController'
     pod 'YBImageBrowser'

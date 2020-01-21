@@ -16,7 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - ARChromeActivity (1.0.5)
   - BaiduMapKit (4.4.0)
-  - BMKLocationKit (1.6.0)
+  - BMKLocationKit-NO-IDFA (1.0.1)
   - DZNEmptyDataSet (1.8.1)
   - FDFullscreenPopGesture (1.1)
   - IQKeyboardManager (3.3.7)
@@ -48,7 +48,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
   - BaiduMapKit
-  - BMKLocationKit
+  - BMKLocationKit-NO-IDFA
   - DZNEmptyDataSet
   - FDFullscreenPopGesture (= 1.1)
   - IQKeyboardManager (~> 3.3.4)
@@ -69,7 +69,7 @@ SPEC REPOS:
     - AFNetworking
     - ARChromeActivity
     - BaiduMapKit
-    - BMKLocationKit
+    - BMKLocationKit-NO-IDFA
     - DZNEmptyDataSet
     - FDFullscreenPopGesture
     - IQKeyboardManager
@@ -91,7 +91,7 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   ARChromeActivity: 821c7849b566f49583987468733a896fee35aa4d
   BaiduMapKit: 19a568e238d6d5a91b93daf7819b868d39cb2206
-  BMKLocationKit: c8bd4f213b231f743c12c3095ad6a8311db259d8
+  BMKLocationKit-NO-IDFA: 9e39cf066c14d8e5dbbe2df0ee9714bdc48ce9c0
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FDFullscreenPopGesture: a8a620179e3d9c40e8e00256dcee1c1a27c6d0f0
   IQKeyboardManager: 249c3946acf61345c18b038eb50863fe2793e3a8
@@ -109,6 +109,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 6ebed9cf54ed6f12f060de1ec2e81779e1ce534e
+PODFILE CHECKSUM: f76772bb0f208ec6b95b461a8bbef75a516b1649
 
 COCOAPODS: 1.7.4

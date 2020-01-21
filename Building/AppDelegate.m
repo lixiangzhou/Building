@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import <BMKLocationkit/BMKLocationComponent.h>
+#import <BMKLocationKit/BMKLocationAuth.h>
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
 #import "WxApi.h"
 #import "PayManager.h"
