@@ -144,6 +144,7 @@
 		1002D4C82243758C003DBB62 /* launchlogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1002D4C52243758C003DBB62 /* launchlogo@3x.png */; };
 		1002D4C92243758C003DBB62 /* launchlogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1002D4C62243758C003DBB62 /* launchlogo.png */; };
 		1002D4CA2243758C003DBB62 /* launchlogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1002D4C72243758C003DBB62 /* launchlogo@2x.png */; };
+		1007567023FA7C6100725F13 /* CLLocationManager+ZZ.m in Sources */ = {isa = PBXBuildFile; fileRef = 1007566F23FA7C6100725F13 /* CLLocationManager+ZZ.m */; };
 		101015B5220085D50005CD9F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 101015B4220085D50005CD9F /* AppDelegate.m */; };
 		101015BD220085D70005CD9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 101015BC220085D70005CD9F /* Assets.xcassets */; };
 		101015C0220085D70005CD9F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 101015BE220085D70005CD9F /* LaunchScreen.storyboard */; };
@@ -488,6 +489,8 @@
 		1002D4C52243758C003DBB62 /* launchlogo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchlogo@3x.png"; sourceTree = "<group>"; };
 		1002D4C62243758C003DBB62 /* launchlogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchlogo.png; sourceTree = "<group>"; };
 		1002D4C72243758C003DBB62 /* launchlogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchlogo@2x.png"; sourceTree = "<group>"; };
+		1007566E23FA7C6100725F13 /* CLLocationManager+ZZ.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CLLocationManager+ZZ.h"; sourceTree = "<group>"; };
+		1007566F23FA7C6100725F13 /* CLLocationManager+ZZ.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CLLocationManager+ZZ.m"; sourceTree = "<group>"; };
 		101015B0220085D50005CD9F /* Building.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Building.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		101015B3220085D50005CD9F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		101015B4220085D50005CD9F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1050,6 +1053,8 @@
 				1029E8212205883C00E987A7 /* Category */,
 				1029E81A22056CFD00E987A7 /* Registry & Logon */,
 				101015F2220086870005CD9F /* Base */,
+				1007566E23FA7C6100725F13 /* CLLocationManager+ZZ.h */,
+				1007566F23FA7C6100725F13 /* CLLocationManager+ZZ.m */,
 			);
 			path = Expansions;
 			sourceTree = "<group>";
@@ -2036,6 +2041,7 @@
 				10260214222C1CBA00864F14 /* YuYueBuildOrderDetailVC.m in Sources */,
 				101015B5220085D50005CD9F /* AppDelegate.m in Sources */,
 				04139B9B22660B3900035403 /* proprietorCCViewControl.m in Sources */,
+				1007567023FA7C6100725F13 /* CLLocationManager+ZZ.m in Sources */,
 				10101602220086870005CD9F /* BaseViewController.m in Sources */,
 				102601C32222E88000864F14 /* CropServiceHouseListVC.m in Sources */,
 				101015FD220086870005CD9F /* PersonViewController.m in Sources */,
